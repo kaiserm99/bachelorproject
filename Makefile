@@ -1,5 +1,5 @@
 EXECUTE_CMD = python3.7
-TEST_CMD = python3 -m doctest
+TEST_CMD = python3.7 -m doctest
 CHECKSTYLE_CMD = flake8
 
 all: execute test checkstyle
