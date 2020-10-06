@@ -1,0 +1,127 @@
+    """
+    Früh 1, Spät 1, Nacht 1, Früh 2, Spät 2, Nacht 2
+    
+    - Nur einmal am Tag:                 Früh 1 -> -(Spät 1 or Nacht 1), Spät 1 -> -(Früh 1 or Nacht 1), Nacht 1 -> -(Früh 1 or Spät 1) | Früh 2 -> -(Spät 2 or Nacht 2), Spät 2 -> -(Früh 2 or Nacht 2), Nacht 2 -> -(Früh 2 or Spät 2)
+    - Wenn Nacht, dann kein Früh         Nacht 1 -> -Früh 2, Früh 2 -> -Nacht 1
+    - Immer zwei Krankenpfleger          
+
+
+
+    Früh 1 -> (Frida and Fritz) or 
+              (Heinz and Udo) or (Heinz and Ira) or
+              (Udo and Ira)
+    
+    Spät 1 -> (Frida and Fritz) or 
+              (Heinz and Udo) or (Heinz and Ira) or
+              (Udo and Ira)
+
+    Nacht 1 -> (Heinz and Udo) or (Heinz and Ira) or (Heinz and Nora) or
+               (Udo and Ira) or (Udo and Nora)
+
+    Früh 2 -> (Frida and Fritz) or 
+              (Heinz and Udo) or (Heinz and Ira) or
+              (Udo and Ira)
+
+    Spät 2 -> (Frida and Fritz) or 
+              (Heinz and Udo) or (Heinz and Ira) or
+              (Udo and Ira)
+
+    Nacht 2 -> (Heinz and Udo) or (Heinz and Ira) or (Heinz and Nora) or
+               (Udo and Ira) or (Udo and Nora)
+
+
+    Heinz, Udo, Ira, Nora, Frida, Fritz
+
+    - Nora und Ira nicht zusammen        Nora -> -Ira, Ira -> -Nora
+    - Fritz und Frida immer zusammen     Fritz -> Frida, Frida -> Fritz
+    - Fritz niemals Nachts               Fritz -> -Nacht 1, Fritz -> -Nacht 2
+    - Nora nur Nachts                    Nora -> Nacht 1, Nora -> Nacht 2
+
+
+// Alle Regeln für Heinz:
+-------------------------
+Heinz_F1 -> -(Heinz_S1 or Heinz_N1)  // Nicht am gleichen Tag nochmal
+Heinz_S1 -> -(Heinz_F1 or Heinz_N1)
+Heinz_N1 -> -(Heinz_F1 or Heinz_S1) and -Heinz_F2 // Nicht am gleichen Tag nochmal und keine Früh
+Heinz_F2 -> -(Heinz_S2 or Heinz_N2)
+Heinz_S2 -> -(Heinz_F2 or Heinz_N2)
+Heinz_N2 -> -(Heinz_F2 or Heinz_S2)
+
+// Alle Regeln für Udo:
+-------------------------
+Udo_F1 -> -(Udo_S1 or Udo_N1)  // Nicht am gleichen Tag nochmal
+Udo_S1 -> -(Udo_F1 or Udo_N1)
+Udo_N1 -> -(Udo_F1 or Udo_S1) and -Udo_F2 // Nicht am gleichen Tag nochmal und keine Früh
+Udo_F2 -> -(Udo_S2 or Udo_N2)
+Udo_S2 -> -(Udo_F2 or Udo_N2)
+Udo_N2 -> -(Udo_F2 or Udo_S2)
+
+
+// Alle Regeln für Ira:
+-------------------------
+Ira_F1 -> -(Ira_S1 or Ira_N1)  // Nicht am gleichen Tag nochmal
+Ira_S1 -> -(Ira_F1 or Ira_N1)
+Ira_N1 -> -(Ira_F1 or Ira_S1) and -Ira_F2 // Nicht am gleichen Tag nochmal und keine Früh
+Ira_F2 -> -(Ira_S2 or Ira_N2)
+Ira_S2 -> -(Ira_F2 or Ira_N2)
+Ira_N2 -> -(Ira_F2 or Ira_S2)
+
+
+// Alle Regeln für Nora:
+-------------------------
+Nora_F1 -> BOT  // Nie Tags, immer nur Nachts
+Nora_S1 -> BOT
+Nora_N1 -> TOP
+Nora_F2 -> BOT
+Nora_S2 -> BOT
+Nora_N2 -> TOP
+
+
+// Alle Regeln für Frida:
+-------------------------
+Frida_F1 -> -Frida_S1  // Nie am selben Tag und niemals nachts, weil nur mit Fritz und Fritz niemals Nachts
+Frida_S1 -> -Frida_F1
+Frida_N1 -> BOT
+Frida_F2 -> -Frida_S2
+Frida_S2 -> -Frida_S1
+Frida_N2 -> BOT
+
+
+// Alle Regeln für Fritz:
+-------------------------
+Impl(Fritz_F1, Not(Fritz_S1)) // Nie am selben Tag und niemals nachts
+Impl(Fritz_S1, Not(Fritz_F1))
+Impl(Fritz_N1, BOT)
+Impl(Fritz_F2, Not(Fritz_S2))
+Impl(Fritz_S2, Not(Fritz_S1))
+Impl(Fritz_N2, BOT
+
+// Frühschicht erster Tag:
+--------------------------
+Or(And(Frida_F1, Fritz_F1), Or(And(Heinz_F1, Udo_F1), Or(And(Heinz_F1, Ira_F1), And(Udo_F1, Ira_F1))))
+
+
+// Spätschicht erster Tag:
+--------------------------
+Or(And(Frida_S1, Fritz_S1), Or(And(Heinz_S1, Udo_S1), Or(And(Heinz_S1, Ira_S1), And(Udo_S1, Ira_S1))))
+
+
+// Nachtschicht erster Tag:
+---------------------------
+Or(And(Heinz_N1, Udo_N1), Or(And(Heinz_N1, Ira_N1), Or(And(Heinz_N1, Nora_N1), Or(And(Udo_N1, Ira_N1), And(Udo_N1, Nora_N1)))))
+
+
+
+// Frühschicht zweiter Tag:
+--------------------------
+Or(And(Frida_F2, Fritz_F2), Or(And(Heinz_F2, Udo_F2), Or(And(Heinz_F2, Ira_F2), And(Udo_F2, Ira_F2))))
+
+
+// Spätschicht zweiter Tag:
+--------------------------
+Or(And(Frida_S2, Fritz_S2), Or(And(Heinz_S2, Udo_S2), Or(And(Heinz_S2, Ira_S2), And(Udo_S2, Ira_S2))))
+
+
+// Nachtschicht zweiter Tag:
+---------------------------
+Or(And(Heinz_N2, Udo_N2), Or(And(Heinz_N2, Ira_N2), Or(And(Heinz_N2, Nora_N2), Or(And(Udo_N2, Ira_N2), And(Udo_N2, Nora_N2)))))

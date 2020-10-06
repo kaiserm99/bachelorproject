@@ -223,41 +223,37 @@ def parseFormular(formular : str, acc = Formular) -> Formular:
         return acc
 
 
-    if formular[current] == 'A':
+    if formular[current] == 'A':  # And()
         incCur()
         return parseFormular(formular, parseAnd(formular))
 
-    elif formular[current] == 'O':
+    elif formular[current] == 'O':  # Or()
         incCur()
         return parseFormular(formular, parseOr(formular))
 
-    elif formular[current] == 'N':
+    elif formular[current] == 'N':  # Not()
         incCur()
         return parseFormular(formular, parseNot(formular))
 
-    elif formular[current] == 'I':
+    elif formular[current] == 'I':  # Impl()
         incCur()
         return parseFormular(formular, parseImpl(formular))
 
     elif formular[current] == 'B':
         incCur()
 
-        if formular[current] == 'O':
+        if formular[current] == 'O':  # BOT
             return parseFormular(formular, parseBot(formular))
-        else:
+        else:  # BiImpl()
             return parseFormular(formular, parseBiImpl(formular))
 
-    elif formular[current] in string.ascii_lowercase:
+    elif formular[current] in string.ascii_lowercase:  # atom
         incCur()
         return parseFormular(formular, parseAtom(formular))
 
-    elif formular[current] == 'T':
+    elif formular[current] == 'T':  # TOP
         incCur()
         return parseFormular(formular, parseTop(formular))
-
-    elif formular[current] == 'B':
-        incCur()
-        return parseFormular(formular, parseBot(formular))
         
     elif formular[current] == ',':
         incCur()
@@ -266,12 +262,13 @@ def parseFormular(formular : str, acc = Formular) -> Formular:
             return False
         incCur()
 
-        return acc
+        return acc  # Return if one of the two break conditions takes place -> in this the left side of a formular got fully parsed and now the creted Syntax tree gets returned
 
     elif formular[current] == ')':
         incCur()
-        return acc
+        return acc  # Return the right side of the recursive Formular
 
+    
     else:  # This should never get triggered, just in case
         current = 0  # Make sure to reset this variable or you can't parse other formulars
         return False
@@ -297,7 +294,7 @@ def convertCNF(formular : Formular) -> Formular:
             ((a ∨ b) ∧ (¬ b ∧ ¬ a))
     """
 
-    # Cancelation Condition
+    # Break Condition
     if type(formular) == str or formular.atom:
         return formular
 
@@ -438,11 +435,11 @@ def getAtom(formular : str, i : int) -> tuple:
 
 def convertDIMACS(formular : Formular) -> Formular:
     if formular.top:
-        print("This is a valid Formular! No need to print the DIMACS-Format!")
+        print("This is a tautology! No need to print the DIMACS-Format!")
         return
 
     elif formular.bot:
-        print("This is a unvalid Formular! No need to print the DIMACS-Format!")
+        print("This is a unsatisfiable Formular! No need to print the DIMACS-Format!")
         return
 
 
@@ -487,6 +484,7 @@ def convertDIMACS(formular : Formular) -> Formular:
     res.append(acc)  # Make sure the last set is also appended because there is no and symbol
 
     variables.sort()  # Make sure the char set is sorted so it is easier to comprehend the Result
+    print(variables)
 
     print("p cnf %d %d" % (len(variables), len(res)))  # Calculate the used variables and the count of the formulas
 
@@ -554,7 +552,7 @@ def main(formular : Formular) -> str:
     convertDIMACS(cnf)
 
 
-# tester = "Not(Not(And(Impl(Not(a), And(BiImpl(a, Not(Not(b))), b)), And(Not(b), And(Not(a), Not(a)))))))"
+tester = "Not(Not(And(Impl(Not(a), And(BiImpl(a, Not(Not(b))), b)), And(Not(b), And(Not(a), Not(a)))))))"
 # tester = "Not(Or(Not(a), b))"
 # tester = "Or(And(a, b), And(c, d))"
 # tester = "And(Impl(Not(a), b), And(Not(b), Not(a)))"
@@ -563,7 +561,7 @@ def main(formular : Formular) -> str:
 if __name__ == '__main__':
     # main(tester)
 
-    main("And(Impl(Not(a), And(b, quer)), Or(Not(BOT), BiImpl(BiImpl(Not(a), TOP), b)))")
+    # main("And(Impl(Not(a), And(b, quer)), Or(Not(BOT), BiImpl(BiImpl(Not(a), TOP), b)))")
     # main("And(Impl(Not(a), b), And(Not(b), Not(a)))")
     # main(tester)
 
@@ -571,4 +569,6 @@ if __name__ == '__main__':
 
     # main("BiImpl(Impl(Not(a), b), And(Not(b), Not(a)))")
 
-    main("And(Or(And(asdfest, TOP), Or(TOP, Or(a, b))), BOT)")
+    # main("And(Impl(heinzfo, Not(Or(heinzso, heinzno))), And(Impl(heinzso, Not(Or(heinzfo, heinzno))), And(Impl(heinzno, And(Not(Or(heinzfo, heinzso)), Not(heinzft))), And(Impl(heinzft, Not(Or(heinzst, heinznt))), And(Impl(heinzst, Not(Or(heinzft, heinznt))), And(Impl(heinznt, Not(Or(heinzft, heinzst))), And(Impl(udofo, Not(Or(udoso, udono))), And(Impl(udoso, Not(Or(udofo, udono))), And(Impl(udono, And(Not(Or(udofo, udoso)), Not(udoft))), And(Impl(udoft, Not(Or(udost, udont))), And(Impl(udost, Not(Or(udoft, udont))), And(Impl(udont, Not(Or(udoft, udost))), And(Impl(irafo, Not(Or(iraso, irano))), And(Impl(iraso, Not(Or(irafo, irano))), And(Impl(irano, And(Not(Or(irafo, iraso)), Not(iraft))), And(Impl(iraft, Not(Or(irast, irant))), And(Impl(irast, Not(Or(iraft, irant))), And(Impl(irant, Not(Or(iraft, irast))), And(Impl(norafo, BOT), And(Impl(noraso, BOT), And(Impl(norano, TOP), And(Impl(noraft, BOT), And(Impl(norast, BOT), And(Impl(norant, TOP), And(Impl(fridafo, Not(fridaso)), And(Impl(fridaso, Not(fridafo)), And(Impl(fridano, BOT), And(Impl(fridaft, Not(fridast)), And(Impl(fridast, Not(fridaft)), And(Impl(fridant, BOT), And(Impl(fritzfo, Not(fritzso)), And(Impl(fritzso, Not(fritzfo)), And(Impl(fritzno, BOT), And(Impl(fritzft, Not(fritzst)), And(Impl(fritzst, Not(fritzft)), And(Impl(firtznt, BOT), Or(And(fridafo, fritzfo), Or(And(heinzfo, udofo), Or(And(heinzfo, irafo), And(udofo, irafo)))), And(Or(And(fridaso, fritzso), Or(And(heinzso, udoso), Or(And(heinzso, iraso), And(udoso, iraso)))), And(Or(And(heinzno, udono), Or(And(heinzno, irano), Or(And(heinzno, norano), Or(And(udono, irano), And(udono, norano))))), And(Or(And(fridaft, fritzft), Or(And(heinzft, udoft), Or(And(heinzft, iraft), And(udoft, iraft)))), And(Or(And(fridast, fritzst), Or(And(heinzst, udost), Or(And(heinzst, irast), And(udost, irast)))), Or(And(heinznt, udont), Or(And(heinznt, irant), Or(And(heinznt, norant), Or(And(udont, irant), And(udont, norant)))))))))))))))))))))))))))))))))))))))))))))")
+
+    main("Or(a, Not(a))")
