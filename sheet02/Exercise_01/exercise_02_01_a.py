@@ -1,35 +1,33 @@
 from constraint import *
 
-problem = Problem()
 
-domain = [0, 1, 2]
-variables = ["WA", "NT", "Q", "NSW", "V", "SA", "T"]
+def main():
+	problem = Problem()
 
-problem.addVariables(variables, domain)
+	domain = [0, 1, 2]
+	variables = ["WA", "NT", "Q", "NSW", "V", "SA", "T"]
 
-# All constraints
-problem.addConstraint(lambda x, y: x != y, ("WA", "NT"))
-problem.addConstraint(lambda x, y: x != y, ("WA", "SA"))
-problem.addConstraint(lambda x, y: x != y, ("NT", "SA"))
-problem.addConstraint(lambda x, y: x != y, ("NT", "Q"))
-problem.addConstraint(lambda x, y: x != y, ("SA", "Q"))
-problem.addConstraint(lambda x, y: x != y, ("SA", "NSW"))
-problem.addConstraint(lambda x, y: x != y, ("SA", "V"))
-problem.addConstraint(lambda x, y: x != y, ("Q", "NSW"))
+	problem.addVariables(variables, domain)
 
-problem.addConstraint(lambda x, y: x != y, ("NSW", "V"))
-problem.addConstraint(lambda x, y: x != y, ("NSW", "SA"))
-problem.addConstraint(lambda x, y: x != y, ("NSW", "Q"))
-
-problem.addConstraint(lambda x, y: x != y, ("SA", "WA"))
-problem.addConstraint(lambda x, y: x != y, ("SA", "NT"))
+	# All constraints
+	problem.addConstraint(lambda x, y: x != y, ("WA", "NT"))
+	problem.addConstraint(lambda x, y: x != y, ("WA", "SA"))
+	problem.addConstraint(lambda x, y: x != y, ("NT", "SA"))
+	problem.addConstraint(lambda x, y: x != y, ("NT", "Q"))
+	problem.addConstraint(lambda x, y: x != y, ("SA", "Q"))
+	problem.addConstraint(lambda x, y: x != y, ("SA", "NSW"))
+	problem.addConstraint(lambda x, y: x != y, ("SA", "V"))
+	problem.addConstraint(lambda x, y: x != y, ("Q", "NSW"))
+	problem.addConstraint(lambda x, y: x != y, ("V", "NSW"))
 
 
+	for n, sol in enumerate(problem.getSolutions()):
+		print(("%d. Solution:") % (n+1))
+		print(sol, end="\n\n")
 
 
-
-print(len(problem.getSolutions()))
-
+if __name__ == '__main__':
+	main()
 
 
 
