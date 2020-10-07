@@ -42,7 +42,6 @@ class Csp:
         self.problem.addVariables(lst, [0, 1])
 
 
-
     # TODO: Füge eine Bedinung hinzu, welche fordert, dass für jedes aufgedeckte Feld, das an 
     # ein Randfeld angrenzt, die Zahl, die in diesem Feld angezeigt wird, die Summe der Minen in 
     # den angrenzenden verdeckten Feldern entspricht. Folgende funktionen können interessant sein
@@ -63,9 +62,6 @@ class Csp:
         self.problem.addConstraint(ExactSumConstraint(value), acc_cells)
 
 
-
-
-    
     # TODO: Die Anzahl an Felder mit einer Bombe (Randgebiet) entspricht maximal der 
     # Bombenanzahl im Spiel 
     # Hierfür kann der MaxSumConstraint verwendet werden
@@ -95,4 +91,3 @@ class Csp:
      
         # Return the cell wich the least bombs in all the solutions
         return max(count_cell, key=count_cell.get)
-
