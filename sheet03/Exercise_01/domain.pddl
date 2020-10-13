@@ -13,10 +13,10 @@
     )
     
     (:action start_action
-        :parameters (?t - tile ?old_c ?new_c - color ?b - bool)
-        :precondition  (and (not (color_value ?t ?new_c)) (color_value ?t ?old_c) (not (curr_color ?b)))  ;; get the old and the new color, make sure there is no floodfill yet
+        :parameters (?t - tile ?old_c ?new_c - color)
+        :precondition  (and (not (color_value ?t ?new_c)) (color_value ?t ?old_c) (not (curr_color true)))  ;; get the old and the new color, make sure there is no floodfill yet
         :effect (and
-            (curr_color ?b)  ;; set this to true, so the floodfill is now in action
+            (curr_color true)  ;; set this to true, so the floodfill is now in action
             (color_value ?t ?new_c) (not (color_value ?t ?old_c))  ;; the color value of the tile should get changed right away
             
             (forall (?acc - tile)  ;; loop through every tile
@@ -35,8 +35,8 @@
     
     ;; at this point the current tile has already the right color marked, just the neighbours should get colored in the same color
     (:action -->
-        :parameters (?t - tile ?old_c ?new_c - color ?b - bool)
-        :precondition (and (color_value ?t ?old_c) (not (color_value ?t ?new_c)) (change_to_color ?t ?new_c) (mark_tile ?t) (curr_color ?b))  ;; current color, color wich it will get changed to, and only the marked tile, there must be a floodfill
+        :parameters (?t - tile ?old_c ?new_c - color)
+        :precondition (and (color_value ?t ?old_c) (change_to_color ?t ?new_c) (curr_color true))  ;; current color, color wich it will get changed to, and only the marked tile, there must be a floodfill
         :effect (and
             (not (change_to_color ?t ?new_c))  ;; set back the marking
             (not (mark_tile ?t))
@@ -58,14 +58,8 @@
 
 
     (:action end_action
-        :parameters (?b - bool)
-        :precondition (and (curr_color ?b) (forall (?t - tile) (not (mark_tile ?t))))
-        :effect (not (curr_color ?b))
-    )
-    
-    
-    
-    
-    
-    
+        :parameters ()
+        :precondition (and (curr_color true) (forall (?t - tile) (not (mark_tile ?t))))
+        :effect (not (curr_color true))
+    )  
 )
