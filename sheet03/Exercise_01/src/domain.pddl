@@ -57,12 +57,12 @@
                    
                 ) ;; when end
             )  ;; forall end
-            (increase (total-cost) 0)  ;; Make sure that this action will not cost something because it is all in one
+            (increase (total-cost) 0)  ;; Make sure that this action will not cost something because it is the floodfill
         )  ;; effect end
     )  ;; action end
 
 
-
+    ;; if all the tiles are not marked to be colored afterwards and the floodfill is activated (curr_color true) then set this back
     (:action end_action
         :parameters ()
         :precondition (and (curr_color true) (forall (?t - tile) (not (mark_tile ?t))))
