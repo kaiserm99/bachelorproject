@@ -92,14 +92,18 @@ def main():
         true - bool)
 
     (:init
+(= (total-cost) 0)
 %s)
 
-    (:goal (and (or (forall (?t - tile) (color_value ?t green))
-                    (forall (?t - tile) (color_value ?t red))
-                    (forall (?t - tile) (color_value ?t brown)))
-                (not (curr_color true))
-)))""" % ("".join(acc_one), "".join(acc_color), "\n".join(acc_two)))
+    (:goal (and (not (curr_color true))
+                (or """ % ("".join(acc_one), "".join(acc_color), "\n".join(acc_two)), end="\n")
 
+    for c in acc_color:
+        print("                   (forall (?t - tile) (color_value ?t %s))" % (c[:-1]), end="\n")
+
+
+    print("              )))\n")
+    print("    (:metric minimize (total-cost))\n)")
 
     f.close()
 

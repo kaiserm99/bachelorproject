@@ -6,7 +6,7 @@ all: execute test
 
 execute:
 	$(EXECUTE_CMD) create_pddl.py > problem.pddl
-	./../downward-main/fast-downward.py domain.pddl problem.pddl --search "astar(blind())"
+	./../downward-main/fast-downward.py domain.pddl problem.pddl --search "astar(blind())" | tee output.txt
 
 test:
 	$(TEST_CMD) *.py
