@@ -10,11 +10,10 @@ Usage of the Script:
 """
 # parser.py, written on: Donnerstag,  1 Oktober 2020.
 
-import resource, sys
+import resource, sys, string
+
 resource.setrlimit(resource.RLIMIT_STACK, (2**29,-1))
 sys.setrecursionlimit(10**6)
-
-import string
 
 class Formular:
     def __init__(self, value = "init", left = "-", right = "-", neg = "-", atom = False, top = False, bot = False):
@@ -445,6 +444,9 @@ def convertDIMACS(formular : Formular) -> Formular:
         print("This is a unsatisfiable Formular! No need to print the DIMACS-Format!")
         return
 
+    elif formular.atom:  # If the Formular is only one atom, then print the following
+        print("p cnf 1 1\n1 0")
+        return
 
     res = []
     acc = []
@@ -532,6 +534,14 @@ def main(formular : Formular) -> str:
             -2 -3 4 0
             -2 -1 3 -4 0
 
+            >>> main("Or(asdf, Or(asdf, Or(asdf, asdf)))")
+            Original: (asdf ∨ (asdf ∨ (asdf ∨ asdf)))
+            CNF converting failed! Retrying...
+            CNF:      asdf
+            <BLANKLINE>
+            p cnf 1 1
+            1 0
+
     """
     resCur()  # Make sure the current counter is reseted to 0, because there can be special cases 
     acc = parseFormular(formular)
@@ -568,15 +578,6 @@ if __name__ == '__main__':
     # main("And(Impl(Not(a), And(b, quer)), Or(Not(BOT), BiImpl(BiImpl(Not(a), TOP), b)))")
     # main("And(Impl(Not(a), b), And(Not(b), Not(a)))")
     # main(tester)
+    main("And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(And(Or(a, Or(b, c)), Or(d, e)), Or(f, g)), Or(h, Or(i, j))), Or(k, l)), m), Or(n, Or(o, p))), Or(q, r)), Or(s, t)), Or(u, Or(v, w))), Or(x, y)), z), BiImpl(d, f)), BiImpl(e, g)), BiImpl(q, s)), BiImpl(r, t)), BiImpl(a, Not(Or(b, c)))), BiImpl(b, Not(Or(a, c)))), BiImpl(c, Not(Or(a, b)))), Impl(d, Not(Or(e, g)))), Impl(e, Not(Or(d, f)))), BiImpl(h, Not(Or(i, j)))), BiImpl(i, Not(Or(h, j)))), BiImpl(j, Not(Or(h, i)))), BiImpl(k, Not(l))), BiImpl(l, Not(k))), BiImpl(n, Not(Or(o, p)))), BiImpl(o, Not(Or(n, p)))), BiImpl(p, Not(Or(n, o)))), BiImpl(q, Not(Or(r, n)))), BiImpl(r, Not(Or(q, s)))), BiImpl(u, Not(Or(v, w)))), BiImpl(v, Not(Or(u, w)))), BiImpl(w, Not(Or(v, u)))), BiImpl(x, Not(y))), BiImpl(y, Not(x))), Impl(d, Not(Or(a, Or(h, k))))), Impl(e, Not(Or(b, Or(i, l))))), BiImpl(c, Not(j))), BiImpl(j, Not(c))), Impl(q, Not(Or(n, Or(u, x))))), Impl(r, Not(Or(o, Or(v, y))))), BiImpl(p, Not(w))), BiImpl(w, Not(p))), Impl(c, Not(n))), Impl(j, Not(u)))")
 
-    # main(tester)
-
-    # main("BiImpl(Impl(Not(a), b), And(Not(b), Not(a)))")
-
-    # main("And(Impl(heinzfo, Not(Or(heinzso, heinzno))), And(Impl(heinzso, Not(Or(heinzfo, heinzno))), And(Impl(heinzno, And(Not(Or(heinzfo, heinzso)), Not(heinzft))), And(Impl(heinzft, Not(Or(heinzst, heinznt))), And(Impl(heinzst, Not(Or(heinzft, heinznt))), And(Impl(heinznt, Not(Or(heinzft, heinzst))), And(Impl(udofo, Not(Or(udoso, udono))), And(Impl(udoso, Not(Or(udofo, udono))), And(Impl(udono, And(Not(Or(udofo, udoso)), Not(udoft))), And(Impl(udoft, Not(Or(udost, udont))), And(Impl(udost, Not(Or(udoft, udont))), And(Impl(udont, Not(Or(udoft, udost))), And(Impl(irafo, Not(Or(iraso, irano))), And(Impl(iraso, Not(Or(irafo, irano))), And(Impl(irano, And(Not(Or(irafo, iraso)), Not(iraft))), And(Impl(iraft, Not(Or(irast, irant))), And(Impl(irast, Not(Or(iraft, irant))), And(Impl(irant, Not(Or(iraft, irast))), And(Impl(norafo, BOT), And(Impl(noraso, BOT), And(Impl(norano, TOP), And(Impl(noraft, BOT), And(Impl(norast, BOT), And(Impl(norant, TOP), And(Impl(fridafo, Not(fridaso)), And(Impl(fridaso, Not(fridafo)), And(Impl(fridano, BOT), And(Impl(fridaft, Not(fridast)), And(Impl(fridast, Not(fridaft)), And(Impl(fridant, BOT), And(Impl(fritzfo, Not(fritzso)), And(Impl(fritzso, Not(fritzfo)), And(Impl(fritzno, BOT), And(Impl(fritzft, Not(fritzst)), And(Impl(fritzst, Not(fritzft)), And(Impl(fritznt, BOT), Or(And(fridafo, fritzfo), Or(And(heinzfo, udofo), Or(And(heinzfo, irafo), And(udofo, irafo)))), And(Or(And(fridaso, fritzso), Or(And(heinzso, udoso), Or(And(heinzso, iraso), And(udoso, iraso)))), And(Or(And(heinzno, udono), Or(And(heinzno, irano), Or(And(heinzno, norano), Or(And(udono, irano), And(udono, norano))))), And(Or(And(fridaft, fritzft), Or(And(heinzft, udoft), Or(And(heinzft, iraft), And(udoft, iraft)))), And(Or(And(fridast, fritzst), Or(And(heinzst, udost), Or(And(heinzst, irast), And(udost, irast)))), Or(And(heinznt, udont), Or(And(heinznt, irant), Or(And(heinznt, norant), Or(And(udont, irant), And(udont, norant)))))))))))))))))))))))))))))))))))))))))))))")
-
-
-    # main("And(Impl(heinzfo, Not(Or(heinzso, heinzno))), And(Impl(heinzso, Not(Or(heinzfo, heinzno))), And(Impl(heinzno, And(Not(Or(heinzfo, heinzso)), Not(heinzft))), And(Impl(heinzft, Not(Or(heinzst, heinznt))), And(Impl(heinzst, Not(Or(heinzft, heinznt))), And(Impl(heinznt, Not(Or(heinzft, heinzst))), And(Impl(udofo, Not(Or(udoso, udono))), And(Impl(udoso, Not(Or(udofo, udono))), And(Impl(udono, And(Not(Or(udofo, udoso)), Not(udoft))), And(Impl(udoft, Not(Or(udost, udont))), And(Impl(udost, Not(Or(udoft, udont))), And(Impl(udont, Not(Or(udoft, udost))), And(Impl(irafo, Not(Or(iraso, irano))), And(Impl(iraso, Not(Or(irafo, irano))), And(Impl(irano, And(Not(Or(irafo, iraso)), Not(iraft))), And(Impl(iraft, Not(Or(irast, irant))), And(Impl(irast, Not(Or(iraft, irant))), And(Impl(irant, Not(Or(iraft, irast))), And(Impl(norafo, BOT), And(Impl(noraso, BOT), And(Impl(norano, TOP), And(Impl(noraft, BOT), And(Impl(norast, BOT), And(Impl(norant, TOP), And(Impl(fridafo, Not(fridaso)), And(Impl(fridaso, Not(fridafo)), And(Impl(fridano, BOT), And(Impl(fridaft, Not(fridast)), And(Impl(fridast, Not(fridaft)), And(Impl(fridant, BOT), And(Impl(fritzfo, Not(fritzso)), And(Impl(fritzso, Not(fritzfo)), And(Impl(fritzno, BOT), And(Impl(fritzft, Not(fritzst)), And(Impl(fritzst, Not(fritzft)), And(Impl(fritznt, BOT), And(Impl(And(fridafo, fritzfo), Not(Or(And(heinzfo, udofo), Or(And(heinzfo, irafo), And(udofo, irafo))))), And(Impl(And(heinzfo, udofo), Not(Or(And(fridafo, fritzfo), Or(And(heinzfo, irafo), And(udofo, irafo))))), And(Impl(And(heinzfo, irafo), Not(Or(And(heinzfo, udofo), Or(And(fridafo, fritzfo), And(udofo, irafo))))), And(Impl(And(udofo, irafo), Not(Or(And(heinzfo, udofo), Or(And(heinzfo, irafo), And(fridafo, fritzfo))))), And(Impl(And(fridaso, fritzso), Not(Or(And(heinzso, udoso), Or(And(heinzso, iraso), And(udoso, iraso))))), And(Impl(And(heinzso, udoso), Not(Or(And(fridaso, fritzso), Or(And(heinzso, iraso), And(udoso, iraso))))), And(Impl(And(heinzso, iraso), Not(Or(And(heinzso, udoso), Or(And(fridaso, fritzso), And(udoso, iraso))))), And(Impl(And(udoso, iraso), Not(Or(And(heinzso, udoso), Or(And(heinzso, iraso), And(fridaso, fritzso))))), And(Impl(And(fridaft, fritzft), Not(Or(And(heinzft, udoft), Or(And(heinzft, iraft), And(udoft, iraft))))), And(Impl(And(heinzft, udoft), Not(Or(And(fridaft, fritzft), Or(And(heinzft, iraft), And(udoft, iraft))))), And(Impl(And(heinzft, iraft), Not(Or(And(heinzft, udoft), Or(And(fridaft, fritzft), And(udoft, iraft))))), And(Impl(And(udoft, iraft), Not(Or(And(heinzft, udoft), Or(And(heinzft, iraft), And(fridaft, fritzft))))), And(Impl(And(fridast, fritzst), Not(Or(And(heinzst, udost), Or(And(heinzst, irast), And(udost, irast))))), And(Impl(And(heinzst, udost), Not(Or(And(fridast, fritzst), Or(And(heinzst, irast), And(udost, irast))))), And(Impl(And(heinzst, irast), Not(Or(And(heinzst, udost), Or(And(fridast, fritzst), And(udost, irast))))), And(Impl(And(udost, irast), Not(Or(And(heinzst, udost), Or(And(heinzst, irast), And(fridast, fritzst))))), And(Impl(And(heinzno, udono), Not(Or(And(heinzno, irano), Or(And(heinzno, norano), Or(And(udono, irano), And(udono, norano)))))), And(Impl(And(heinzno, irano), Not(Or(And(heinzno, udono), Or(And(heinzno, norano), Or(And(udono, irano), And(udono, norano))))))), And(Impl(And(heinzno, norano), Not(Or(And(heinzno, irano), Or(And(heinzno, udono), Or(And(udono, irano), And(udono, norano))))))), And(Impl(And(udono, irano), Not(Or(And(heinzno, irano), Or(And(heinzno, norano), Or(And(heinzno, udono), And(udono, norano)))))), And(Impl(And(udono, norano), Not(Or(And(heinzno, irano), Or(And(heinzno, norano), Or(And(udono, irano), And(heinzno, udono)))))), And(Impl(And(heinznt, udont), Not(Or(And(heinznt, irant), Or(And(heinznt, norant), Or(And(udont, irant), And(udont, norant)))))), And(Impl(And(heinznt, irant), Not(Or(And(heinznt, udont), Or(And(heinznt, norant), Or(And(udont, irant), And(udont, norant))))))), And(Impl(And(heinznt, norant), Not(Or(And(heinznt, irant), Or(And(heinznt, udont), Or(And(udont, irant), And(udont, norant))))))), And(Impl(And(udont, irant), Not(Or(And(heinznt, irant), Or(And(heinznt, norant), Or(And(heinznt, udont), And(udont, norant)))))), Impl(And(udont, norant), Not(Or(And(heinznt, irant), Or(And(heinznt, norant), Or(And(udont, irant), And(heinznt, udont)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))")
-    # main("Impl(b, a)")
-    main(tester)
 

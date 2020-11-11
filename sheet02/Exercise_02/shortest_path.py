@@ -85,7 +85,7 @@ def main():
         bounds.append((0, None))
 
 
-    res = linprog(c, A_eq=A, b_eq=b, bounds=bounds, method='revised simplex')
+    res = linprog(c, A_eq=A, b_eq=b, bounds=bounds, method='simplex')
 
 
     # Print the whole result of the Linear Optimisation

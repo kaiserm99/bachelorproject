@@ -52,19 +52,24 @@ def main():
 
         for x, char in enumerate(line):
 
-            acc_one.append("tile%d%d " %(x, y))
+            if char != " ":
+                acc_one.append("tile%d%d " %(x, y))
 
     acc_one.append("- tile")
 
 
     max_y = len(vertical)
-    for y, line in enumerate(reversed(vertical)):
+
+    for y, line in enumerate(vertical):
 
         max_x = len(line)
 
         for x, char in enumerate(line):
 
-            if char == "R":
+            if char == " ":
+                continue
+
+            elif char == "R":
                 acc_two.append("(color_value tile%d%d red)" % (x, y))
 
                 if "red " not in acc_color:
@@ -86,17 +91,22 @@ def main():
                 if "yellow " not in acc_color:
                     acc_color.append("yellow ")
 
+            
             if x + 1 < max_x:
-                acc_two.append("(is_neighbour tile%d%d tile%d%d)" % (x, y, x+1, y))
+                if vertical[y][x+1] != " ":
+                    acc_two.append("(is_neighbour tile%d%d tile%d%d)" % (x, y, x+1, y))
 
             if x - 1 >= 0:
-                acc_two.append("(is_neighbour tile%d%d tile%d%d)" % (x, y, x-1, y))
+                if vertical[y][x-1] != " ":
+                    acc_two.append("(is_neighbour tile%d%d tile%d%d)" % (x, y, x-1, y))
 
-            if y + 1 < max_y:
-                acc_two.append("(is_neighbour tile%d%d tile%d%d)" % (x, y, x, y+1))
+            if y + 1 < max_y and x < len(vertical[y+1]):
+                if vertical[y+1][x] != " ":
+                    acc_two.append("(is_neighbour tile%d%d tile%d%d)" % (x, y, x, y+1))
 
-            if y - 1 >= 0:
-                acc_two.append("(is_neighbour tile%d%d tile%d%d)" % (x, y, x, y-1))
+            if y - 1 >= 0 and x < len(vertical[y-1]):
+                if vertical[y-1][x] != " ":
+                    acc_two.append("(is_neighbour tile%d%d tile%d%d)" % (x, y, x, y-1))
 
 
     print("""(define (problem kami-prob)
