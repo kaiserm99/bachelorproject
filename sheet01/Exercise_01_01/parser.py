@@ -448,6 +448,13 @@ def convertDIMACS(formular : Formular) -> Formular:
         print("p cnf 1 1\n1 0")
         return
 
+    try:
+        if formular.neg.atom:  # If the Formular is onle one negetaed atom
+            print("p cnf 1 1\n-1 0")
+            return
+    except:
+        pass
+
     res = []
     acc = []
     variables = []
@@ -581,6 +588,8 @@ if __name__ == '__main__':
     
 
     # This is the whole term for solving the given NSP in Exercise 01 d)
-    main("And(Or(fritzfo, fritzso), And(Or(fritzft, fritzst), And(Or(fridafo, fridaso), And(Or(fridaft, fridast), And(Or(udofo, Or(udoso, udono)), And(Or(udoft, Or(udost, udont)), And(Or(irafo, iraso), And(Or(iraft, irast), And(Or(heinzfo, Or(heinzso, heinzno)), And(Or(heinzft, Or(heinzst, heinznt)), And(norano, And(norant, And(BiImpl(fritzfo, fridafo), And(BiImpl(fritzso, fridaso), And(BiImpl(fritzft, fridaft), And(BiImpl(fritzst, fridast), And(BiImpl(fritzfo, Not(fritzso)), And(BiImpl(fritzso, Not(fritzfo)), And(BiImpl(fritzft, Not(fritzst)), And(BiImpl(fritzst, Not(fritzft)), And(BiImpl(fridafo, Not(fridaso)), And(BiImpl(fridaso, Not(fridafo)), And(BiImpl(fridaft, Not(fridast)), And(BiImpl(fridast, Not(fridaft)), And(BiImpl(heinzfo, Not(Or(heinzso, heinzno))), And(BiImpl(heinzso, Not(Or(heinzfo, heinzno))), And(BiImpl(heinzno, Not(Or(heinzfo, heinzso))), And(BiImpl(heinzft, Not(Or(heinzst, heinznt))), And(BiImpl(heinzst, Not(Or(heinzft, heinznt))), And(BiImpl(heinznt, Not(Or(heinzft, heinzst))), And(BiImpl(udofo, Not(Or(udoso, udono))), And(BiImpl(udoso, Not(Or(udofo, udono))), And(BiImpl(udono, Not(Or(udofo, udoso))), And(BiImpl(udoft, Not(Or(udost, udont))), And(BiImpl(udost, Not(Or(udoft, udont))), And(BiImpl(udont, Not(Or(udoft, udost))), And(BiImpl(irafo, Not(iraso)), And(BiImpl(iraso, Not(irafo)), And(BiImpl(iraft, Not(irast)), And(BiImpl(irast, Not(iraft)), And(BiImpl(heinzno, Not(udono)), And(BiImpl(udono, Not(heinzno)), And(BiImpl(heinznt, Not(udont)), And(BiImpl(udont, Not(heinznt)), And(Impl(fridafo, Not(Or(heinzfo, Or(udofo, irafo)))), And(Impl(fridaso, Not(Or(heinzso, Or(udoso, iraso)))), And(Impl(fridaft, Not(Or(heinzft, Or(udoft, iraft)))), And(Impl(fridast, Not(Or(heinzst, Or(udost, irast)))), And(Impl(heinzno, Not(heinzft)), Impl(udono, Not(udoft)))))))))))))))))))))))))))))))))))))))))))))))))))")
+    # main("And(Or(fritzfo, fritzso), And(Or(fritzft, fritzst), And(Or(fridafo, fridaso), And(Or(fridaft, fridast), And(Or(udofo, Or(udoso, udono)), And(Or(udoft, Or(udost, udont)), And(Or(irafo, iraso), And(Or(iraft, irast), And(Or(heinzfo, Or(heinzso, heinzno)), And(Or(heinzft, Or(heinzst, heinznt)), And(norano, And(norant, And(BiImpl(fritzfo, fridafo), And(BiImpl(fritzso, fridaso), And(BiImpl(fritzft, fridaft), And(BiImpl(fritzst, fridast), And(BiImpl(fritzfo, Not(fritzso)), And(BiImpl(fritzso, Not(fritzfo)), And(BiImpl(fritzft, Not(fritzst)), And(BiImpl(fritzst, Not(fritzft)), And(BiImpl(fridafo, Not(fridaso)), And(BiImpl(fridaso, Not(fridafo)), And(BiImpl(fridaft, Not(fridast)), And(BiImpl(fridast, Not(fridaft)), And(BiImpl(heinzfo, Not(Or(heinzso, heinzno))), And(BiImpl(heinzso, Not(Or(heinzfo, heinzno))), And(BiImpl(heinzno, Not(Or(heinzfo, heinzso))), And(BiImpl(heinzft, Not(Or(heinzst, heinznt))), And(BiImpl(heinzst, Not(Or(heinzft, heinznt))), And(BiImpl(heinznt, Not(Or(heinzft, heinzst))), And(BiImpl(udofo, Not(Or(udoso, udono))), And(BiImpl(udoso, Not(Or(udofo, udono))), And(BiImpl(udono, Not(Or(udofo, udoso))), And(BiImpl(udoft, Not(Or(udost, udont))), And(BiImpl(udost, Not(Or(udoft, udont))), And(BiImpl(udont, Not(Or(udoft, udost))), And(BiImpl(irafo, Not(iraso)), And(BiImpl(iraso, Not(irafo)), And(BiImpl(iraft, Not(irast)), And(BiImpl(irast, Not(iraft)), And(BiImpl(heinzno, Not(udono)), And(BiImpl(udono, Not(heinzno)), And(BiImpl(heinznt, Not(udont)), And(BiImpl(udont, Not(heinznt)), And(Impl(fridafo, Not(Or(heinzfo, Or(udofo, irafo)))), And(Impl(fridaso, Not(Or(heinzso, Or(udoso, iraso)))), And(Impl(fridaft, Not(Or(heinzft, Or(udoft, iraft)))), And(Impl(fridast, Not(Or(heinzst, Or(udost, irast)))), And(Impl(heinzno, Not(heinzft)), Impl(udono, Not(udoft)))))))))))))))))))))))))))))))))))))))))))))))))))")
+
+    main("Impl(q, BOT)")
     
 
