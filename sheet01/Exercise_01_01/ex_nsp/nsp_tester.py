@@ -71,7 +71,7 @@ def main():
                 print("| {0:9s} | {1:10s}|".format(acc_day_one[shift][person][:-2], acc_day_two[shift][person][:-2]))
             print("|{0:11s}|{0:11s}|".format("-"*11))
 
-
+        print(" ".join(line[:-1]))
         print("\n")
 
 
