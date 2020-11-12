@@ -1,0 +1,192 @@
+Belegung 0:
+Heinz Nachtschicht 3
+Frida Frühschicht 4
+Fritz Frühschicht 6
+Udo Spätschicht 9
+Ira Spätschicht 12
+Nora Nachtschicht 13
+--------------
+Heinz Spätschicht 15
+Frida Frühschicht 17
+Fritz Frühschicht 19
+Udo Nachtschicht 23
+Ira Spätschicht 25
+Nora Nachtschicht 26
+
+
+Belegung 1:
+Heinz Nachtschicht 3
+Frida Spätschicht 5
+Fritz Spätschicht 7
+Udo Frühschicht 8
+Ira Frühschicht 11
+Nora Nachtschicht 13
+--------------
+Heinz Nachtschicht 16
+Frida Spätschicht 18
+Fritz Spätschicht 20
+Udo Frühschicht 21
+Ira Frühschicht 24
+Nora Nachtschicht 26
+
+
+Belegung 2:
+Heinz Nachtschicht 3
+Frida Frühschicht 4
+Fritz Frühschicht 6
+Udo Spätschicht 9
+Ira Spätschicht 12
+Nora Nachtschicht 13
+--------------
+Heinz Nachtschicht 16
+Frida Frühschicht 17
+Fritz Frühschicht 19
+Udo Spätschicht 22
+Ira Spätschicht 25
+Nora Nachtschicht 26
+
+
+Belegung 3:
+Heinz Spätschicht 2
+Frida Frühschicht 4
+Fritz Frühschicht 6
+Udo Nachtschicht 10
+Ira Spätschicht 12
+Nora Nachtschicht 13
+--------------
+Heinz Nachtschicht 16
+Frida Frühschicht 17
+Fritz Frühschicht 19
+Udo Spätschicht 22
+Ira Spätschicht 25
+Nora Nachtschicht 26
+
+
+Belegung 4:
+Heinz Nachtschicht 3
+Frida Spätschicht 5
+Fritz Spätschicht 7
+Udo Frühschicht 8
+Ira Frühschicht 11
+Nora Nachtschicht 13
+--------------
+Heinz Spätschicht 15
+Frida Frühschicht 17
+Fritz Frühschicht 19
+Udo Nachtschicht 23
+Ira Spätschicht 25
+Nora Nachtschicht 26
+
+
+Belegung 5:
+Heinz Frühschicht 1
+Frida Spätschicht 5
+Fritz Spätschicht 7
+Udo Nachtschicht 10
+Ira Frühschicht 11
+Nora Nachtschicht 13
+--------------
+Heinz Nachtschicht 16
+Frida Frühschicht 17
+Fritz Frühschicht 19
+Udo Spätschicht 22
+Ira Spätschicht 25
+Nora Nachtschicht 26
+
+
+Belegung 6:
+Heinz Spätschicht 2
+Frida Frühschicht 4
+Fritz Frühschicht 6
+Udo Nachtschicht 10
+Ira Spätschicht 12
+Nora Nachtschicht 13
+--------------
+Heinz Frühschicht 14
+Frida Spätschicht 18
+Fritz Spätschicht 20
+Udo Nachtschicht 23
+Ira Frühschicht 24
+Nora Nachtschicht 26
+
+
+Belegung 7:
+Heinz Nachtschicht 3
+Frida Frühschicht 4
+Fritz Frühschicht 6
+Udo Spätschicht 9
+Ira Spätschicht 12
+Nora Nachtschicht 13
+--------------
+Heinz Nachtschicht 16
+Frida Spätschicht 18
+Fritz Spätschicht 20
+Udo Frühschicht 21
+Ira Frühschicht 24
+Nora Nachtschicht 26
+
+
+Belegung 8:
+Heinz Spätschicht 2
+Frida Frühschicht 4
+Fritz Frühschicht 6
+Udo Nachtschicht 10
+Ira Spätschicht 12
+Nora Nachtschicht 13
+--------------
+Heinz Spätschicht 15
+Frida Frühschicht 17
+Fritz Frühschicht 19
+Udo Nachtschicht 23
+Ira Spätschicht 25
+Nora Nachtschicht 26
+
+
+Belegung 9:
+Heinz Nachtschicht 3
+Frida Spätschicht 5
+Fritz Spätschicht 7
+Udo Frühschicht 8
+Ira Frühschicht 11
+Nora Nachtschicht 13
+--------------
+Heinz Nachtschicht 16
+Frida Frühschicht 17
+Fritz Frühschicht 19
+Udo Spätschicht 22
+Ira Spätschicht 25
+Nora Nachtschicht 26
+
+
+Belegung 10:
+Heinz Frühschicht 1
+Frida Spätschicht 5
+Fritz Spätschicht 7
+Udo Nachtschicht 10
+Ira Frühschicht 11
+Nora Nachtschicht 13
+--------------
+Heinz Spätschicht 15
+Frida Frühschicht 17
+Fritz Frühschicht 19
+Udo Nachtschicht 23
+Ira Spätschicht 25
+Nora Nachtschicht 26
+
+
+Belegung 11:
+Heinz Frühschicht 1
+Frida Spätschicht 5
+Fritz Spätschicht 7
+Udo Nachtschicht 10
+Ira Frühschicht 11
+Nora Nachtschicht 13
+--------------
+Heinz Frühschicht 14
+Frida Spätschicht 18
+Fritz Spätschicht 20
+Udo Nachtschicht 23
+Ira Frühschicht 24
+Nora Nachtschicht 26
+
+

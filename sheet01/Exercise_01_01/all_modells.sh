@@ -19,6 +19,7 @@ while :; do
 
 	if [ $SOLUTIONS -eq 0 ]; then  # If there is minimum one solution, then write SAT on top of the Output file
 		echo "SAT" > $2
+		echo "" >> /tmp/tmpsat
 	fi
 
 	SOLUTIONS=$((SOLUTIONS + 1))
