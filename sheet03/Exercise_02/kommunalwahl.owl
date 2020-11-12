@@ -1,0 +1,286 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#"
+     xml:base="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#besitztStadtteil -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#besitztStadtteil">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#stadtteilVon"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#geschlecht -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#geschlecht">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Gender"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#stadtteilVon -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#stadtteilVon">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Stadtteil"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#City"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#wohntInStadt -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#wohntInStadt">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#City"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#wohntInStadtteil -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#wohntInStadtteil">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Stadtteil"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Age -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Age">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Nachname -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Nachname">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Vorname -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Vorname">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#City -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#City">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Place"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#DarfInFreiburgWaehlen -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#DarfInFreiburgWaehlen">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburger"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Age"/>
+                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">16</owl:minQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2002/07/owl#rational"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburger -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburger">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Gender -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Gender">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#NichtFreiburger -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#NichtFreiburger">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburger"/>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#NotEU -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#NotEU">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:complementOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU"/>
+            </owl:Class>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Place -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Place"/>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Stadtteil -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Stadtteil">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Place"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Betzenhausen -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Betzenhausen">
+        <rdf:type rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Stadtteil"/>
+        <stadtteilVon rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburg"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU-Buerger1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU-Buerger1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU"/>
+        <geschlecht rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Male"/>
+        <wohntInStadt rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburg"/>
+        <wohntInStadtteil rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Wiehre"/>
+        <Age rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">18</Age>
+        <Nachname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mustermann</Nachname>
+        <Vorname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Max</Vorname>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Female -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Female">
+        <rdf:type rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Gender"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburg -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburg">
+        <rdf:type rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#City"/>
+        <besitztStadtteil rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Betzenhausen"/>
+        <besitztStadtteil rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Wiehre"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Male -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Male">
+        <rdf:type rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Gender"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Wiehre -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Wiehre">
+        <rdf:type rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Stadtteil"/>
+        <stadtteilVon rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburg"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
