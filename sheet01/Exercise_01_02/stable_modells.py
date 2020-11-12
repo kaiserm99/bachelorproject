@@ -11,6 +11,7 @@ Usage of the Script:
 # stable_modells.py, written on: Donnerstag,  12 Oktober 2020.
 
 import sys
+from helping_stable import *
 
 # Make sure that the main() Function of the DIMACS-Parser is imported and can be used
 sys.path.insert(1, '../Exercise_01_01/')
@@ -122,53 +123,11 @@ def get_impl(prog : str):
     return (body, head)
 
 
-def get_body_atoms(lst : list):
-    acc_body_atoms = []
-    
-    for rule in lst:
-        i = 0
-        acc_atom = ""
-
-        if rule[0] != "A":
-            acc_body_atoms.append(rule)
-            continue
-
-        while i < len(rule):
-            char = rule[i]  # get the current char
-
-            if char == "A":
-                i += 4
-
-            elif char == " ":
-                i += 1
-
-            elif (char == "," or char == ")") and len(acc_atom) > 0 and ")" not in acc_atom:  # the len because all the atoms can already be inside, then a empty atom would get appended
-                
-                if acc_atom not in acc_body_atoms:  # if the atom is already inside, don't append
-                    acc_body_atoms.append(acc_atom)
-            
-                acc_atom = ""  # Restore everything so the next run can start
-                i += 1
-
-            else:
-                acc_atom += char
-                i += 1
-
-    return acc_body_atoms
-
-
-def get_head_atoms(lst : list):
-    acc_head_atoms = []
-
-    for head in lst:
-        acc_head_atoms.append(head)
-
-    return acc_head_atoms
-
-
 def cmpl_parser(prog : str):
     resCur()
 
+    # The following Part to extract all the Impls out of the given programm and order it
+    # ----------------------------------------------------------------------------------
     acc_impls = []
     acc_impls_spez_written = []
 
@@ -228,6 +187,14 @@ def cmpl_parser(prog : str):
     diff_atoms = list(set(tmp_body_impl) - set(tmp_head_impl))
 
     
+    # The following Part is for adding all the atoms which are not in any head of the rules
+    # -------------------------------------------------------------------------------------
+    res = acc_impls_spez_written  # Later, it is a list with all the 
+    
+    for atom in diff_atoms:
+        res.append("BiImpl(%s, BOT)" % atom)  
+
+    
 
     # The following Part is for creating all the needed BiImpl rules
     # --------------------------------------------------------------
@@ -237,7 +204,6 @@ def cmpl_parser(prog : str):
     next_or = 0
     acc = "BiImpl("
     count_brack = 0
-    res = acc_impls_spez_written  # Later, it is a list with all the 
 
     # Format the rules with the same head into the desired format
     for n, val in enumerate(acc_impls):
@@ -265,7 +231,6 @@ def cmpl_parser(prog : str):
                 res.append(acc)
 
                 acc = "BiImpl("
-                
 
         # If there is a start of a rule which has successor rule with the same head
         elif n < len(acc_impls)-1 and val[1] == acc_impls[n+1][1]:
@@ -273,13 +238,12 @@ def cmpl_parser(prog : str):
             next_or = n+1
 
 
-
         # If the predecessor rule has not the same head and there is no successor rule with the same head
         elif next_or == 0:
             res.append("BiImpl(%s, %s)" % (val[0], val[1]))
 
 
-    print(res)
+    return res  # In this list is the complete cmpl. At first all the BOT and TOP Rules, then the missing atoms, then the BiImpl rules
 
 
 
@@ -289,11 +253,14 @@ def main(prog : str):
     # Here you will get a list of all the 
     cmpl_res = cmpl_parser(prog)
 
+    for form in cmpl_res:
+        dimacs(form)
+
 
 
 # tester = "Impl(a, g), Impl(And(a, b), popopo), Impl(And(b, d), quer), Impl(And(b, And(a, e)), qur), Impl(And(a, t), qur), Impl(And(b, c), quer), Impl(And(h, c), quer), Impl(TOP, aasdf), Impl(qasd, BOT), Impl(qa, BOT), Impl(And(asdf, s), zz), Impl(And(b, And(a, b)), quer), Impl(And(asdf, s), zz), Impl(And(af, s), zz), Impl(And(asf, s), zz), Impl(And(s, And(adf, And(a, And(qw, And(asd, fa))))), zz)"
 
-tester = "Impl(And(a, b), a), Impl(b, b)"
+tester = "Impl(And(a, b), a), Impl(q, asdf), Impl(And(qwe, asdf), BOT)"
 
 if __name__ == '__main__':
     main(tester)
