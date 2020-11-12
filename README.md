@@ -6,8 +6,8 @@
  - [x] a)
  - [x] b)
  - [ ] c), Note: The Syntax-Error Or(a, b, c) can't get detected
- - [ ] d)
- - [ ] e), Note: There are duplicate formuars
+ - [X] d)
+ - [X] e)
 
 ### Task 02:  
  - [ ] a)
