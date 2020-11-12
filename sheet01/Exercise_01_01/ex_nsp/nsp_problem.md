@@ -100,4 +100,4 @@ And(Or(fritzfo, fritzso), And(Or(fritzft, fritzst), And(Or(fridafo, fridaso), An
 
 ## Ergebnis:  
 
-Mit dem klicken auf den [LINK](nsp_all_modells_written.txt).
+Mit dem klicken auf den [LINK](nsp_all_modells_written.txt). Dort können alle dann alle zwölf Belegungen eingesehen werden, mit denen man die Schichten mit den Krankenpfleger(innen) belegen kann.
