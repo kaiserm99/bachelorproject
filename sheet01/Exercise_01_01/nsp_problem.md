@@ -40,29 +40,6 @@ fritzft, fritzst, fridaft, fridast, udoft, udost, udont, iraft, irast, heinzft, 
 
 ### Jeder arbeitet höchstens einmal am Tag:
 
-BiImpl(heinzfo, Not(Or(heinzso, heinzno))) 
-BiImpl(heinzso, Not(Or(heinzfo, heinzno))) 
-BiImpl(heinzno, Not(Or(heinzfo, heinzno))) 
-BiImpl(fridafo, Not(Or(fridaso, fritzso))) 
-BiImpl(fridaso, Not(Or(fridafo, fritzfo))) 
-BiImpl(udofo, Not(Or(udoso, udono))) 
-BiImpl(udoso, Not(Or(udofo, udono))) 
-BiImpl(udono, Not(Or(udofo, udoso))) 
-BiImpl(irafo, Not(iraso)) 
-BiImpl(iraso, Not(irafo))
-
-
-BiImpl(heinzft, Not(Or(heinzst, heinznt))) 
-BiImpl(heinzst, Not(Or(heinzft, heinznt))) 
-BiImpl(heinznt, Not(Or(heinzft, heinzst))) 
-BiImpl(fridaft, Not(Or(fridast, heinzft))) 
-BiImpl(fridast, Not(Or(fridaft, fritzft))) 
-BiImpl(udoft, Not(Or(udost, udont))) 
-BiImpl(udost, Not(Or(udoft, udont))) 
-BiImpl(udont, Not(Or(udost, udoft))) 
-BiImpl(iraft, Not(irast)) 
-BiImpl(irast, Not(iraft))
-
 **Fritz:**  
  - BiImpl(fritzfo, Not(fritzso))
  - BiImpl(fritzso, Not(fritzfo))
@@ -118,7 +95,9 @@ BiImpl(irast, Not(iraft))
 
 ### Letztendlich resultiert folgende große Formel aus den oben genannten Annahmen:  
 
-And(Or(fritzfo, fritzso), And(Or(fritzft, fritzst), And(Or(fridafo, fridaso), And(Or(fridaft, fridast), And(Or(udofo, Or(udoso, udono)), And(Or(udoft, Or(udost, udont)), And(Or(irafo, iraso), And(Or(iraft, irast), And(Or(heinzfo, Or(heinzso, heinzno)), And(Or(heinzft, Or(heinzst, heinznt)), And(norano, And(norant, And(BiImpl(fritzfo, fridafo), And(BiImpl(fritzso, fridaso), And(BiImpl(fritzft, fridaft), And(BiImpl(fritzst, fridast), And(BiImpl(heinzfo, Not(Or(heinzso, heinzno))), And(BiImpl(heinzso, Not(Or(heinzfo, heinzno))), And(BiImpl(heinzno, Not(Or(heinzfo, heinzno))), And(BiImpl(fridafo, Not(Or(fridaso, fritzso))), And(BiImpl(fridaso, Not(Or(fridafo, fritzfo))), And(BiImpl(udofo, Not(Or(udoso, udono))), And(BiImpl(udoso, Not(Or(udofo, udono))), And(BiImpl(udono, Not(Or(udofo, udoso))), And(BiImpl(irafo, Not(iraso)), And(BiImpl(iraso, Not(irafo)), And(BiImpl(heinzft, Not(Or(heinzst, heinznt))), And(BiImpl(heinzst, Not(Or(heinzft, heinznt))), And(BiImpl(heinznt, Not(Or(heinzft, heinzst))), And(BiImpl(fridaft, Not(Or(fridast, heinzft))), And(BiImpl(fridast, Not(Or(fridaft, fritzft))), And(BiImpl(udoft, Not(Or(udost, udont))), And(BiImpl(udost, Not(Or(udoft, udont))), And(BiImpl(udont, Not(Or(udost, udoft))), And(BiImpl(iraft, Not(irast)), And(BiImpl(irast, Not(iraft)), And(BiImpl(heinzno, Not(udono)), And(BiImpl(udono, Not(heinzno)), And(BiImpl(heinznt, Not(udont)), And(BiImpl(udont, Not(heinznt)), And(Impl(fridafo, Not(Or(heinzfo, Or(udofo, irafo)))), And(Impl(fridaso, Not(Or(heinzso, Or(udoso, iraso)))), And(Impl(fridaft, Not(Or(heinzft, Or(udoft, iraft)))), And(Impl(fridast, Not(Or(heinzst, Or(udost, irast)))), And(Impl(heinzno, Not(heinzft)), Impl(udono, Not(udoft)))))))))))))))))))))))))))))))))))))))))))))))
+And(Or(fritzfo, fritzso), And(Or(fritzft, fritzst), And(Or(fridafo, fridaso), And(Or(fridaft, fridast), And(Or(udofo, Or(udoso, udono)), And(Or(udoft, Or(udost, udont)), And(Or(irafo, iraso), And(Or(iraft, irast), And(Or(heinzfo, Or(heinzso, heinzno)), And(Or(heinzft, Or(heinzst, heinznt)), And(norano, And(norant, And(BiImpl(fritzfo, fridafo), And(BiImpl(fritzso, fridaso), And(BiImpl(fritzft, fridaft), And(BiImpl(fritzst, fridast), And(BiImpl(fritzfo, Not(fritzso)), And(BiImpl(fritzso, Not(fritzfo)), And(BiImpl(fritzft, Not(fritzst)), And(BiImpl(fritzst, Not(fritzft)), And(BiImpl(fridafo, Not(fridaso)), And(BiImpl(fridaso, Not(fridafo)), And(BiImpl(fridaft, Not(fridast)), And(BiImpl(fridast, Not(fridaft)), And(BiImpl(heinzfo, Not(Or(heinzso, heinzno))), And(BiImpl(heinzso, Not(Or(heinzfo, heinzno))), And(BiImpl(heinzno, Not(Or(heinzfo, heinzso))), And(BiImpl(heinzft, Not(Or(heinzst, heinznt))), And(BiImpl(heinzst, Not(Or(heinzft, heinznt))), And(BiImpl(heinznt, Not(Or(heinzft, heinzst))), And(BiImpl(udofo, Not(Or(udoso, udono))), And(BiImpl(udoso, Not(Or(udofo, udono))), And(BiImpl(udono, Not(Or(udofo, udoso))), And(BiImpl(udoft, Not(Or(udost, udont))), And(BiImpl(udost, Not(Or(udoft, udont))), And(BiImpl(udont, Not(Or(udoft, udost))), And(BiImpl(irafo, Not(iraso)), And(BiImpl(iraso, Not(irafo)), And(BiImpl(iraft, Not(irast)), And(BiImpl(irast, Not(iraft)), And(BiImpl(heinzno, Not(udono)), And(BiImpl(udono, Not(heinzno)), And(BiImpl(heinznt, Not(udont)), And(BiImpl(udont, Not(heinznt)), And(Impl(fridafo, Not(Or(heinzfo, Or(udofo, irafo)))), And(Impl(fridaso, Not(Or(heinzso, Or(udoso, iraso)))), And(Impl(fridaft, Not(Or(heinzft, Or(udoft, iraft)))), And(Impl(fridast, Not(Or(heinzst, Or(udost, irast)))), And(Impl(heinzno, Not(heinzft)), Impl(udono, Not(udoft)))))))))))))))))))))))))))))))))))))))))))))))))))
 
 
-# ACHTUNG!!! Passt noch nicht!!!
+## Ergebnis:  
+
+Mit dem klicken auf den [LINK](nsp_all_modells_written.txt).

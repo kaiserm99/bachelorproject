@@ -1,13 +1,21 @@
+#!/usr/bin/env python3
+
+"""
+Copyright 2020, University of Freiburg
+Author: Marco Kaiser <kaiserm@informatik.uni-freiburg.de>
+
+Usage of the Script:
+    python3 nsp_tester.py <.modell encoded file>
+
+
+"""
+# nsp_tester.py, written on: Donnerstag,  12 Oktober 2020.
+
 
 import sys
 
 
-NAME = ["Heinz Frühschicht", "Heinz Spätschicht", "Heinz Nachtschicht", "Frida Frühschicht", "Frida Spätschicht", "Fritz Frühschicht",
-"Fritz Spätschicht", "Udo Frühschicht", "Udo Spätschicht", "Udo Nachtschicht", "Ira Frühschicht", "Ira Spätschicht", "Nora Nachtschicht",
-"Heinz Frühschicht", "Heinz Spätschicht", "Heinz Nachtschicht", "Frida Frühschicht", "Frida Spätschicht", "Fritz Frühschicht",
-"Fritz Spätschicht",  "Udo Frühschicht", "Udo Spätschicht", "Udo Nachtschicht", "Ira Frühschicht", "Ira Spätschicht", "Nora Nachtschicht"]
-
-ASDF = ["fritz früh eins", "fritz spät eins", "frida früh eins", "frida spät eins", "udo früh eins", "udo spät eins", "udo nachts eins", "ira früh eins", "ira spät eins", "heinz früh eins", "heinz spät eins", "heinz nachts eins", "nora nachts eins", "fritz früh", "fritz spät", "frida früh", "frida spät", "udo früh", "udo spät", "udo nacht", "ira früh", "ira spät", "heinz früh", "heinz spät", "heinz nacht", "nora nacht"]
+ASDF = ['fridafo', 'fridaft', 'fridaso', 'fridast', 'fritzfo', 'fritzft', 'fritzso', 'fritzst', 'heinzfo', 'heinzft', 'heinzno', 'heinznt', 'heinzso', 'heinzst', 'irafo', 'iraft', 'iraso', 'irast', 'norano', 'norant', 'udofo', 'udoft', 'udono', 'udont', 'udoso', 'udost']
 
 def main():
 
@@ -20,21 +28,56 @@ def main():
 
     content = f.readlines()
 
-    for i, line in enumerate(content[1:]):
-    	print("Belegung %d:" % (i))
-    	line = line.split(" ")
-    	for n, char in enumerate(line[:-1]):
+    for i, line in enumerate(content[1:]):  # [1:] because the first line is SAT
+        line = line.split(" ")
 
-    		if n == 13:
-    			print("--------------")
+        acc_day_one = [[], [], []]  # 0 -> früh, 1 -> spät, 2 -> nacht
+        acc_day_two = [[], [], []]
+        for n, char in enumerate(line[:-1]):
 
-    		if char[0] != "-":
-    			print(ASDF[int(char)-1] + " " + char)
 
-    		
+            if char[0] != "-":
+                shift_name = ASDF[int(char)-1]
+                
+                if shift_name[-1] == "o":
 
-    	print("\n")
+                    if shift_name[-2] == "f":
+                        acc_day_one[0].append(shift_name)
+
+                    elif shift_name[-2] == "s":
+                        acc_day_one[1].append(shift_name)
+
+                    elif shift_name[-2] == "n":
+                        acc_day_one[2].append(shift_name)
+
+
+                else:
+                    if shift_name[-2] == "f":
+                        acc_day_two[0].append(shift_name)
+
+                    elif shift_name[-2] == "s":
+                        acc_day_two[1].append(shift_name)
+
+                    elif shift_name[-2] == "n":
+                        acc_day_two[2].append(shift_name)
+
+
+        # Print a nice Table with the corresponding shifts
+        print("  {0:11s} {1:10s} ({2})".format("Tag 1:", "Tag 2:", i+1))
+        print("-"*25)
+        for shift in range(3):
+            for person in range(2):
+            	# [:-2] because the last two chars are just the shift designation
+                print("| {0:9s} | {1:10s}|".format(acc_day_one[shift][person][:-2], acc_day_two[shift][person][:-2]))
+            print("|{0:11s}|{0:11s}|".format("-"*11))
+
+
+        print("\n")
 
 
 if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print("Usage: python3 %s <.modell encoded file>" % sys.argv[0])
+        sys.exit(1)
+
     main()
