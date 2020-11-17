@@ -35,9 +35,15 @@ def resCur():
 
 
 def get_impl_top(prog : str):
+    """
+        This function is a helping function which gets the head atom of the Rule when its
+        Body is a TOP. Then it is only needed to parse the remaining Atom in the head and 
+        return it to the get_impl function.
+    """
+
     for c in "TOP":
         if prog[current] != c:
-            return ("-1", "-1")
+            print_error("Syntax Error! You misspelled TOP.")
         incCur()
 
     # If TOP is spelled correctly, set that the head has been found and skip the remaining two chars ", "
@@ -46,7 +52,7 @@ def get_impl_top(prog : str):
     body = "TOP"
     head = ""
 
-    while running and current < len(prog):
+    while running and current < len(prog):  # The len is that there is no endless loop
         char = prog[current]
 
         if char == ")":
@@ -55,6 +61,11 @@ def get_impl_top(prog : str):
             
         incCur()
         head += char
+
+    # Basic Syntax checking. The head of this Rule should only contain chars
+    for c in " (),":
+        if c in head:
+            print_error("Syntax Error! There is one of \" (),\" in the head of a TOP Rule.")
 
     return (body, head)
 
@@ -70,7 +81,7 @@ def get_impl(prog : str):
     running = True
     bracket_count = 1
     head = ""
-    body = ""
+    inside = ""
 
     # Check if the current char is a "T", then it should be a Fact
     if prog[current] == "T":
@@ -95,26 +106,30 @@ def get_impl(prog : str):
         else:
             incCur()
 
-        body += char
+        inside += char
 
 
-    for i in range(len(body)-2, 0, -1):  # -2 becaus the ")" is irrelevant
-        char = body[i]
+    # Basic Syntax checking. The Syntax of Inside should be "BODY, ATOM)"
+    if inside[-1] != ")": 
+        print_error("Syntax Error! You forgot the last ) of the Rule.")
+        sys.exit(1)
+
+
+    for i in range(len(inside)-2, 0, -1):  # -2 becaus the ")" is irrelevant
+        char = inside[i]
 
         # Get the right head and do some syntax checking
         if char == " ":
 
-            if body[i-1] != ",":
+            if inside[i-1] != ",":
 
-                print("Syntax Error! To may spaces between ',' and space or there is a space in the atom.")
-                sys.exit(1)
+                print_error("Syntax Error! There is a invalid count of spaces at the Atom.")
 
-            body = body[:i-1]  # -1 because the "," is irrelevant for the head
+            body = inside[:i-1]  # -1 because the "," is irrelevant for the head
             break
 
         if char == ",":
-            print("Syntax Error! You forgot the space between an atom an the ','.")
-            sys.exit(1)
+            print_error("Syntax Error! You forgot the space between an atom an the ','.")
 
         head += char  # add the current char to the head, note that it is reversed
 
@@ -124,16 +139,30 @@ def get_impl(prog : str):
 
 
 def cmpl_parser(prog : str):
+    """
+        This function is used to parse a string which is a Program. So it contains only 
+        Impl Rules. Those rules get parsed and all the needed Clark's Completion Rules
+        get calculated and a List of all the full cmpl get returned.
+
+        The Rules should be in the Following Syntax:
+
+            "Impl(BODY, HEAD), Impl(BODY, HEAD), Impl(BODY, HEAD), ..."
+
+        Therefore it is important that there are only commas and spaces between the rules
+        otherewise it will throw a Syntax Error.
+    """
+
     resCur()
 
     # The following Part to extract all the Impls out of the given programm and order it
     # ----------------------------------------------------------------------------------
-    acc_impls = []
-    acc_impls_spez_written = []
+    acc_impls = []  # List out of all values which needs to calculate the BiImpl Rules
+    acc_impls_spez_written = []  # List of all TOP and BOT Rules which only gets printed
 
-    bodys_bot = []
-    heads_top = []
+    bodys_bot = []  # If the Head of a Rule contains a BOT then the body Value get saved into this list
+    heads_top = []  # When the Body contains a TOP then the Head is already the right atom
 
+    # Parse trough the whole program
     while current < len(prog):
        
         char = prog[current]
@@ -155,12 +184,13 @@ def cmpl_parser(prog : str):
                 acc_impls_spez_written.append("Impl(TOP, %s)" % val[1])
                 heads_top.append(val[1])
 
+            # If there is no BOT or TOP in the Rule, than it is a simple Impl() rule
             else:
                 acc_impls.append(val)
 
+        # You can use as many spaces and commas between the rules and it won't fail
         elif char != " " and char != ",":
-            print("Syntax Error! You used a other char than ',' or a space between Formulars.")
-            sys.exit(1)
+            print_error("Syntax Error! You used a other char than ',' or a space between Rules.")
 
 
         incCur()
@@ -184,6 +214,12 @@ def cmpl_parser(prog : str):
     tmp_body_impl.extend(tmp_body_bot)
     tmp_head_impl.extend(heads_top)
 
+    # Remove all the duplicates from the lists so we can work with them later on
+    tmp_body_impl = remove_duplicates(tmp_body_impl)
+    tmp_head_impl = remove_duplicates(tmp_head_impl)
+
+
+    # Get all the atoms which are in the body, but not in the head of any rule
     diff_atoms = list(set(tmp_body_impl) - set(tmp_head_impl))
 
     
@@ -254,13 +290,13 @@ def main(prog : str):
     cmpl_res = cmpl_parser(prog)
 
     for form in cmpl_res:
-        dimacs(form)
+        print(form)
 
 
 
 # tester = "Impl(a, g), Impl(And(a, b), popopo), Impl(And(b, d), quer), Impl(And(b, And(a, e)), qur), Impl(And(a, t), qur), Impl(And(b, c), quer), Impl(And(h, c), quer), Impl(TOP, aasdf), Impl(qasd, BOT), Impl(qa, BOT), Impl(And(asdf, s), zz), Impl(And(b, And(a, b)), quer), Impl(And(asdf, s), zz), Impl(And(af, s), zz), Impl(And(asf, s), zz), Impl(And(s, And(adf, And(a, And(qw, And(asd, fa))))), zz)"
 
-tester = "Impl(And(a, b), a), Impl(q, asdf), Impl(And(qwe, asdf), BOT)"
+tester = "Impl(And(ab, b), ab), Impl(TOP, ab), Impl(And(a, And(b, c)), ab), Impl(And(e, f), f), Impl(And(x, And(y, z)), BOT), Impl(f, f)"
 
 if __name__ == '__main__':
     main(tester)
