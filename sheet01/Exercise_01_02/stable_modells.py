@@ -150,6 +150,9 @@ def cmpl_parser(prog : str):
 
         Therefore it is important that there are only commas and spaces between the rules
         otherewise it will throw a Syntax Error.
+
+        This functions returns a Tuple. In the first element contains the whole cmpl and the
+        second element contains all the Impl Rules which are needed to create the graph.
     """
 
     resCur()
@@ -279,24 +282,30 @@ def cmpl_parser(prog : str):
             res.append("BiImpl(%s, %s)" % (val[0], val[1]))
 
 
-    return res  # In this list is the complete cmpl. At first all the BOT and TOP Rules, then the missing atoms, then the BiImpl rules
+    return (res, acc_impls) # In this list is the complete cmpl. At first all the BOT and TOP Rules, then the missing atoms, then the BiImpl rules
 
 
 
 
 def main(prog : str):
 
-    # Here you will get a list of all the 
-    cmpl_res = cmpl_parser(prog)
+    # Here you will get a list of all the
+    (cmpl_res, imp_rules) = cmpl_parser(prog)
 
     for form in cmpl_res:
         print(form)
 
+    print("\n\n")
+
+    # Create the Graph which is needed to detect the loops
+    compute_graph(imp_rules)
 
 
 # tester = "Impl(a, g), Impl(And(a, b), popopo), Impl(And(b, d), quer), Impl(And(b, And(a, e)), qur), Impl(And(a, t), qur), Impl(And(b, c), quer), Impl(And(h, c), quer), Impl(TOP, aasdf), Impl(qasd, BOT), Impl(qa, BOT), Impl(And(asdf, s), zz), Impl(And(b, And(a, b)), quer), Impl(And(asdf, s), zz), Impl(And(af, s), zz), Impl(And(asf, s), zz), Impl(And(s, And(adf, And(a, And(qw, And(asd, fa))))), zz)"
 
-tester = "Impl(And(ab, b), ab), Impl(TOP, ab), Impl(And(a, And(b, c)), ab), Impl(And(e, f), f), Impl(And(x, And(y, z)), BOT), Impl(f, f)"
+# tester = "Impl(And(ab, And(a, And(e, f))), ab), Impl(TOP, ab), Impl(And(a, And(ab, And(c, e))), f), Impl(And(e, f), e), Impl(And(x, And(y, z)), BOT), Impl(a, f), Impl(f, a)"
+
+tester = "Impl(And(a, b), c), Impl(And(a, c), b), Impl(And(c, b), a), Impl(g, c), Impl(a, g), Impl(And(f, h), z), Impl(z, h)"
 
 if __name__ == '__main__':
     main(tester)

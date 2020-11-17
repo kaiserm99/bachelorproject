@@ -11,6 +11,7 @@ Usage of the Script:
 # helping_atble.py, written on: Donnerstag,  12 Oktober 2020.
 
 import sys
+from tarjan import *
 
 
 # Copied from StackOverflow (https://stackoverflow.com/questions/287871/how-to-print-colored-text-in-python)
@@ -97,10 +98,43 @@ def get_head_atoms(lst : list):
     return acc_head_atoms
 
 
+
+def compute_graph(imp_rules : list):
+    graph = {}  # Save the graph as a dict
+
+    # Zip up the list and get all the bodys
+    bodys_impl, heads_impl = zip(*imp_rules)
+
+    # Use this method to get all the body atoms
+    acc_bodys = get_body_atoms(bodys_impl)
+    acc_heads = get_head_atoms(heads_impl)
+
+
+    # Insert all the body atoms into the graph, because the are likly no head atom and wouldn't get inserted into the graph
+    for atom in acc_bodys:
+        graph[atom] = Knoten(atom, [])
+
+    # Make sure to add all the head atoms too, because they can be in no body and so it will occure a IndexError
+    for atom in acc_heads:
+        graph[atom] = Knoten(atom, []) 
+
+    # Insert all the edges the current head atom is connected to 
+    for i in range(len(imp_rules)):
+
+        head_atom = heads_impl[i]
+        body_atoms = get_body_atoms([bodys_impl[i]])  # Get all the body atoms of the current rule
+
+        graph[head_atom].add_edges(body_atoms)
+
+    print(graph)
+    tj(graph)
+
+
 def print_error(msg : str):
     print(bcolors.FAIL + msg + bcolors.ENDC)
     sys.exit(1)
 
 
 def remove_duplicates(x):
-  return list(dict.fromkeys(x))
+    return list(dict.fromkeys(x))
+
