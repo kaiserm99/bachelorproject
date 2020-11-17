@@ -203,11 +203,18 @@ def cmpl_parser(prog : str):
     # ----------------------------------------------------------------------------------
 
     # Zip up the list and get all the bodys
-    bodys_impl, heads_impl = zip(*acc_impls)
+    if len(acc_impls) > 0:
+        bodys_impl, heads_impl = zip(*acc_impls)
 
-    # Get all the atoms which are related to the impl rules
-    tmp_body_impl = get_body_atoms(bodys_impl)
-    tmp_head_impl = get_head_atoms(heads_impl)
+        # Get all the atoms which are related to the impl rules
+        tmp_body_impl = get_body_atoms(bodys_impl)
+        tmp_head_impl = get_head_atoms(heads_impl)
+
+    else:
+        # Make sure to handle the case when there are no "normal" Rules in the provided Program
+        tmp_body_impl = []
+        tmp_head_impl = []
+
 
     # Get all the atoms which are realted to the BOT rules
     tmp_body_bot = get_body_atoms(bodys_bot)
@@ -305,7 +312,9 @@ def main(prog : str):
 
 # tester = "Impl(And(ab, And(a, And(e, f))), ab), Impl(TOP, ab), Impl(And(a, And(ab, And(c, e))), f), Impl(And(e, f), e), Impl(And(x, And(y, z)), BOT), Impl(a, f), Impl(f, a)"
 
-tester = "Impl(And(a, b), c), Impl(And(a, c), b), Impl(And(c, b), a), Impl(g, c), Impl(a, g), Impl(And(f, h), z), Impl(z, h)"
+# tester = "Impl(And(a, b), c), Impl(And(a, c), b), Impl(And(c, b), a), Impl(g, c), Impl(a, g), Impl(And(f, h), z), Impl(z, h)"
+
+tester = "Impl(TOP, asdf), Impl(asdf, BOT)"
 
 if __name__ == '__main__':
     main(tester)

@@ -100,6 +100,11 @@ def get_head_atoms(lst : list):
 
 
 def compute_graph(imp_rules : list):
+    
+    if len(imp_rules) == 0:
+        print("You provided no Rules which don't contain a TOP or a BOT so there is no need for Loop-Formulars")
+        return []
+
     graph = {}  # Save the graph as a dict
 
     # Zip up the list and get all the bodys
