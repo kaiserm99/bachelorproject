@@ -40,6 +40,32 @@ def get_body_atoms(lst : list) -> list:
         i = 0
         acc_atom = ""
 
+        # Make sure to handle the Nots when they are alone in the body of a rule
+        if body[0] == "N":
+
+            for j in "ot(":
+                i += 1
+                if body[i] != j:
+                    print_error("Syntax Error! You misspelled Not in a body.")
+
+            i += 1  # The pointer points now on the first digit of the atom and the las char is a )
+            
+            # Last char should be a )
+            if body[-1] != ")":
+                print_error("Syntax Error! You forgot to close a Not.")
+            
+
+            body = "-" + body[i:-1]  # The not and the ) gets removed, make sure to add the -
+
+            # Check if it contains a invalid char
+            for c in " (),":
+                if c in body:
+                    print_error("Syntax Error! There is one of \" (),\" in a atom which is alone in the body.")
+            
+            acc_body_atoms.append(body)
+            continue
+
+
         # If there is no A at the first char then it is only one atom in the body
         if body[0] != "A":
 
@@ -82,11 +108,25 @@ def get_body_atoms(lst : list) -> list:
                 acc_atom = ""  # Restore everything so the next run can start
                 i += 1
 
+            elif char == "N":
+                for j in "ot(":
+                    i += 1
+                    if body[i] != j:
+                        print_error("Syntax Error! You misspelled Not in a body.")
+
+                i += 1
+                # Check if the following char after ( is a invalid char
+                if body[i] in " ,()":
+                    print_error("Syntax Error! There is a invalid char after a Not expression.")
+
+                acc_atom = "-"
+
             # It is assumed, that every other char is a pice of the atom
             else:
                 acc_atom += char
                 i += 1
 
+    # print(acc_body_atoms)
     return acc_body_atoms  # Return all the atoms. There ARE duplicates
 
 
@@ -100,7 +140,7 @@ def get_head_atoms(lst : list):
 
 
 
-def compute_graph(imp_rules : list):
+def compute_loops(imp_rules : list):
     
     if len(imp_rules) == 0:
         print("You provided no Rules which don't contain a TOP or a BOT so there is no need for Loop-Formulars")
@@ -118,7 +158,8 @@ def compute_graph(imp_rules : list):
 
     # Insert all the body atoms into the graph, because the are likly no head atom and wouldn't get inserted into the graph
     for atom in acc_bodys:
-        graph[atom] = []
+        if atom[0] != "-":
+            graph[atom] = []
 
     # Make sure to add all the head atoms too, because they can be in no body and so it will occure a IndexError
     for atom in acc_heads:
@@ -130,21 +171,137 @@ def compute_graph(imp_rules : list):
         head_atom = heads_impl[i]
         body_atoms = get_body_atoms([bodys_impl[i]])  # Get all the body atoms of the current rule
 
-        for edge in body_atoms:
+        for vert in body_atoms:
 
-            # Only append the head_atom to the Graph if there is no connection yet
-            if head_atom not in graph.get(edge):
-                graph[edge].append(head_atom)
+            # NOTE: Check if a sling to the same atom is valid
 
+            # Check if the current Vertex is a not atom. If so don't add a edge
+            if vert[0] != "-" and vert != head_atom:
+                # There is no need for a test if the edge is already in the graph or not
+                graph[vert].append(head_atom)
 
+    print(graph)
     # At this point the Graph is fully formed and we need to calculate all the Loops by using networkx
     graph = nx.DiGraph(graph)
 
-    
     # draw_graph(graph)
-    loops = list(nx.simple_cycles(graph))
+    loops = list(nx.simple_cycles(graph))  # This is a list of lists with all the loops in the graph
 
-    print(loops)
+    return loops
+
+
+def compute_loop_formular(loops : list, imp_rules : list):
+
+    r_minus = {}
+
+    # Loop through all loops and create R-
+    for loop in loops:
+
+        for atom in loop:
+
+            # Check if the atom is already in the dict, when not create a entry
+            if atom not in r_minus:
+                r_minus[atom] = []
+
+
+            i = 0
+
+            found = False
+            while i < len(imp_rules):
+
+                rule = imp_rules[i]
+
+                # If the head of the current rule is matching with the atom out of the current loop
+                if rule[1] == atom:
+                    found = True
+
+                    body_atoms = get_body_atoms([rule[0]])
+
+                    # Check if the body atoms of the current rule are in the current loop
+                    append = True
+                    for ba in body_atoms:
+                
+                        # NOTE: Unsure what to do when there is a neg atom in the body_atoms, which is positiv in the loop
+
+                        if ba in loop:
+                            append = False
+                            break
+
+                    # If there was no atom in the body of the rule, which is also in the current loop. Append it
+                    if append:
+                        # Check if this Body is already in the dict. If so, just skip
+                        if rule[0] not in r_minus[atom]:
+                            r_minus[atom].append(rule[0])
+
+
+                # imp_rules is sorted by the head of the rule. So if we have found one matching atom with a head
+                # and the next one is not matching, then there are no more rules with a matching head
+                elif rule[1] != atom and found:
+                    break
+
+                # Count to the next atom 
+                i += 1
+
+    # r_minus is now a dict with all the p Atoms and all the corresponding Bodys.
+    # Now apply the last Loop-Formular rule
+
+    all_bodys = []
+    all_heads = []
+
+    for head, bodys in r_minus.items():
+
+        # There is no need to check for dupplicates beacause the Loop-Formular has a Or in it
+        for body in bodys:
+            all_bodys.append(body)
+        all_heads.append(head)
+
+
+    # Bring all the Bodys in the right form: Not(Or(Body, Or(Body, ...)))
+    left = write_rules(all_bodys, "Or", wrapper_op="Not")
+
+    # Bring all the Heady in the right form: And(Not(p1), And(Not(p2), ...))
+    right = write_rules(all_heads, "And", atom_start="Not(", atom_end=")")
+
+    print(r_minus)
+    # Return the resulting Loop-Formular
+    return "Impl({0}, {1})".format(left, right)
+
+
+def write_rules(lst : list, op, atom_start="", atom_end="", wrapper_op=""):
+    count = len(lst)
+    written = ""
+
+    if wrapper_op != "":
+        written += wrapper_op + "("
+
+    if count == 0:
+        written += "BOT" 
+
+    elif count == 1:
+        written += "{1}{0}{2}".format(lst[0], atom_start, atom_end)
+
+    elif count == 2:
+        written += "{0}({3}{1}{4}, {3}{2}{4})".format(op, lst[0], lst[1], atom_start, atom_end)
+
+    else:
+
+        written += "{0}({2}{1}{3}".format(op, lst[0], atom_start, atom_end)
+
+        bracket_count = 0
+        for n, body in enumerate(lst[1:]):
+
+            if count - n == 3:
+                written += ", {0}({3}{1}{4}, {3}{2}{4}{5}".format(op, lst[-2], lst[-1], atom_start, atom_end, ")" * (bracket_count+2))
+                break
+
+            written += ", {0}({2}{1}{3}".format(op, body, atom_start, atom_end)
+            bracket_count += 1
+
+    if wrapper_op != "":
+        written += ")"
+
+    return written
+
 
 def print_error(msg : str):
     print(bcolors.FAIL + msg + bcolors.ENDC)
@@ -153,6 +310,13 @@ def print_error(msg : str):
 
 def remove_duplicates(x):
     return list(dict.fromkeys(x))
+
+
+def remove_nots(lst : list) -> list:
+    for n, atom in enumerate(lst):
+        if atom[0] == "-":
+            lst[n] = atom[1:]
+    return lst
 
 
 def draw_graph(graph : nx.DiGraph):

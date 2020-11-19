@@ -225,7 +225,8 @@ def cmpl_parser(prog : str):
     tmp_head_impl.extend(heads_top)
 
     # Remove all the duplicates from the lists so we can work with them later on
-    tmp_body_impl = remove_duplicates(tmp_body_impl)
+    # Make sure that also the negated atoms get changed to positiv ones (for the last rule)
+    tmp_body_impl = remove_duplicates(remove_nots(tmp_body_impl))
     tmp_head_impl = remove_duplicates(tmp_head_impl)
 
 
@@ -235,7 +236,7 @@ def cmpl_parser(prog : str):
     
     # The following Part is for adding all the atoms which are not in any head of the rules
     # -------------------------------------------------------------------------------------
-    res = acc_impls_spez_written  # Later, it is a list with all the 
+    res = acc_impls_spez_written  # Later, it is a list with all the
     
     for atom in diff_atoms:
         res.append("BiImpl(%s, BOT)" % atom)  
@@ -295,6 +296,41 @@ def cmpl_parser(prog : str):
 
 
 def main(prog : str):
+    """
+    
+    >>> tester = "Impl(TOP, a), Impl(Not(a), b), Impl(And(a, Not(d)), c), Impl(And(Not(c), Not(e)), d), Impl(And(b, Not(f)), e), Impl(e, e)"
+    >>> main(tester)
+    BiImpl(TOP, a)
+    BiImpl(f, BOT)
+    BiImpl(Not(a), b)
+    BiImpl(And(a, Not(d)), c)
+    BiImpl(And(Not(c), Not(e)), d)
+    BiImpl(Or(And(b, Not(f)), e), e)
+    {'a': ['c'], 'b': ['e'], 'e': ['e'], 'c': [], 'd': []}
+    [['e']]
+
+
+    >>> tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(And(a, Not(d)), c), Impl(And(a, Not(c)), d), Impl(And(c, Not(a)), e), Impl(And(d, Not(b)), e)"
+    >>> main(tester)
+    BiImpl(Not(b), a)
+    BiImpl(Not(a), b)
+    BiImpl(And(a, Not(d)), c)
+    BiImpl(And(a, Not(c)), d)
+    BiImpl(Or(And(c, Not(a)), And(d, Not(b))), e)
+    {'a': ['c', 'd'], 'c': ['e'], 'd': ['e'], 'b': [], 'e': []}
+    []
+
+
+    >>> tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(Not(a), c), Impl(d, c), Impl(And(a, b), d), Impl(c, d)"
+    >>> main(tester)
+    BiImpl(Not(b), a)
+    BiImpl(Not(a), b)
+    BiImpl(Or(Not(a), d), c)
+    BiImpl(Or(And(a, b), c), d)
+    {'d': ['c'], 'a': ['d'], 'b': ['d'], 'c': ['d']}
+    [['c', 'd']]
+
+    """
 
     # Here you will get a list of all the
     (cmpl_res, imp_rules) = cmpl_parser(prog)
@@ -302,10 +338,27 @@ def main(prog : str):
     for form in cmpl_res:
         print(form)
 
+    # Create the Graph which is needed to detect the loops
+    loops = compute_loops(imp_rules)
+
+    print(loops)
+
+    # If the loops variable is empty there is no need to compute those foumulars
+    if len(loops) > 0:
+        loop_formular = compute_loop_formular(loops, imp_rules)
+
+        cmpl_res.append(loop_formular)
+
+        print(loop_formular)
+
+
+    # At this point there is the complete cmpl and the Loop-Formular, which now get written
+    # so the DIMACS-Parser can start
     print("\n\n")
 
-    # Create the Graph which is needed to detect the loops
-    compute_graph(imp_rules)
+    print(write_rules(cmpl_res, "And"))
+
+
 
 
 # tester = "Impl(a, g), Impl(And(a, b), popopo), Impl(And(b, d), quer), Impl(And(b, And(a, e)), qur), Impl(And(a, t), qur), Impl(And(b, c), quer), Impl(And(h, c), quer), Impl(TOP, aasdf), Impl(qasd, BOT), Impl(qa, BOT), Impl(And(asdf, s), zz), Impl(And(b, And(a, b)), quer), Impl(And(asdf, s), zz), Impl(And(af, s), zz), Impl(And(asf, s), zz), Impl(And(s, And(adf, And(a, And(qw, And(asd, fa))))), zz)"
@@ -316,9 +369,13 @@ def main(prog : str):
 
 # tester = "Impl(And(a, c), b), Impl(TOP, a)"
 
-tester = "Impl(a, c), Impl(And(b, d), c), Impl(And(b, c), d), Impl(e, d), Impl(b, e), Impl(And(c, d), e)"
+# tester = "Impl(a, c), Impl(And(b, And(d, Not(e))), c), Impl(And(b, c), d), Impl(e, d), Impl(b, e), Impl(And(c, d), e), Impl(Not(a), BOT)"
 
-# NOTE: Whene there is a Not in the Body, the parser can't detect it yet
+# tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(Not(a), c), Impl(d, c), Impl(And(a, b), d), Impl(c, d)"
+
+tester = "Impl(Not(b), a), Impl(a, c), Impl(And(b, c), d), Impl(And(b, Not(a)), e), Impl(Not(a), b), Impl(And(b, d), c), Impl(e, d), Impl(And(c, d), e)"
+
+# tester = "Impl(a, b), Impl(b, a), Impl(e, a), Impl(f, a)"
 
 if __name__ == '__main__':
     main(tester)
