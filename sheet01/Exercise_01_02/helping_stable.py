@@ -11,7 +11,8 @@ Usage of the Script:
 # helping_atble.py, written on: Donnerstag,  12 Oktober 2020.
 
 import sys
-from tarjan import *
+import networkx as nx
+import matplotlib.pyplot as plt
 
 
 # Copied from StackOverflow (https://stackoverflow.com/questions/287871/how-to-print-colored-text-in-python)
@@ -117,11 +118,11 @@ def compute_graph(imp_rules : list):
 
     # Insert all the body atoms into the graph, because the are likly no head atom and wouldn't get inserted into the graph
     for atom in acc_bodys:
-        graph[atom] = Knoten(atom, [])
+        graph[atom] = []
 
     # Make sure to add all the head atoms too, because they can be in no body and so it will occure a IndexError
     for atom in acc_heads:
-        graph[atom] = Knoten(atom, []) 
+        graph[atom] = []
 
     # Insert all the edges the current head atom is connected to 
     for i in range(len(imp_rules)):
@@ -129,11 +130,21 @@ def compute_graph(imp_rules : list):
         head_atom = heads_impl[i]
         body_atoms = get_body_atoms([bodys_impl[i]])  # Get all the body atoms of the current rule
 
-        graph[head_atom].add_edges(body_atoms)
+        for edge in body_atoms:
 
-    print(graph)
-    tj(graph)
+            # Only append the head_atom to the Graph if there is no connection yet
+            if head_atom not in graph.get(edge):
+                graph[edge].append(head_atom)
 
+
+    # At this point the Graph is fully formed and we need to calculate all the Loops by using networkx
+    graph = nx.DiGraph(graph)
+
+    
+    # draw_graph(graph)
+    loops = list(nx.simple_cycles(graph))
+
+    print(loops)
 
 def print_error(msg : str):
     print(bcolors.FAIL + msg + bcolors.ENDC)
@@ -142,4 +153,9 @@ def print_error(msg : str):
 
 def remove_duplicates(x):
     return list(dict.fromkeys(x))
+
+
+def draw_graph(graph : nx.DiGraph):
+    nx.draw_networkx(graph)
+    plt.show()
 

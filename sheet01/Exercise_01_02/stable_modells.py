@@ -180,11 +180,11 @@ def cmpl_parser(prog : str):
 
             # Append the certain value to the corresponding list
             if acc_head == "BOT":
-                acc_impls_spez_written.append("Impl(%s, BOT)" % val[0])
+                acc_impls_spez_written.append("BiImpl(%s, BOT)" % val[0])
                 bodys_bot.append(val[0])
 
             elif acc_body == "TOP":
-                acc_impls_spez_written.append("Impl(TOP, %s)" % val[1])
+                acc_impls_spez_written.append("BiImpl(TOP, %s)" % val[1])
                 heads_top.append(val[1])
 
             # If there is no BOT or TOP in the Rule, than it is a simple Impl() rule
@@ -314,7 +314,11 @@ def main(prog : str):
 
 # tester = "Impl(And(a, b), c), Impl(And(a, c), b), Impl(And(c, b), a), Impl(g, c), Impl(a, g), Impl(And(f, h), z), Impl(z, h)"
 
-tester = "Impl(TOP, asdf), Impl(asdf, BOT)"
+# tester = "Impl(And(a, c), b), Impl(TOP, a)"
+
+tester = "Impl(a, c), Impl(And(b, d), c), Impl(And(b, c), d), Impl(e, d), Impl(b, e), Impl(And(c, d), e)"
+
+# NOTE: Whene there is a Not in the Body, the parser can't detect it yet
 
 if __name__ == '__main__':
     main(tester)
