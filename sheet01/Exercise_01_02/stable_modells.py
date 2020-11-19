@@ -335,28 +335,30 @@ def main(prog : str):
     # Here you will get a list of all the
     (cmpl_res, imp_rules) = cmpl_parser(prog)
 
+    print("\nPrinting all the Clark's Completion...\n" + "="*40)
     for form in cmpl_res:
         print(form)
 
     # Create the Graph which is needed to detect the loops
     loops = compute_loops(imp_rules)
 
-    print(loops)
-
     # If the loops variable is empty there is no need to compute those foumulars
     if len(loops) > 0:
-        loop_formular = compute_loop_formular(loops, imp_rules)
+        loop_formulars = compute_loop_formular(loops, imp_rules)
 
-        cmpl_res.append(loop_formular)
-
-        print(loop_formular)
+        print("\nPrinting all the found Loop-Formulars...\n" + "="*40)
+        for lf in loop_formulars:
+            cmpl_res.append(lf)
+            print(lf)
 
 
     # At this point there is the complete cmpl and the Loop-Formular, which now get written
     # so the DIMACS-Parser can start
     print("\n\n")
 
-    print(write_rules(cmpl_res, "And"))
+    end = write_rules(cmpl_res, "And")
+
+    dimacs(end)
 
 
 
@@ -371,11 +373,23 @@ def main(prog : str):
 
 # tester = "Impl(a, c), Impl(And(b, And(d, Not(e))), c), Impl(And(b, c), d), Impl(e, d), Impl(b, e), Impl(And(c, d), e), Impl(Not(a), BOT)"
 
+
+# Asp-handout: S 218 1
+# tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(And(a, Not(d)), c), Impl(And(a, Not(c)), d), Impl(And(c, Not(a)), e), Impl(And(d, Not(b)), e)"
+
+
+# Asp-handout: S 218 2
 # tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(Not(a), c), Impl(d, c), Impl(And(a, b), d), Impl(c, d)"
 
+
+# Characterizations: S 272
 tester = "Impl(Not(b), a), Impl(a, c), Impl(And(b, c), d), Impl(And(b, Not(a)), e), Impl(Not(a), b), Impl(And(b, d), c), Impl(e, d), Impl(And(c, d), e)"
 
-# tester = "Impl(a, b), Impl(b, a), Impl(e, a), Impl(f, a)"
+
+# Characterizations: S 262
+# tester = "Impl(Not(b), a), Impl(And(a, b), c), Impl(a, d), Impl(And(Not(a), Not(b)), e), Impl(Not(a), b), Impl(d, c), Impl(And(b, c), d)"
+
+# tester = "Impl(TOP, a), Impl(And(a, Not(d)), c), Impl(And(b, Not(f)), e), Impl(Not(a), b), Impl(And(Not(c), Not(e)), d), Impl(e, e)"
 
 if __name__ == '__main__':
     main(tester)

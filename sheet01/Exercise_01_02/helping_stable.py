@@ -180,22 +180,27 @@ def compute_loops(imp_rules : list):
                 # There is no need for a test if the edge is already in the graph or not
                 graph[vert].append(head_atom)
 
-    print(graph)
+    # print(graph)
     # At this point the Graph is fully formed and we need to calculate all the Loops by using networkx
     graph = nx.DiGraph(graph)
 
     # draw_graph(graph)
     loops = list(nx.simple_cycles(graph))  # This is a list of lists with all the loops in the graph
 
+    print("\nPrinting all the found Loops...\n" + "="*40)
+    print("Loops: ", loops)
+
     return loops
 
 
 def compute_loop_formular(loops : list, imp_rules : list):
 
-    r_minus = {}
+    loop_formulars = []
 
     # Loop through all loops and create R-
     for loop in loops:
+
+        r_minus = {}
 
         for atom in loop:
 
@@ -242,29 +247,31 @@ def compute_loop_formular(loops : list, imp_rules : list):
                 # Count to the next atom 
                 i += 1
 
-    # r_minus is now a dict with all the p Atoms and all the corresponding Bodys.
-    # Now apply the last Loop-Formular rule
+        # r_minus is now a dict with all the p Atoms and all the corresponding Bodys.
+        # Now apply the last Loop-Formular rule
 
-    all_bodys = []
-    all_heads = []
+        all_bodys = []
+        all_heads = []
 
-    for head, bodys in r_minus.items():
+        for head, bodys in r_minus.items():
 
-        # There is no need to check for dupplicates beacause the Loop-Formular has a Or in it
-        for body in bodys:
-            all_bodys.append(body)
-        all_heads.append(head)
+            # There is no need to check for dupplicates beacause the Loop-Formular has a Or in it
+            for body in bodys:
+                all_bodys.append(body)
+            all_heads.append(head)
 
 
-    # Bring all the Bodys in the right form: Not(Or(Body, Or(Body, ...)))
-    left = write_rules(all_bodys, "Or", wrapper_op="Not")
+        # Bring all the Bodys in the right form: Not(Or(Body, Or(Body, ...)))
+        left = write_rules(all_bodys, "Or", wrapper_op="Not")
 
-    # Bring all the Heady in the right form: And(Not(p1), And(Not(p2), ...))
-    right = write_rules(all_heads, "And", atom_start="Not(", atom_end=")")
+        # Bring all the Heady in the right form: And(Not(p1), And(Not(p2), ...))
+        right = write_rules(all_heads, "And", atom_start="Not(", atom_end=")")
 
-    print(r_minus)
-    # Return the resulting Loop-Formular
-    return "Impl({0}, {1})".format(left, right)
+        loop_formulars.append("Impl({0}, {1})".format(left, right))
+
+    # print(imp_rules)
+    # Return the resulting Loop-Formulars
+    return loop_formulars
 
 
 def write_rules(lst : list, op, atom_start="", atom_end="", wrapper_op=""):
