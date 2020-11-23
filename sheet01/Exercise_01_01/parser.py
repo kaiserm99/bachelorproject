@@ -10,12 +10,15 @@ Usage of the Script:
 """
 # parser.py, written on: Donnerstag,  1 Oktober 2020.
 
-import resource, sys, string
+import sys, string
 
-resource.setrlimit(resource.RLIMIT_STACK, (2**29,-1))
-sys.setrecursionlimit(10**6)
+# Only use if needed more recursion depth
+# =======================================
+# import resource
+# resource.setrlimit(resource.RLIMIT_STACK, (2**29,-1))
+# sys.setrecursionlimit(10**6)
 
-class Formular:
+class Formula:
     def __init__(self, value = "init", left = "-", right = "-", neg = "-", atom = False, top = False, bot = False):
         self.value = value
         self.left = left
@@ -51,7 +54,7 @@ class Formular:
         return acc
 
 
-
+DEBUG = False
 current = 0
 
 
@@ -65,105 +68,100 @@ def resCur():
     current = 0
 
 
-def parseOr(formular : Formular) -> Formular:
-
+def parseOr(formula : Formula) -> Formula:
     # Check if the Word is spelled correctly
     for c in "r(":
-        if formular[current] != c:
+        if formula[current] != c:
             return False
         incCur()
         
-    left = parseFormular(formular)
-    right = parseFormular(formular)
+    left = parseFormula(formula)
+    right = parseFormula(formula)
 
     if left is False or right is False:
         return False
 
-    return Formular("Or", left, right)
+    return Formula("Or", left, right)
 
 
-def parseAnd(formular : Formular) -> Formular:
-
+def parseAnd(formula : Formula) -> Formula:
     # Check if the Word is spelled correctly
     for c in "nd(":
-        if formular[current] != c:
+        if formula[current] != c:
             print("False!")
             return False
         incCur()
         
-    left = parseFormular(formular)  
-    right = parseFormular(formular)
+    left = parseFormula(formula)  
+    right = parseFormula(formula)
 
     if left is False or right is False:
         return False
 
-    return Formular("And", left, right)
+    return Formula("And", left, right)
 
 
 # A -> B --> -A o B
-def parseImpl(formular : Formular) -> Formular:
-
+def parseImpl(formula : Formula) -> Formula:
     # Check if the Word is spelled correctly
     for c in "mpl(":
-        if formular[current] != c:
+        if formula[current] != c:
             return False
         incCur()
         
-    left = parseFormular(formular)
-    right = parseFormular(formular)
+    left = parseFormula(formula)
+    right = parseFormula(formula)
 
     if left is False or right is False:
         return False
 
-    return Formular("Or", Formular("Not", neg=left), right)
+    return Formula("Or", Formula("Not", neg=left), right)
 
 
 
 # A <-> B --> (-A o B) u () (A o -B)
-def parseBiImpl(formular : Formular) -> Formular:
-
+def parseBiImpl(formula : Formula) -> Formula:
     # Check if the Word is spelled correctly
     for c in "iImpl(":
-        if formular[current] != c:
+        if formula[current] != c:
             return False
         incCur()
         
-    left = parseFormular(formular)
-    right = parseFormular(formular)
+    left = parseFormula(formula)
+    right = parseFormula(formula)
 
     if left is False or right is False:
         return False
 
-    return Formular("And",
-                    Formular("Or", Formular("Not", neg=left), right), 
-                    Formular("Or", left, Formular("Not", neg=right)))
+    return Formula("And",
+                    Formula("Or", Formula("Not", neg=left), right), 
+                    Formula("Or", left, Formula("Not", neg=right)))
 
 
 
-def parseNot(formular : Formular) -> Formular:
-
+def parseNot(formula : Formula) -> Formula:
     # Check if the Word is spelled correctly
     for c in "ot(":
-        if formular[current] != c:
+        if formula[current] != c:
             return False
         incCur()
         
-    value = parseFormular(formular)
+    value = parseFormula(formula)
 
     if value is False:
         return False
 
-    return Formular("Not", neg = value)
+    return Formula("Not", neg = value)
 
 
 
-def parseAtom(formular) -> Formular:
+def parseAtom(formula) -> Formula:
     # Check if the Atom has any more lowercase letters and parse them
-    acc = formular[current - 1]
+    acc = formula[current - 1]
     running = True
 
     while running:
-        c = formular[current]
+        c = formula[current]
 
         if c == ")" or c == ",":
             running = False
@@ -171,260 +169,263 @@ def parseAtom(formular) -> Formular:
             acc += c
             incCur()  # Only increment when there is a ) or a , because the next char which is going to get parsed should be one of those chars
 
-        
-
-    return Formular(acc, atom=True)
+    return Formula(acc, atom=True)
 
 
-def parseTop(formular : Formular) -> Formular:
+def parseTop(formula : Formula) -> Formula:
     # Check if the Word is spelled correctly
     for c in "OP":
-        if formular[current] != c:
+        if formula[current] != c:
             return False
         incCur()
 
-    return Formular("TOP", top=True)
+    return Formula("TOP", top=True)
 
 
-def parseBot(formular : Formular) -> Formular:
+def parseBot(formula : Formula) -> Formula:
     # Check if the Word is spelled correctly
     for c in "OT":
-        if formular[current] != c:
+        if formula[current] != c:
             return False
         incCur()
 
-    return Formular("BOT", bot=True)
+    return Formula("BOT", bot=True)
 
 
 
-def parseFormular(formular : str, acc = Formular) -> Formular:
+def parseFormula(formula : str, acc = Formula) -> Formula:
     """ 
-        This function is used to parse the whole formular which is given by an string.
+        This function is used to parse the whole formula which is given by an string.
         The global Variable current takes care of which letter is used at the moment.
         This function takes care of the Implications and the Äquvalations and replaces
         it directly.
 
         Doctests:
             >>> resCur()
-            >>> res = parseFormular("And(Impl(Not(a), And(BiImpl(a, b), b)), And(Not(b), Not(a)))")
+            >>> res = parseFormula("And(Impl(Not(a), And(BiImpl(a, b), b)), And(Not(b), Not(a)))")
             >>> print(res)
             ((¬ ¬ a ∨ (((¬ a ∨ b) ∧ (a ∨ ¬ b)) ∧ b)) ∧ (¬ b ∧ ¬ a))
             >>> resCur()
-            >>> res = parseFormular("Not(Not(And(Impl(Not(a), And(BiImpl(a, Not(Not(b))), b)), And(Not(b), And(Not(a), Not(a)))))))")
+            >>> res = parseFormula("Not(Not(And(Impl(Not(a), And(BiImpl(a, Not(Not(b))), b)), And(Not(b), And(Not(a), Not(a)))))))")
             >>> print(res)
             ¬ ¬ ((¬ ¬ a ∨ (((¬ a ∨ ¬ ¬ b) ∧ (a ∨ ¬ ¬ ¬ b)) ∧ b)) ∧ (¬ b ∧ (¬ a ∧ ¬ a)))
     """
     global current
 
-    # If the given acc -> the formular which get parsed next, is not valid, return False to all
+    # If the given acc -> the formula which get parsed next, is not valid, return False to all
     if not acc:
         return False
 
-    if len(formular) == current:
-        current = 0  # Make sure to reset this variable or you can't parse other formulars
+    if len(formula) == current:
+        current = 0  # Make sure to reset this variable or you can't parse other formulas
         return acc
 
 
-    if formular[current] == 'A':  # And()
+    if formula[current] == 'A':  # And()
         incCur()
-        return parseFormular(formular, parseAnd(formular))
+        return parseFormula(formula, parseAnd(formula))
 
-    elif formular[current] == 'O':  # Or()
+    elif formula[current] == 'O':  # Or()
         incCur()
-        return parseFormular(formular, parseOr(formular))
+        return parseFormula(formula, parseOr(formula))
 
-    elif formular[current] == 'N':  # Not()
+    elif formula[current] == 'N':  # Not()
         incCur()
-        return parseFormular(formular, parseNot(formular))
+        return parseFormula(formula, parseNot(formula))
 
-    elif formular[current] == 'I':  # Impl()
+    elif formula[current] == 'I':  # Impl()
         incCur()
-        return parseFormular(formular, parseImpl(formular))
+        return parseFormula(formula, parseImpl(formula))
 
-    elif formular[current] == 'B':
+    elif formula[current] == 'B':
         incCur()
 
-        if formular[current] == 'O':  # BOT
-            return parseFormular(formular, parseBot(formular))
+        if formula[current] == 'O':  # BOT
+            return parseFormula(formula, parseBot(formula))
         else:  # BiImpl()
-            return parseFormular(formular, parseBiImpl(formular))
+            return parseFormula(formula, parseBiImpl(formula))
 
-    elif formular[current] in string.ascii_lowercase:  # atom
+    elif formula[current] in string.ascii_lowercase:  # atom
         incCur()
-        return parseFormular(formular, parseAtom(formular))
+        return parseFormula(formula, parseAtom(formula))
 
-    elif formular[current] == 'T':  # TOP
+    elif formula[current] == 'T':  # TOP
         incCur()
-        return parseFormular(formular, parseTop(formular))
+        return parseFormula(formula, parseTop(formula))
         
-    elif formular[current] == ',':
+    elif formula[current] == ',':
         incCur()
 
-        if formular[current] != " ":  # Skip the blank line
+        if formula[current] != " ":  # Skip the blank line
             return False
         incCur()
 
-        return acc  # Return if one of the two break conditions takes place -> in this the left side of a formular got fully parsed and now the creted Syntax tree gets returned
+        return acc  # Return if one of the two break conditions takes place -> in this the left side of a formula got fully parsed and now the creted Syntax tree gets returned
 
-    elif formular[current] == ')':
+    elif formula[current] == ')':
         incCur()
-        return acc  # Return the right side of the recursive Formular
+        return acc  # Return the right side of the recursive Formula
 
     
     else:  # This should never get triggered, just in case
-        current = 0  # Make sure to reset this variable or you can't parse other formulars
+        current = 0  # Make sure to reset this variable or you can't parse other formulas
         return False
 
 
 
-def convertCNF(formular : Formular) -> Formular:
+def convertCNF(formula : Formula) -> Formula:
     """
-        This function is used to calculate the CNF of any given Formular.
+        This function is used to calculate the CNF of any given Formula.
 
         Note:
-            This function isn't perfect, because of the BiImpl. The correctness is haneled
+            This function isn't perfect, because of the BiImpl. The correctness is handled
             in convertDIMACS!
 
         Doctests:
             >>> resCur()
-            >>> res = parseFormular("And(Impl(a, b), And(Impl(c, d), Not(Impl(e, f))))")
+            >>> res = parseFormula("And(Impl(a, b), And(Impl(c, d), Not(Impl(e, f))))")
             >>> print(convertCNF(res))
             ((¬ a ∨ b) ∧ ((¬ c ∨ d) ∧ (e ∧ ¬ f)))
             >>> resCur()
-            >>> res2 = parseFormular("And(Impl(Not(a), b), And(Not(b), Not(a)))")
-            >>> print(convertCNF(res2))
+            >>> res = parseFormula("And(Impl(Not(a), b), And(Not(b), Not(a)))")
+            >>> print(convertCNF(res))
             ((a ∨ b) ∧ (¬ b ∧ ¬ a))
     """
 
     # Break Condition
-    if type(formular) == str or formular.atom:
-        return formular
+    if type(formula) == str or formula.atom:
+        return formula
 
     
-    if formular.value == "Not":
+    if formula.value == "Not":
         # Neg(⊤) -> ⊥
-        if formular.neg.top:
-            formular = Formular("BOT", bot=True)
+        if formula.neg.top:
+            formula = Formula("BOT", bot=True)
 
         # Neg(⊥) -> ⊤
-        elif formular.neg.bot:
-            formular = Formular("TOP", top=True)
+        elif formula.neg.bot:
+            formula = Formula("TOP", top=True)
 
         # Involution of the Negator
-        elif formular.neg.value == "Not":
+        elif formula.neg.value == "Not":
             
-            formular = formular.neg.neg
+            formula = formula.neg.neg
 
         # DeMorgan when the inner Value is a And
-        elif formular.neg.value == "And":
+        elif formula.neg.value == "And":
             
-            formular = Formular("Or", Formular("Not", neg=formular.neg.left), Formular("Not", neg=formular.neg.right))
+            formula = Formula("Or", Formula("Not", neg=formula.neg.left), Formula("Not", neg=formula.neg.right))
 
         # DeMorgan when the inner Value is a Or
-        elif formular.neg.value == "Or":
+        elif formula.neg.value == "Or":
             
-            formular = Formular("And", Formular("Not", neg=formular.neg.left), Formular("Not", neg=formular.neg.right))            
+            formula = Formula("And", Formula("Not", neg=formula.neg.left), Formula("Not", neg=formula.neg.right))            
 
 
           
-    if formular.value == "Or":
-        # Or(⊤, Formular) or Or(Formular, ⊤) or Or(⊤, ⊤) --> ⊤
-        if formular.left.top or formular.right.top:
-            formular = Formular("TOP", top=True)
+    if formula.value == "Or":
+        # Or(⊤, Formula) or Or(Formula, ⊤) or Or(⊤, ⊤) --> ⊤
+        if formula.left.top or formula.right.top:
+            formula = Formula("TOP", top=True)
 
         # Or(⊥, ⊥) --> ⊥
-        elif formular.left.bot and formular.right.bot:
-            formular = Formular("BOT", bot=True)
+        elif formula.left.bot and formula.right.bot:
+            formula = Formula("BOT", bot=True)
 
-        # Or(⊥, Formular) --> Formular
-        elif formular.left.bot:
-            formular = formular.right
+        # Or(⊥, Formula) --> Formula
+        elif formula.left.bot:
+            formula = formula.right
 
-        # Or(Formular, ⊥) --> Formular
-        elif formular.right.bot:
-            formular = formular.left
+        # Or(Formula, ⊥) --> Formula
+        elif formula.right.bot:
+            formula = formula.left
 
         # Idempotenz of the Or Operator  
-        elif str(formular.left) == str(formular.right):
-            formular = formular.left
+        elif str(formula.left) == str(formula.right):
+            formula = formula.left
 
 
         # Distributivity when (A u B) o (C u D) -> (A o (C u D)) u (B o (C u D)) -> ((A o C) u (A o D)) u ((B o C) u (B o D))
-        elif formular.left.value == "And" and formular.right.value == "And":
+        elif formula.left.value == "And" and formula.right.value == "And":
 
-            acc = Formular("And", 
-                Formular("Or", formular.left.left, formular.right),
-                Formular("Or", formular.left.right, formular.right)
+            acc = Formula("And", 
+                Formula("Or", formula.left.left, formula.right),
+                Formula("Or", formula.left.right, formula.right)
                 )
 
-            formular = Formular("And", 
-                Formular("And", 
-                    Formular("Or", acc.left.left, acc.left.right.left),
-                    Formular("Or", acc.left.left, acc.left.right.right)), 
-                Formular("And",
-                    Formular("Or", acc.right.left, acc.right.right.left),
-                    Formular("Or", acc.right.left, acc.right.right.right))
+            formula = Formula("And", 
+                Formula("And", 
+                    Formula("Or", acc.left.left, acc.left.right.left),
+                    Formula("Or", acc.left.left, acc.left.right.right)), 
+                Formula("And",
+                    Formula("Or", acc.right.left, acc.right.right.left),
+                    Formula("Or", acc.right.left, acc.right.right.right))
                 )
 
 
 
         # Distributivity when (A u B) o C -> (A o C) u (B o C)
-        elif formular.left.value == "And":
+        elif formula.left.value == "And":
 
-            formular = Formular("And", 
-                Formular("Or", formular.left.left, formular.right),
-                Formular("Or", formular.left.right, formular.right)
+            formula = Formula("And", 
+                Formula("Or", formula.left.left, formula.right),
+                Formula("Or", formula.left.right, formula.right)
                 )
 
         # Distributivity when C o (A u B)  -> (C o A) u (C o B)
-        elif formular.right.value == "And":
+        elif formula.right.value == "And":
 
-            formular = Formular("And", 
-                Formular("Or", formular.left, formular.right.left),
-                Formular("Or", formular.left, formular.right.right)
+            formula = Formula("And", 
+                Formula("Or", formula.left, formula.right.left),
+                Formula("Or", formula.left, formula.right.right)
                 )
 
   
-    if formular.value == "And":
-        # And(⊥, Formular) or And(Formular, ⊥) or And(⊥, ⊥) --> ⊥
-        if formular.left.bot and formular.right.bot:
-            formular = Formular("BOT", bot=True)
+    if formula.value == "And":
+        # And(⊥, Formula) or And(Formula, ⊥) or And(⊥, ⊥) --> ⊥
+        if formula.left.bot and formula.right.bot:
+            formula = Formula("BOT", bot=True)
 
         # Or(⊤, ⊤) --> ⊤
-        elif formular.left.bot and formular.right.bot:
-            formular = Formular("TOP", top=True)
+        elif formula.left.bot and formula.right.bot:
+            formula = Formula("TOP", top=True)
 
-        # Or(⊤, Formular) --> Formular
-        elif formular.left.top:
-            formular = formular.right
+        # Or(⊤, Formula) --> Formula
+        elif formula.left.top:
+            formula = formula.right
 
-        # Or(Formular, ⊤) --> Formular
-        elif formular.right.top:
-            formular = formular.left
+        # Or(Formula, ⊤) --> Formula
+        elif formula.right.top:
+            formula = formula.left
 
         # Idempotenz of the And Operator
-        elif str(formular.left) == str(formular.right):
-            formular = formular.left
+        elif str(formula.left) == str(formula.right):
+            formula = formula.left
     
 
 
     # Make sure to loop trough the whole tree
-    if formular.value == "Not":
-        convertCNF(formular.neg)
+    if formula.value == "Not":
+        convertCNF(formula.neg)
 
-    formular.left = convertCNF(formular.left)
-    formular.right = convertCNF(formular.right)
+    formula.left = convertCNF(formula.left)
+    formula.right = convertCNF(formula.right)
 
-    return formular
+    return formula
 
 
-def getAtom(formular : str, i : int) -> tuple:
-    acc = formular[i]
+def getAtom(formula : str, i : int) -> tuple:
+    """
+        This function gets the full atom if convertDIMAS has found a atom and needs to 
+        know the full name of it. Make sure to only use lowercase ascii atoms, otherwise
+        this will fail.
+    """
+    acc = formula[i]
     running = True
 
     while running:
 
-        c = formular[i+1]  # Index shift becaue the i-te char has already been read
+        c = formula[i+1]  # Index shift becaue the i-te char has already been read
 
         if c not in string.ascii_lowercase:
             running = False
@@ -435,33 +436,78 @@ def getAtom(formular : str, i : int) -> tuple:
     return (acc, i)
 
 
-def convertDIMACS(formular : Formular) -> Formular:
-    if formular.top:
+def convertDIMACS(formula : Formula):
+    """
+        This function gets a Formula which is in CNF and converts it into the DIMACS-Format
+        so we can print it and we can pass it into Minisat to get the Modells of the given
+        Formula.
+
+        Doctests:
+            >>> formula_str = "And(Impl(Not(a), And(b, c)), Or(Not(b), BiImpl(Or(Not(a), c), d)))"
+            >>> formula = parseFormula(formula_str)
+            >>> cnf = convertCNF(formula)
+            >>> convertDIMACS(cnf)
+            ['a', 'b', 'c', 'd']
+            p cnf 4 5
+            1 2 0
+            1 3 0
+            -2 1 0
+            -3 4 0
+            -2 -1 3 -4 0
+
+            Here you can see a Example that the Function convertCNF is not perfect and you need
+            to pass the created cnf through the convertCNF another time.
+            >>> formula_str = "BiImpl(a, BiImpl(a, b))"
+            >>> formula = parseFormula(formula_str)
+            >>> cnf = convertCNF(formula)
+            >>> convertDIMACS(cnf)
+            ['a', 'b']
+            p cnf 2 5
+            -1 2 0
+            -1 1 -2 0
+            1 0
+            -2 -1 0
+            2 0
+        
+        Returns:
+            This function do not return anything. It just prints the full DIMACS-Format of the
+            given CNF and the arrangement of all the given atoms, so you can take a look which
+            of the numbers corresponds to the given atom.
+    """
+
+    # Check the given Formula and based on what it is, print an Error or the DIMACS-Format
+    # This is to prevent Errors which can occure because the parsing of the atom can
+    # be out of Index and a Exception can get triggered.
+
+    if formula.top:
         print("This is a tautology! No need to print the DIMACS-Format!")
         return
 
-    elif formular.bot:
-        print("This is a unsatisfiable Formular! No need to print the DIMACS-Format!")
+    elif formula.bot:
+        print("This is a unsatisfiable Formula! No need to print the DIMACS-Format!")
         return
 
-    elif formular.atom:  # If the Formular is only one atom, then print the following
+    elif formula.atom:  # If the Formula is only one atom, then print the following
         print("p cnf 1 1\n1 0")
         return
 
     try:
-        if formular.neg.atom:  # If the Formular is onle one negetaed atom
+        if formula.neg.atom:  # If the Formula is onle one negetaed atom
             print("p cnf 1 1\n-1 0")
             return
     except:
         pass
 
+    # Checking of the Formula end. Now move on to parse it and get the DIMACS-Format
+    # ===============================================================================
+
     res = []
     acc = []
     variables = []
-    str_form = str(formular)
+    str_form = str(formula)
     i = 0
 
-    while i < len(str(formular)):
+    while i < len(str(formula)):
 
         c = str_form[i]
 
@@ -515,25 +561,21 @@ def convertDIMACS(formular : Formular) -> Formular:
 
 
 
-def main(formular : Formular) -> str:
+def main(formula : Formula) -> str:
     """
         This function unites all the previous functions and prints out the DIMACS Format of an
-        given Formular.
+        given Formula.
 
         Doctests:
             >>> main("And(Impl(Not(a), b), And(Not(b), Not(a)))")
-            Original: ((¬ ¬ a ∨ b) ∧ (¬ b ∧ ¬ a))
-            CNF:      ((a ∨ b) ∧ (¬ b ∧ ¬ a))
-            <BLANKLINE>
+            ['a', 'b']
             p cnf 2 3
             1 2 0
             -2 0
             -1 0
+
             >>> main("And(Impl(Not(a), And(b, c)), Or(Not(b), BiImpl(Or(Not(a), c), d)))")
-            Original: ((¬ ¬ a ∨ (b ∧ c)) ∧ (¬ b ∨ ((¬ (¬ a ∨ c) ∨ d) ∧ ((¬ a ∨ c) ∨ ¬ d))))
-            CNF converting failed! Retrying...
-            CNF:      (((a ∨ b) ∧ (a ∨ c)) ∧ (((¬ b ∨ (a ∨ d)) ∧ (¬ b ∨ (¬ c ∨ d))) ∧ (¬ b ∨ ((¬ a ∨ c) ∨ ¬ d))))
-            <BLANKLINE>
+            ['a', 'b', 'c', 'd']
             p cnf 4 5
             1 2 0
             1 3 0
@@ -542,17 +584,14 @@ def main(formular : Formular) -> str:
             -2 -1 3 -4 0
 
             >>> main("Or(asdf, Or(asdf, Or(asdf, asdf)))")
-            Original: (asdf ∨ (asdf ∨ (asdf ∨ asdf)))
-            CNF converting failed! Retrying...
-            CNF:      asdf
-            <BLANKLINE>
             p cnf 1 1
             1 0
 
     """
     resCur()  # Make sure the current counter is reseted to 0, because there can be special cases 
-    acc = parseFormular(formular)
-    print("Original: " + str(acc))
+    acc = parseFormula(formula)
+
+    if DEBUG: print("Original: " + str(acc))
 
     if type(acc) is bool:
         print("The Syntax of the given Formula is false!")
@@ -562,12 +601,11 @@ def main(formular : Formular) -> str:
 
     # Make sure there is a valid CNF, when there was a change, repeat it a often as necessary
     while str(cnf) != str(convertCNF(cnf)):
-        print("CNF converting failed! Retrying...")
         cnf = convertCNF(cnf)
 
 
 
-    print("CNF:      " + str(cnf), end="\n\n")
+    if DEBUG: print("CNF:      " + str(cnf), end="\n\n")
 
     convertDIMACS(cnf)
 
@@ -590,6 +628,6 @@ if __name__ == '__main__':
     # This is the whole term for solving the given NSP in Exercise 01 d)
     # main("And(Or(fritzfo, fritzso), And(Or(fritzft, fritzst), And(Or(fridafo, fridaso), And(Or(fridaft, fridast), And(Or(udofo, Or(udoso, udono)), And(Or(udoft, Or(udost, udont)), And(Or(irafo, iraso), And(Or(iraft, irast), And(Or(heinzfo, Or(heinzso, heinzno)), And(Or(heinzft, Or(heinzst, heinznt)), And(norano, And(norant, And(BiImpl(fritzfo, fridafo), And(BiImpl(fritzso, fridaso), And(BiImpl(fritzft, fridaft), And(BiImpl(fritzst, fridast), And(BiImpl(fritzfo, Not(fritzso)), And(BiImpl(fritzso, Not(fritzfo)), And(BiImpl(fritzft, Not(fritzst)), And(BiImpl(fritzst, Not(fritzft)), And(BiImpl(fridafo, Not(fridaso)), And(BiImpl(fridaso, Not(fridafo)), And(BiImpl(fridaft, Not(fridast)), And(BiImpl(fridast, Not(fridaft)), And(BiImpl(heinzfo, Not(Or(heinzso, heinzno))), And(BiImpl(heinzso, Not(Or(heinzfo, heinzno))), And(BiImpl(heinzno, Not(Or(heinzfo, heinzso))), And(BiImpl(heinzft, Not(Or(heinzst, heinznt))), And(BiImpl(heinzst, Not(Or(heinzft, heinznt))), And(BiImpl(heinznt, Not(Or(heinzft, heinzst))), And(BiImpl(udofo, Not(Or(udoso, udono))), And(BiImpl(udoso, Not(Or(udofo, udono))), And(BiImpl(udono, Not(Or(udofo, udoso))), And(BiImpl(udoft, Not(Or(udost, udont))), And(BiImpl(udost, Not(Or(udoft, udont))), And(BiImpl(udont, Not(Or(udoft, udost))), And(BiImpl(irafo, Not(iraso)), And(BiImpl(iraso, Not(irafo)), And(BiImpl(iraft, Not(irast)), And(BiImpl(irast, Not(iraft)), And(BiImpl(heinzno, Not(udono)), And(BiImpl(udono, Not(heinzno)), And(BiImpl(heinznt, Not(udont)), And(BiImpl(udont, Not(heinznt)), And(Impl(fridafo, Not(Or(heinzfo, Or(udofo, irafo)))), And(Impl(fridaso, Not(Or(heinzso, Or(udoso, iraso)))), And(Impl(fridaft, Not(Or(heinzft, Or(udoft, iraft)))), And(Impl(fridast, Not(Or(heinzst, Or(udost, irast)))), And(Impl(heinzno, Not(heinzft)), Impl(udono, Not(udoft)))))))))))))))))))))))))))))))))))))))))))))))))))")
 
-    main("Impl(q, BOT)")
+    main("BiImpl(a, BiImpl(a, b))")
     
 

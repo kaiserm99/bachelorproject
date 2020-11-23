@@ -8,7 +8,7 @@ Usage of the Script:
 
 
 """
-# helping_atble.py, written on: Donnerstag,  12 Oktober 2020.
+# helping_stable.py, written on: Donnerstag,  12 Oktober 2020.
 
 import sys
 import networkx as nx
@@ -183,7 +183,7 @@ def compute_loops(imp_rules : list):
     # print(graph)
     # At this point the Graph is fully formed and we need to calculate all the Loops by using networkx
     graph = nx.DiGraph(graph)
-
+ 
     # draw_graph(graph)
     loops = list(nx.simple_cycles(graph))  # This is a list of lists with all the loops in the graph
 
@@ -269,7 +269,6 @@ def compute_loop_formular(loops : list, imp_rules : list):
 
         loop_formulars.append("Impl({0}, {1})".format(left, right))
 
-    # print(imp_rules)
     # Return the resulting Loop-Formulars
     return loop_formulars
 

@@ -236,7 +236,7 @@ def cmpl_parser(prog : str):
     
     # The following Part is for adding all the atoms which are not in any head of the rules
     # -------------------------------------------------------------------------------------
-    res = acc_impls_spez_written  # Later, it is a list with all the
+    res = acc_impls_spez_written  # Later, it is a list with th full cmpl
     
     for atom in diff_atoms:
         res.append("BiImpl(%s, BOT)" % atom)  
