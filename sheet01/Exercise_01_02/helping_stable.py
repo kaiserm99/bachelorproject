@@ -31,8 +31,8 @@ class bcolors:
 def get_body_atoms(lst : list) -> list:
     """
         This function is used to parse all the given bodys and return all the atoms which are
-        inside the given formulars.
-        Returns a list with all the atoms which are in the formular
+        inside the given formulas.
+        Returns a list with all the atoms which are in the formula
     """
     acc_body_atoms = []
     
@@ -143,7 +143,7 @@ def get_head_atoms(lst : list):
 def compute_loops(imp_rules : list):
     
     if len(imp_rules) == 0:
-        print("You provided no Rules which don't contain a TOP or a BOT so there is no need for Loop-Formulars")
+        print("You provided no Rules which don't contain a TOP or a BOT so there is no need for Loop-Formulas")
         return []
 
     graph = {}  # Save the graph as a dict
@@ -187,15 +187,12 @@ def compute_loops(imp_rules : list):
     # draw_graph(graph)
     loops = list(nx.simple_cycles(graph))  # This is a list of lists with all the loops in the graph
 
-    print("\nPrinting all the found Loops...\n" + "="*40)
-    print("Loops: ", loops)
-
     return loops
 
 
-def compute_loop_formular(loops : list, imp_rules : list):
+def compute_loop_formula(loops : list, imp_rules : list):
 
-    loop_formulars = []
+    loop_formulas = []
 
     # Loop through all loops and create R-
     for loop in loops:
@@ -248,14 +245,14 @@ def compute_loop_formular(loops : list, imp_rules : list):
                 i += 1
 
         # r_minus is now a dict with all the p Atoms and all the corresponding Bodys.
-        # Now apply the last Loop-Formular rule
+        # Now apply the last Loop-Formula rule
 
         all_bodys = []
         all_heads = []
 
         for head, bodys in r_minus.items():
 
-            # There is no need to check for dupplicates beacause the Loop-Formular has a Or in it
+            # There is no need to check for dupplicates beacause the Loop-Formula has a Or in it
             for body in bodys:
                 all_bodys.append(body)
             all_heads.append(head)
@@ -267,10 +264,10 @@ def compute_loop_formular(loops : list, imp_rules : list):
         # Bring all the Heady in the right form: And(Not(p1), And(Not(p2), ...))
         right = write_rules(all_heads, "And", atom_start="Not(", atom_end=")")
 
-        loop_formulars.append("Impl({0}, {1})".format(left, right))
+        loop_formulas.append("Impl({0}, {1})".format(left, right))
 
-    # Return the resulting Loop-Formulars
-    return loop_formulars
+    # Return the resulting Loop-Formulas
+    return loop_formulas
 
 
 def write_rules(lst : list, op, atom_start="", atom_end="", wrapper_op=""):

@@ -13,7 +13,7 @@ Usage of the Script:
 import sys, string
 
 # Only use if needed more recursion depth
-# =======================================
+# ============================================================================================
 # import resource
 # resource.setrlimit(resource.RLIMIT_STACK, (2**29,-1))
 # sys.setrecursionlimit(10**6)
@@ -68,6 +68,9 @@ def resCur():
     current = 0
 
 
+# All atomic functions which are necessary to parse the current logical Symbol and transform
+# it into the right Format.
+# ============================================================================================
 def parseOr(formula : Formula) -> Formula:
     # Check if the Word is spelled correctly
     for c in "r(":
@@ -118,7 +121,6 @@ def parseImpl(formula : Formula) -> Formula:
     return Formula("Or", Formula("Not", neg=left), right)
 
 
-
 # A <-> B --> (-A o B) u () (A o -B)
 def parseBiImpl(formula : Formula) -> Formula:
     # Check if the Word is spelled correctly
@@ -138,7 +140,6 @@ def parseBiImpl(formula : Formula) -> Formula:
                     Formula("Or", left, Formula("Not", neg=right)))
 
 
-
 def parseNot(formula : Formula) -> Formula:
     # Check if the Word is spelled correctly
     for c in "ot(":
@@ -152,7 +153,6 @@ def parseNot(formula : Formula) -> Formula:
         return False
 
     return Formula("Not", neg = value)
-
 
 
 def parseAtom(formula) -> Formula:
@@ -190,7 +190,7 @@ def parseBot(formula : Formula) -> Formula:
         incCur()
 
     return Formula("BOT", bot=True)
-
+# ===========================================================================================
 
 
 def parseFormula(formula : str, acc = Formula) -> Formula:
@@ -270,7 +270,6 @@ def parseFormula(formula : str, acc = Formula) -> Formula:
     else:  # This should never get triggered, just in case
         current = 0  # Make sure to reset this variable or you can't parse other formulas
         return False
-
 
 
 def convertCNF(formula : Formula) -> Formula:
@@ -514,13 +513,11 @@ def convertDIMACS(formula : Formula):
         if c == "\u00AC":  # If there is a neg char
             # Format: i = neg, i+1 = BLANK, i+2 = Atom beginning
 
-            d = str_form[i]
-
             atom, i = getAtom(str_form, i+2)  # Because of the format an index shift
 
-            d += atom
+            c += atom
 
-            if d not in acc: acc.append(d)  # Make sure by checking, that you don't put one Variable in which is already in 
+            if c not in acc: acc.append(c)  # Make sure by checking, that you don't put one Variable in which is already in 
         
             if atom not in variables: variables.append(atom)  # Check if the atom is already in the List, otherwise append it
 
@@ -559,9 +556,7 @@ def convertDIMACS(formula : Formula):
         print("0")
 
 
-
-
-def main(formula : Formula) -> str:
+def main(formula : Formula):
     """
         This function unites all the previous functions and prints out the DIMACS Format of an
         given Formula.
@@ -588,25 +583,32 @@ def main(formula : Formula) -> str:
             1 0
 
     """
-    resCur()  # Make sure the current counter is reseted to 0, because there can be special cases 
-    acc = parseFormula(formula)
+    resCur()  # Make sure the current counter is reseted to 0, because there can be special cases
 
-    if DEBUG: print("Original: " + str(acc))
+    # At first parse the current formular and check if it a valid formula
+    # ========================================================================================
+    formula = parseFormula(formula)
 
-    if type(acc) is bool:
+    if DEBUG: print("Original: " + str(formula))
+
+    # If the formula is from the type bool, then it was a invalid formula and a False got returned
+    if type(formula) is bool:
         print("The Syntax of the given Formula is false!")
         return
-
-    cnf = convertCNF(acc)
+    
+    # Then convert the parsed formula into the CNF and make sure the CNF is fully applied
+    # ========================================================================================    
+    cnf = convertCNF(formula)
 
     # Make sure there is a valid CNF, when there was a change, repeat it a often as necessary
     while str(cnf) != str(convertCNF(cnf)):
         cnf = convertCNF(cnf)
 
 
-
     if DEBUG: print("CNF:      " + str(cnf), end="\n\n")
 
+    # At last convert the CNF into the DIMACS-Fomat. This function prints out the right Format.
+    # ========================================================================================
     convertDIMACS(cnf)
 
 
@@ -626,8 +628,6 @@ if __name__ == '__main__':
     
 
     # This is the whole term for solving the given NSP in Exercise 01 d)
-    # main("And(Or(fritzfo, fritzso), And(Or(fritzft, fritzst), And(Or(fridafo, fridaso), And(Or(fridaft, fridast), And(Or(udofo, Or(udoso, udono)), And(Or(udoft, Or(udost, udont)), And(Or(irafo, iraso), And(Or(iraft, irast), And(Or(heinzfo, Or(heinzso, heinzno)), And(Or(heinzft, Or(heinzst, heinznt)), And(norano, And(norant, And(BiImpl(fritzfo, fridafo), And(BiImpl(fritzso, fridaso), And(BiImpl(fritzft, fridaft), And(BiImpl(fritzst, fridast), And(BiImpl(fritzfo, Not(fritzso)), And(BiImpl(fritzso, Not(fritzfo)), And(BiImpl(fritzft, Not(fritzst)), And(BiImpl(fritzst, Not(fritzft)), And(BiImpl(fridafo, Not(fridaso)), And(BiImpl(fridaso, Not(fridafo)), And(BiImpl(fridaft, Not(fridast)), And(BiImpl(fridast, Not(fridaft)), And(BiImpl(heinzfo, Not(Or(heinzso, heinzno))), And(BiImpl(heinzso, Not(Or(heinzfo, heinzno))), And(BiImpl(heinzno, Not(Or(heinzfo, heinzso))), And(BiImpl(heinzft, Not(Or(heinzst, heinznt))), And(BiImpl(heinzst, Not(Or(heinzft, heinznt))), And(BiImpl(heinznt, Not(Or(heinzft, heinzst))), And(BiImpl(udofo, Not(Or(udoso, udono))), And(BiImpl(udoso, Not(Or(udofo, udono))), And(BiImpl(udono, Not(Or(udofo, udoso))), And(BiImpl(udoft, Not(Or(udost, udont))), And(BiImpl(udost, Not(Or(udoft, udont))), And(BiImpl(udont, Not(Or(udoft, udost))), And(BiImpl(irafo, Not(iraso)), And(BiImpl(iraso, Not(irafo)), And(BiImpl(iraft, Not(irast)), And(BiImpl(irast, Not(iraft)), And(BiImpl(heinzno, Not(udono)), And(BiImpl(udono, Not(heinzno)), And(BiImpl(heinznt, Not(udont)), And(BiImpl(udont, Not(heinznt)), And(Impl(fridafo, Not(Or(heinzfo, Or(udofo, irafo)))), And(Impl(fridaso, Not(Or(heinzso, Or(udoso, iraso)))), And(Impl(fridaft, Not(Or(heinzft, Or(udoft, iraft)))), And(Impl(fridast, Not(Or(heinzst, Or(udost, irast)))), And(Impl(heinzno, Not(heinzft)), Impl(udono, Not(udoft)))))))))))))))))))))))))))))))))))))))))))))))))))")
+    main("And(Or(fritzfo, fritzso), And(Or(fritzft, fritzst), And(Or(fridafo, fridaso), And(Or(fridaft, fridast), And(Or(udofo, Or(udoso, udono)), And(Or(udoft, Or(udost, udont)), And(Or(irafo, iraso), And(Or(iraft, irast), And(Or(heinzfo, Or(heinzso, heinzno)), And(Or(heinzft, Or(heinzst, heinznt)), And(norano, And(norant, And(BiImpl(fritzfo, fridafo), And(BiImpl(fritzso, fridaso), And(BiImpl(fritzft, fridaft), And(BiImpl(fritzst, fridast), And(BiImpl(fritzfo, Not(fritzso)), And(BiImpl(fritzso, Not(fritzfo)), And(BiImpl(fritzft, Not(fritzst)), And(BiImpl(fritzst, Not(fritzft)), And(BiImpl(fridafo, Not(fridaso)), And(BiImpl(fridaso, Not(fridafo)), And(BiImpl(fridaft, Not(fridast)), And(BiImpl(fridast, Not(fridaft)), And(BiImpl(heinzfo, Not(Or(heinzso, heinzno))), And(BiImpl(heinzso, Not(Or(heinzfo, heinzno))), And(BiImpl(heinzno, Not(Or(heinzfo, heinzso))), And(BiImpl(heinzft, Not(Or(heinzst, heinznt))), And(BiImpl(heinzst, Not(Or(heinzft, heinznt))), And(BiImpl(heinznt, Not(Or(heinzft, heinzst))), And(BiImpl(udofo, Not(Or(udoso, udono))), And(BiImpl(udoso, Not(Or(udofo, udono))), And(BiImpl(udono, Not(Or(udofo, udoso))), And(BiImpl(udoft, Not(Or(udost, udont))), And(BiImpl(udost, Not(Or(udoft, udont))), And(BiImpl(udont, Not(Or(udoft, udost))), And(BiImpl(irafo, Not(iraso)), And(BiImpl(iraso, Not(irafo)), And(BiImpl(iraft, Not(irast)), And(BiImpl(irast, Not(iraft)), And(BiImpl(heinzno, Not(udono)), And(BiImpl(udono, Not(heinzno)), And(BiImpl(heinznt, Not(udont)), And(BiImpl(udont, Not(heinznt)), And(Impl(fridafo, Not(Or(heinzfo, Or(udofo, irafo)))), And(Impl(fridaso, Not(Or(heinzso, Or(udoso, iraso)))), And(Impl(fridaft, Not(Or(heinzft, Or(udoft, iraft)))), And(Impl(fridast, Not(Or(heinzst, Or(udost, irast)))), And(Impl(heinzno, Not(heinzft)), Impl(udono, Not(udoft)))))))))))))))))))))))))))))))))))))))))))))))))))")
 
-    main("BiImpl(a, BiImpl(a, b))")
-    
-
+    # main("BiImpl(a, BiImpl(a, b))")

@@ -293,72 +293,47 @@ def cmpl_parser(prog : str):
     return (res, acc_impls) # In this list is the complete cmpl. At first all the BOT and TOP Rules, then the missing atoms, then the BiImpl rules
 
 
-
-
-def main(prog : str):
-    """
-    
-    >>> tester = "Impl(TOP, a), Impl(Not(a), b), Impl(And(a, Not(d)), c), Impl(And(Not(c), Not(e)), d), Impl(And(b, Not(f)), e), Impl(e, e)"
-    >>> main(tester)
-    BiImpl(TOP, a)
-    BiImpl(f, BOT)
-    BiImpl(Not(a), b)
-    BiImpl(And(a, Not(d)), c)
-    BiImpl(And(Not(c), Not(e)), d)
-    BiImpl(Or(And(b, Not(f)), e), e)
-    {'a': ['c'], 'b': ['e'], 'e': ['e'], 'c': [], 'd': []}
-    [['e']]
-
-
-    >>> tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(And(a, Not(d)), c), Impl(And(a, Not(c)), d), Impl(And(c, Not(a)), e), Impl(And(d, Not(b)), e)"
-    >>> main(tester)
-    BiImpl(Not(b), a)
-    BiImpl(Not(a), b)
-    BiImpl(And(a, Not(d)), c)
-    BiImpl(And(a, Not(c)), d)
-    BiImpl(Or(And(c, Not(a)), And(d, Not(b))), e)
-    {'a': ['c', 'd'], 'c': ['e'], 'd': ['e'], 'b': [], 'e': []}
-    []
-
-
-    >>> tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(Not(a), c), Impl(d, c), Impl(And(a, b), d), Impl(c, d)"
-    >>> main(tester)
-    BiImpl(Not(b), a)
-    BiImpl(Not(a), b)
-    BiImpl(Or(Not(a), d), c)
-    BiImpl(Or(And(a, b), c), d)
-    {'d': ['c'], 'a': ['d'], 'b': ['d'], 'c': ['d']}
-    [['c', 'd']]
-
+def main(prog : str, only_dimacs = False):
     """
 
-    # Here you will get a list of all the
+    """
+    # In the First step the Program is parsed and checked. Then all Clark's Completion Rules
+    # gets created and returned in a tuple. The imp_rules get later used to create the Loop-Formulas
+    # ===========================================================================================
     (cmpl_res, imp_rules) = cmpl_parser(prog)
 
-    print("\nPrinting all the Clark's Completion...\n" + "="*40)
-    for form in cmpl_res:
-        print(form)
+    if not only_dimacs:
+        print("Printing all Formulas in the Clark's Completion...\n" + "="*60)
+        for form in cmpl_res:
+            print(form)
 
     # Create the Graph which is needed to detect the loops
+    # ========================================================================================
     loops = compute_loops(imp_rules)
 
-    # If the loops variable is empty there is no need to compute those foumulars
+    if not only_dimacs:
+        print("\nPrinting all the found Loops...\n" + "="*60)
+        for loop in loops:
+            print(loop)
+
+    # If the loops variable is empty there is no need to compute those foumulars. Otherwise compute
+    # all those Formulas based on the earlier created imp_rules.
+    # ======================================================================================== 
     if len(loops) > 0:
-        loop_formulars = compute_loop_formular(loops, imp_rules)
+        loop_formulas = compute_loop_formula(loops, imp_rules)
 
-        print("\nPrinting all the found Loop-Formulars...\n" + "="*40)
-        for lf in loop_formulars:
-            cmpl_res.append(lf)
-            print(lf)
+        if not only_dimacs:
+            print("\nPrinting all the found Loop-Formulas...\n" + "="*60)
+            for lf in loop_formulas:
+                cmpl_res.append(lf)
+                print(lf)
 
+    # At this point there is the complete cmpl and the Loop-Formulas in the variable cmpl_res.
+    # Now all of those rules need to get conjugated and gets formatted into DIMACS-Format.
+    # ========================================================================================
+    if not only_dimacs: print("\nPrinting the full DIMACS-Format...\n" + "="*60)
 
-    # At this point there is the complete cmpl and the Loop-Formular, which now get written
-    # so the DIMACS-Parser can start
-    print("\n\n")
-
-    end = write_rules(cmpl_res, "And")
-
-    dimacs(end)
+    dimacs(write_rules(cmpl_res, "And"))
 
 
 
@@ -392,4 +367,4 @@ tester = "Impl(Not(b), a), Impl(a, c), Impl(And(b, c), d), Impl(And(b, Not(a)), 
 # tester = "Impl(TOP, a), Impl(And(a, Not(d)), c), Impl(And(b, Not(f)), e), Impl(Not(a), b), Impl(And(Not(c), Not(e)), d), Impl(e, e)"
 
 if __name__ == '__main__':
-    main(tester)
+    main(tester, True)
