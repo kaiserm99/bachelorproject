@@ -1,14 +1,24 @@
- #!/usr/bin/env python3
+#!/usr/bin/env python3
 
 """
 Copyright 2020, University of Freiburg
+Bachelor-project - Foundations of Artificial Intelligence
+
 Author: Marco Kaiser <kaiserm@informatik.uni-freiburg.de>
 
-Usage of the Script:
+Description:
+    This script represents the given graph of cities and their connection
+    to each other. With the help of Linear Programming a valid path from
+    Frankfurt to München is calculated and the used edges get printed out
+    at the end of the calculation.
+    This file is static and if you want to use another graph, then you have
+    to change the full array, weights, ... .
 
+Usage:
+    python3 shortest_path.py
 
 """
-# shortest_path.py, written on: Mittwoch,  7 Oktober 2020.
+# shortest_path.py, written on: Mittwoch, 7 Oktober 2020.
 
 
 """
@@ -88,7 +98,7 @@ def main():
     res = linprog(c, A_eq=A, b_eq=b, bounds=bounds, method='simplex')
 
 
-    # Print the whole result of the Linear Optimisation
+    # Print the whole result of the Linear Optimization
     print(res, end="\n\n")
 
     acc = 1

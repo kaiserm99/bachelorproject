@@ -1,3 +1,23 @@
+#!/usr/bin/env python3
+
+"""
+Copyright 2020, University of Freiburg
+Bachelor-project - Foundations of Artificial Intelligence
+
+Author: Marco Kaiser <kaiserm@informatik.uni-freiburg.de>
+
+Description:
+    This file is for solving the given minesweeper board by creating
+    the necessary constraints. It can't be perfect because of the
+    probability of the mines, but there is more in the the exercise
+    d) to read about.
+
+Usage:
+    This file is only imported and can't be use by itself, otherwise
+    it wouldn't function.
+
+"""
+
 from constraint import *
 import operator
 from minesweeper_board import *

@@ -2,21 +2,46 @@
 
 """
 Copyright 2020, University of Freiburg
+Bachelor-project - Foundations of Artificial Intelligence
+
 Author: Marco Kaiser <kaiserm@informatik.uni-freiburg.de>
 
-Usage of the Script:
+Description:
+	This script contains a Parser which you can provide a Formula in the following syntax:
 
+	phi --> a | b | .. | aa | ab | .. | And(phi, phi) | Or(phi, phi) | Impl(phi, phi) | BiImpl(phi, phi)
+			Not(phi) | TOP | BOT
+
+	If you provide such a Formula as a String it will get parsed, converted into CNF and then
+	it will get converted into the DIMACS-Format so you can solve it and get all the models of
+	the provided Formula.
+
+Usage:
+	You need to open up this script an provide the Formula as a String to the main(str : Formula)
+	function. Then you need to execute the script by using:
+
+	python3 parser.py
+
+	You will get the DIMACS-Format for every Formula you provide into.
+
+Note:
+	If you want to see some of the Debug informations e.g. the provided Formula or the Formula when
+	it is in the CNF, then just set the DEBUG variable in line 36 to true. There is no difference to
+	the output, there are just some more informations I used to check if my parser did everything right.
 
 """
-# parser.py, written on: Donnerstag,  1 Oktober 2020.
+# parser.py, written on: Donnerstag, 1 Oktober 2020.
 
 import sys, string
+DEBUG = False
+
 
 # Only use if needed more recursion depth
 # ============================================================================================
 # import resource
 # resource.setrlimit(resource.RLIMIT_STACK, (2**29,-1))
 # sys.setrecursionlimit(10**6)
+
 
 class Formula:
     def __init__(self, value = "init", left = "-", right = "-", neg = "-", atom = False, top = False, bot = False):
@@ -54,7 +79,6 @@ class Formula:
         return acc
 
 
-DEBUG = False
 current = 0
 
 
@@ -197,7 +221,7 @@ def parseFormula(formula : str, acc = Formula) -> Formula:
     """ 
         This function is used to parse the whole formula which is given by an string.
         The global Variable current takes care of which letter is used at the moment.
-        This function takes care of the Implications and the Äquvalations and replaces
+        This function takes care of the Implications and the equivalences and replaces
         it directly.
 
         Doctests:
@@ -416,7 +440,7 @@ def convertCNF(formula : Formula) -> Formula:
 def getAtom(formula : str, i : int) -> tuple:
     """
         This function gets the full atom if convertDIMAS has found a atom and needs to 
-        know the full name of it. Make sure to only use lowercase ascii atoms, otherwise
+        know the full name of it. Make sure to only use lowercase ASCII atoms, otherwise
         this will fail.
     """
     acc = formula[i]
@@ -424,7 +448,7 @@ def getAtom(formula : str, i : int) -> tuple:
 
     while running:
 
-        c = formula[i+1]  # Index shift becaue the i-te char has already been read
+        c = formula[i+1]  # Index shift because the i-te char has already been read
 
         if c not in string.ascii_lowercase:
             running = False
@@ -438,7 +462,7 @@ def getAtom(formula : str, i : int) -> tuple:
 def convertDIMACS(formula : Formula):
     """
         This function gets a Formula which is in CNF and converts it into the DIMACS-Format
-        so we can print it and we can pass it into Minisat to get the Modells of the given
+        so we can print it and we can pass it into Minisat to get the models of the given
         Formula.
 
         Doctests:
@@ -475,7 +499,7 @@ def convertDIMACS(formula : Formula):
     """
 
     # Check the given Formula and based on what it is, print an Error or the DIMACS-Format
-    # This is to prevent Errors which can occure because the parsing of the atom can
+    # This is to prevent Errors which can occur because the parsing of the atom can
     # be out of Index and a Exception can get triggered.
 
     if formula.top:
@@ -491,7 +515,7 @@ def convertDIMACS(formula : Formula):
         return
 
     try:
-        if formula.neg.atom:  # If the Formula is onle one negetaed atom
+        if formula.neg.atom:  # If the Formula is only one negated atom
             print("p cnf 1 1\n-1 0")
             return
     except:
@@ -585,7 +609,7 @@ def main(formula : Formula):
     """
     resCur()  # Make sure the current counter is reseted to 0, because there can be special cases
 
-    # At first parse the current formular and check if it a valid formula
+    # At first parse the current formula and check if it a valid formula
     # ========================================================================================
     formula = parseFormula(formula)
 
@@ -607,7 +631,7 @@ def main(formula : Formula):
 
     if DEBUG: print("CNF:      " + str(cnf), end="\n\n")
 
-    # At last convert the CNF into the DIMACS-Fomat. This function prints out the right Format.
+    # At last convert the CNF into the DIMACS-Format. This function prints out the right Format.
     # ========================================================================================
     convertDIMACS(cnf)
 

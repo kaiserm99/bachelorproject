@@ -1,10 +1,28 @@
+#!/usr/bin/env python3
+
+"""
+Copyright 2020, University of Freiburg
+Bachelor-project - Foundations of Artificial Intelligence
+
+Description:
+    There was no need for changing something in this file
+    it was fully provided and it is for illustrating
+    the current state of the minesweeper board and creating
+    the board by placing the mines.
+
+Usage:
+    There is no single usage for this script.
+
+"""
+
 import random
 
 BOMB = "X"
 COVERED = "."
 
+
 class Board:
-    
+
     def __init__(self, width, height):
         self.width = width
         self.height = height
