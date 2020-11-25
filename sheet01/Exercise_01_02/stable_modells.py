@@ -2,16 +2,20 @@
 
 """
 Copyright 2020, University of Freiburg
+Bachelor-project - Foundations of Artificial Intelligence
+
 Author: Marco Kaiser <kaiserm@informatik.uni-freiburg.de>
 
-Usage of the Script:
+Description:
 
+Usage:
 
 """
 # stable_modells.py, written on: Donnerstag,  12 Oktober 2020.
 
 import sys
 from helping_stable import *
+import argparse
 
 # Make sure that the main() Function of the DIMACS-Parser is imported and can be used
 sys.path.insert(1, '../Exercise_01_01/')
@@ -88,7 +92,7 @@ def get_impl(prog : str):
         return get_impl_top(prog)
 
 
-    # It makesk no difference if there is a BOT or a normal atom
+    # It makes no difference if there is a BOT or a normal atom
     # Loop trough the whole prog and count the Brackets
     while running and current < len(prog):
         char = prog[current]
@@ -115,7 +119,7 @@ def get_impl(prog : str):
         sys.exit(1)
 
 
-    for i in range(len(inside)-2, 0, -1):  # -2 becaus the ")" is irrelevant
+    for i in range(len(inside)-2, 0, -1):  # -2 because the ")" is irrelevant
         char = inside[i]
 
         # Get the right head and do some syntax checking
@@ -149,7 +153,7 @@ def cmpl_parser(prog : str):
             "Impl(BODY, HEAD), Impl(BODY, HEAD), Impl(BODY, HEAD), ..."
 
         Therefore it is important that there are only commas and spaces between the rules
-        otherewise it will throw a Syntax Error.
+        otherwise it will throw a Syntax Error.
 
         This functions returns a Tuple. In the first element contains the whole cmpl and the
         second element contains all the Impl Rules which are needed to create the graph.
@@ -157,7 +161,7 @@ def cmpl_parser(prog : str):
 
     resCur()
 
-    # The following Part to extract all the Impls out of the given programm and order it
+    # The following Part to extract all the Impls out of the given program and order it
     # ----------------------------------------------------------------------------------
     acc_impls = []  # List out of all values which needs to calculate the BiImpl Rules
     acc_impls_spez_written = []  # List of all TOP and BOT Rules which only gets printed
@@ -170,7 +174,7 @@ def cmpl_parser(prog : str):
        
         char = prog[current]
 
-        # Get all the Impls out of the string and chekc if it contains a TOP or a BOT
+        # Get all the Impls out of the string and check if it contains a TOP or a BOT
         if char == "I":
 
             acc_body, acc_head = get_impl(prog)
@@ -199,7 +203,7 @@ def cmpl_parser(prog : str):
         incCur()
 
 
-    # The following Part is for creating the difference betzween the bodys and the heads
+    # The following Part is for creating the difference between the body's and the heads
     # ----------------------------------------------------------------------------------
 
     # Zip up the list and get all the bodys
@@ -216,16 +220,16 @@ def cmpl_parser(prog : str):
         tmp_head_impl = []
 
 
-    # Get all the atoms which are realted to the BOT rules
+    # Get all the atoms which are related to the BOT rules
     tmp_body_bot = get_body_atoms(bodys_bot)
 
 
-    # In those list are all the heads and all the bodys from every rule
+    # In those list are all the heads and all the body's from every rule
     tmp_body_impl.extend(tmp_body_bot)
     tmp_head_impl.extend(heads_top)
 
     # Remove all the duplicates from the lists so we can work with them later on
-    # Make sure that also the negated atoms get changed to positiv ones (for the last rule)
+    # Make sure that also the negated atoms get changed to positive ones (for the last rule)
     tmp_body_impl = remove_duplicates(remove_nots(tmp_body_impl))
     tmp_head_impl = remove_duplicates(tmp_head_impl)
 
@@ -316,7 +320,7 @@ def main(prog : str, only_dimacs = False):
         for loop in loops:
             print(loop)
 
-    # If the loops variable is empty there is no need to compute those foumulars. Otherwise compute
+    # If the loops variable is empty there is no need to compute those foumulas. Otherwise compute
     # all those Formulas based on the earlier created imp_rules.
     # ======================================================================================== 
     if len(loops) > 0:
@@ -358,7 +362,7 @@ def main(prog : str, only_dimacs = False):
 
 
 # Characterizations: S 272
-tester = "Impl(Not(b), a), Impl(a, c), Impl(And(b, c), d), Impl(And(b, Not(a)), e), Impl(Not(a), b), Impl(And(b, d), c), Impl(e, d), Impl(And(c, d), e)"
+# tester = "Impl(Not(b), a), Impl(a, c), Impl(And(b, c), d), Impl(And(b, Not(a)), e), Impl(Not(a), b), Impl(And(b, d), c), Impl(e, d), Impl(And(c, d), e)"
 
 
 # Characterizations: S 262
@@ -375,5 +379,27 @@ tester = "Impl(Not(b), a), Impl(a, c), Impl(And(b, c), d), Impl(And(b, Not(a)), 
 # tester = "Impl(And(Not(fliegt), vogel), ffliegt), Impl(Not(pinguin), ffliegt), Impl(TOP, vogel), Impl(TOP, pinguin)"
 # tester = "Impl(And(Not(ffliegt), vogel), fliegt), Impl(Not(pinguin), ffliegt), Impl(TOP, vogel), Impl(TOP, pinguin)"
 
+
+# =====================================================================
+# = Provide the Program of your choice here into the variable tester: =
+# =====================================================================
+tester = "Impl(Not(b), a), Impl(a, c), Impl(And(b, c), d), Impl(And(b, Not(a)), e), Impl(Not(a), b), Impl(And(b, d), c), Impl(e, d), Impl(And(c, d), e)"
+
+
 if __name__ == '__main__':
-    main(tester, True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-m", "--minimal", help="just print out minimal informations about the parsing. Used by get_modells.sh", action="store_true")
+    parser.add_argument("-p", "--prog", help="you can also provide a string version of your program in the command line", type=str)
+    parser.add_argument("-d", "--dimacs", help="you can provide a Formula which will parsed into DIMACS-Format", type=str)
+    args = parser.parse_args()
+
+    if args.dimacs:
+        dimacs(args.dimacs)
+    else:
+        if args.prog:
+            main(args.prog, args.minimal)
+        else:
+            main(tester, args.minimal)
+
+
+    

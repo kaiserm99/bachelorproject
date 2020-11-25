@@ -2,10 +2,13 @@
 
 """
 Copyright 2020, University of Freiburg
+Bachelor-project - Foundations of Artificial Intelligence
+
 Author: Marco Kaiser <kaiserm@informatik.uni-freiburg.de>
 
-Usage of the Script:
+Description:
 
+Usage:
 
 """
 # helping_stable.py, written on: Donnerstag,  12 Oktober 2020.
@@ -16,22 +19,9 @@ import matplotlib.pyplot as plt
 import string
 
 
-# Copied from StackOverflow (https://stackoverflow.com/questions/287871/how-to-print-colored-text-in-python)
-class bcolors:
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
-    OKCYAN = '\033[96m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-
-
 def get_body_atoms(lst : list) -> list:
     """
-        This function is used to parse all the given bodys and return all the atoms which are
+        This function is used to parse all the given body's and return all the atoms which are
         inside the given formulas.
         Returns a list with all the atoms which are in the formula
     """
@@ -41,7 +31,7 @@ def get_body_atoms(lst : list) -> list:
         i = 0
         acc_atom = ""
 
-        # Make sure to handle the Nots when they are alone in the body of a rule
+        # Make sure to handle the Not's when they are alone in the body of a rule
         if body[0] == "N":
 
             for j in "ot(":
@@ -122,7 +112,7 @@ def get_body_atoms(lst : list) -> list:
 
                 acc_atom = "-"
 
-            # It is assumed, that every other char is a pice of the atom
+            # It is assumed, that every other char is a piece of the atom
             elif char in string.ascii_lowercase:
                 acc_atom += char
                 i += 1
@@ -142,7 +132,6 @@ def get_head_atoms(lst : list):
     return acc_head_atoms
 
 
-
 def compute_loops(imp_rules : list):
     
     if len(imp_rules) == 0:
@@ -151,7 +140,7 @@ def compute_loops(imp_rules : list):
 
     graph = {}  # Save the graph as a dict
 
-    # Zip up the list and get all the bodys
+    # Zip up the list and get all the body's
     bodys_impl, heads_impl = zip(*imp_rules)
 
     # Use this method to get all the body atoms
@@ -159,12 +148,12 @@ def compute_loops(imp_rules : list):
     acc_heads = get_head_atoms(heads_impl)
 
 
-    # Insert all the body atoms into the graph, because the are likly no head atom and wouldn't get inserted into the graph
+    # Insert all the body atoms into the graph, because the are likely no head atom and wouldn't get inserted into the graph
     for atom in acc_bodys:
         if atom[0] != "-":
             graph[atom] = []
 
-    # Make sure to add all the head atoms too, because they can be in no body and so it will occure a IndexError
+    # Make sure to add all the head atoms too, because they can be in no body and so it will occurs a IndexError
     for atom in acc_heads:
         graph[atom] = []
 
@@ -255,7 +244,7 @@ def compute_loop_formula(loops : list, imp_rules : list):
 
         for head, bodys in r_minus.items():
 
-            # There is no need to check for dupplicates beacause the Loop-Formula has a Or in it
+            # There is no need to check for duplicates because the Loop-Formula has a Or in it
             for body in bodys:
                 all_bodys.append(body)
             all_heads.append(head)
@@ -309,11 +298,6 @@ def write_rules(lst : list, op, atom_start="", atom_end="", wrapper_op=""):
     return written
 
 
-def print_error(msg : str):
-    print(bcolors.FAIL + msg + bcolors.ENDC)
-    sys.exit(1)
-
-
 def remove_duplicates(x):
     return list(dict.fromkeys(x))
 
@@ -328,4 +312,22 @@ def remove_nots(lst : list) -> list:
 def draw_graph(graph : nx.DiGraph):
     nx.draw_networkx(graph)
     plt.show()
+
+
+# Copied from StackOverflow (https://stackoverflow.com/questions/287871/how-to-print-colored-text-in-python)
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
+def print_error(msg : str):
+    print(bcolors.FAIL + msg + bcolors.ENDC)
+    sys.exit(1)
 
