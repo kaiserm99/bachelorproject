@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# NOTE: I created a symlink in /usr/bin/fast-downward which points to the fast-downward.py file
+# If you want to use this file, then you need to change it fast-downward --> fast-downward.py
+
+
 if [ -z "$1" ]
   then
     echo "No argument supplied (name of kami encoded file)"
@@ -50,7 +54,7 @@ fi
 
 printf $color"Running fast-downward with FF heuristic and context-enhanced additive heuristic... \n\n"$color_end
 
-if ./../downward-main/fast-downward.py $domain $tmp_prob --evaluator "hff=ff()" --evaluator "hcea=cea()" --search "lazy_greedy([hff, hcea], preferred=[hff, hcea])" > $tmp_out; then
+if fast-downward $domain $tmp_prob --evaluator "hff=ff()" --evaluator "hcea=cea()" --search "lazy_greedy([hff, hcea], preferred=[hff, hcea])" > $tmp_out; then
 	print_plan
 else
 	cleanup
@@ -60,7 +64,7 @@ fi
 
 printf $color"\n\nRunning fast-downward with blind heuristics, may take a while...\n\n"$color_end
 
-if ./../downward-main/fast-downward.py $domain $tmp_prob --search "astar(blind())" > $tmp_out; then
+if fast-downward $domain $tmp_prob --search "astar(blind())"; then
 	print_plan
 else
 	cleanup

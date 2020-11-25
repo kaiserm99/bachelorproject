@@ -50,8 +50,6 @@ def main():
 
     for y, line in enumerate(vertical):
 
-        print(line)
-
         for x, char in enumerate(line):
 
             if char != " ":

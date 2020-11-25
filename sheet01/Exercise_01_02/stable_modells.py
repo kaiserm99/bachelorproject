@@ -366,5 +366,14 @@ tester = "Impl(Not(b), a), Impl(a, c), Impl(And(b, c), d), Impl(And(b, Not(a)), 
 
 # tester = "Impl(TOP, a), Impl(And(a, Not(d)), c), Impl(And(b, Not(f)), e), Impl(Not(a), b), Impl(And(Not(c), Not(e)), d), Impl(e, e)"
 
+
+# Exercise 1.3
+# tester = "Impl(Not(b), a), Impl(Not(a), b)"
+
+
+# Exercise 1.4
+# tester = "Impl(And(Not(fliegt), vogel), ffliegt), Impl(Not(pinguin), ffliegt), Impl(TOP, vogel), Impl(TOP, pinguin)"
+# tester = "Impl(And(Not(ffliegt), vogel), fliegt), Impl(Not(pinguin), ffliegt), Impl(TOP, vogel), Impl(TOP, pinguin)"
+
 if __name__ == '__main__':
     main(tester, True)

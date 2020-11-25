@@ -13,6 +13,7 @@ Usage of the Script:
 import sys
 import networkx as nx
 import matplotlib.pyplot as plt
+import string
 
 
 # Copied from StackOverflow (https://stackoverflow.com/questions/287871/how-to-print-colored-text-in-python)
@@ -122,11 +123,13 @@ def get_body_atoms(lst : list) -> list:
                 acc_atom = "-"
 
             # It is assumed, that every other char is a pice of the atom
-            else:
+            elif char in string.ascii_lowercase:
                 acc_atom += char
                 i += 1
 
-    # print(acc_body_atoms)
+            else:
+                i += 1
+
     return acc_body_atoms  # Return all the atoms. There ARE duplicates
 
 
