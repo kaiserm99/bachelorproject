@@ -11,7 +11,7 @@ Description:
 Usage:
 
 """
-# stable_modells.py, written on: Donnerstag,  12 Oktober 2020.
+# stable_models.py, written on: Donnerstag,  12 Oktober 2020.
 
 import sys
 from helping_stable import *
@@ -326,7 +326,6 @@ def main(prog : str, only_dimacs = False):
     if len(loops) > 0:
         loop_formulas = compute_loop_formula(loops, imp_rules)
 
-        
         if not only_dimacs: print("\nPrinting all the found Loop-Formulas...\n" + "="*60)
 
         # Make sure that the loop Formulas gets also append when there is the minimal version
@@ -339,11 +338,7 @@ def main(prog : str, only_dimacs = False):
     # ========================================================================================
     if not only_dimacs: print("\nPrinting the full DIMACS-Format...\n" + "="*60)
 
-    end = write_rules(cmpl_res, "And")
-
-    # print(end)
-
-    dimacs(end)
+    dimacs(write_rules(cmpl_res, "And"))
 
 
 
@@ -364,7 +359,7 @@ def main(prog : str, only_dimacs = False):
 
 
 # Asp-handout: S 218 2
-tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(Not(a), c), Impl(d, c), Impl(And(a, b), d), Impl(c, d)"
+# tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(Not(a), c), Impl(d, c), Impl(And(a, b), d), Impl(c, d)"
 
 
 # Characterizations: S 272
@@ -372,7 +367,7 @@ tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(Not(a), c), Impl(d, c), Impl(An
 
 
 # Characterizations: S 262
-# tester = "Impl(Not(b), a), Impl(And(a, b), c), Impl(a, d), Impl(And(Not(a), Not(b)), e), Impl(Not(a), b), Impl(d, c), Impl(And(b, c), d)"
+tester = "Impl(Not(b), a), Impl(And(a, b), c), Impl(a, d), Impl(And(Not(a), Not(b)), e), Impl(Not(a), b), Impl(d, c), Impl(And(b, c), d)"
 
 # tester = "Impl(TOP, a), Impl(And(a, Not(d)), c), Impl(And(b, Not(f)), e), Impl(Not(a), b), Impl(And(Not(c), Not(e)), d), Impl(e, e)"
 

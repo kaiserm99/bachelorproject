@@ -1,3 +1,4 @@
+
 ## Aufgabe Nr.3 b)
 
 Mit dem Befehl *clingo 0 exercise_01_03_b.lp* erhält man folgende Ausgabe:
@@ -12,12 +13,12 @@ SATISFIABLE
 
 -->  Somit erhalten wir die beiden Modelle des Programms, welche gerade gerade {{a}, {b}} sind. 
 
-Mit dem Befehl *./get_modells.sh* in dem Unterordner Exercise_01_02 erhält man folgendes Ergebnis. Dabei muss in der in der Datei *stable_modells.py* auch das jeweilige Programm ausgewählt werden:
-> Here you can see all the used atoms. The first Element corresponds to the Number 1 and so on...  
-All Atoms: ['a', 'b']  
-All stable modells of the given Program:  
-SAT  
-1 -2 0  
--1 2 0  
+Mit dem Befehl *./get_modells.sh* "Impl(a, b), Impl(b, a)" in dem Unterordner Exercise_01_02 erhält man folgendes:
+> All Atoms:   
+['a', 'b']  
+All stable models out of Minisat:  
+-1 -2 0  
+All stable models mapped to the right atom:  
+ 
 
---> Somit erhalten wir das gleiche Ergebnis wie mit *clingo*.
+--> Somit erhalten wir kein Ergebnis. Dieses ist unterschiedlich mit dem Ergebnis von *clingo*.
