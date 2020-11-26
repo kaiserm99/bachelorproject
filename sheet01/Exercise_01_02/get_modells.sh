@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Copyright 2020, University of Freiburg
+# Bachelor-project - Foundations of Artificial Intelligence
+
+# Author: Marco Kaiser <kaiserm@informatik.uni-freiburg.de>
+
 
 # File names
 tmp_file=("/tmp/tmp_cnf")
@@ -11,7 +16,7 @@ color=("\x1B[34m")
 color_end=("\e[0m")
 
 
-python3 stable_modells.py > $tmp_file
+python3 stable_modells.py --minimal > $tmp_file
 
 tail -n +2 $tmp_file > $tmp_cnf
 

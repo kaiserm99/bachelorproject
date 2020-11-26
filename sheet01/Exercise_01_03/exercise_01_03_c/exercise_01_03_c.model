@@ -1,0 +1,33 @@
+clingo version 5.2.2
+Reading from nsp.lp
+Solving...
+Answer: 1
+assign(frida,mor,two) assign(fritz,mor,two) assign(frida,aft,one) assign(fritz,aft,one) assign(nora,nig,one) assign(nora,nig,two) assign(udo,nig,one) assign(heinz,mor,one) assign(ira,mor,one) assign(heinz,nig,two) assign(udo,aft,two) assign(ira,aft,two)
+Answer: 2
+assign(frida,mor,two) assign(fritz,mor,two) assign(frida,aft,one) assign(fritz,aft,one) assign(nora,nig,one) assign(nora,nig,two) assign(udo,nig,one) assign(heinz,mor,one) assign(ira,mor,one) assign(heinz,aft,two) assign(udo,nig,two) assign(ira,aft,two)
+Answer: 3
+assign(frida,mor,two) assign(fritz,mor,two) assign(frida,aft,one) assign(fritz,aft,one) assign(nora,nig,one) assign(nora,nig,two) assign(heinz,nig,one) assign(udo,mor,one) assign(ira,mor,one) assign(heinz,nig,two) assign(udo,aft,two) assign(ira,aft,two)
+Answer: 4
+assign(frida,mor,two) assign(fritz,mor,two) assign(frida,aft,one) assign(fritz,aft,one) assign(nora,nig,one) assign(nora,nig,two) assign(heinz,nig,one) assign(udo,mor,one) assign(ira,mor,one) assign(heinz,aft,two) assign(udo,nig,two) assign(ira,aft,two)
+Answer: 5
+assign(frida,mor,two) assign(fritz,mor,two) assign(frida,mor,one) assign(fritz,mor,one) assign(nora,nig,one) assign(nora,nig,two) assign(heinz,nig,one) assign(udo,aft,one) assign(ira,aft,one) assign(heinz,aft,two) assign(udo,nig,two) assign(ira,aft,two)
+Answer: 6
+assign(frida,mor,two) assign(fritz,mor,two) assign(frida,mor,one) assign(fritz,mor,one) assign(nora,nig,one) assign(nora,nig,two) assign(udo,nig,one) assign(heinz,aft,one) assign(ira,aft,one) assign(heinz,aft,two) assign(udo,nig,two) assign(ira,aft,two)
+Answer: 7
+assign(frida,mor,two) assign(fritz,mor,two) assign(frida,mor,one) assign(fritz,mor,one) assign(nora,nig,one) assign(nora,nig,two) assign(heinz,nig,one) assign(udo,aft,one) assign(ira,aft,one) assign(heinz,nig,two) assign(udo,aft,two) assign(ira,aft,two)
+Answer: 8
+assign(frida,mor,two) assign(fritz,mor,two) assign(frida,mor,one) assign(fritz,mor,one) assign(nora,nig,one) assign(nora,nig,two) assign(udo,nig,one) assign(heinz,aft,one) assign(ira,aft,one) assign(heinz,nig,two) assign(udo,aft,two) assign(ira,aft,two)
+Answer: 9
+assign(frida,aft,two) assign(fritz,aft,two) assign(frida,aft,one) assign(fritz,aft,one) assign(nora,nig,one) assign(nora,nig,two) assign(heinz,nig,one) assign(udo,mor,two) assign(ira,mor,two) assign(udo,mor,one) assign(ira,mor,one) assign(heinz,nig,two)
+Answer: 10
+assign(frida,aft,two) assign(fritz,aft,two) assign(frida,aft,one) assign(fritz,aft,one) assign(nora,nig,one) assign(nora,nig,two) assign(heinz,mor,two) assign(udo,nig,one) assign(ira,mor,two) assign(heinz,mor,one) assign(ira,mor,one) assign(udo,nig,two)
+Answer: 11
+assign(frida,aft,two) assign(fritz,aft,two) assign(frida,mor,one) assign(fritz,mor,one) assign(nora,nig,one) assign(nora,nig,two) assign(heinz,nig,one) assign(udo,mor,two) assign(ira,mor,two) assign(udo,aft,one) assign(ira,aft,one) assign(heinz,nig,two)
+Answer: 12
+assign(frida,aft,two) assign(fritz,aft,two) assign(frida,mor,one) assign(fritz,mor,one) assign(nora,nig,one) assign(nora,nig,two) assign(heinz,mor,two) assign(udo,nig,one) assign(ira,mor,two) assign(heinz,aft,one) assign(ira,aft,one) assign(udo,nig,two)
+SATISFIABLE
+
+Models       : 12
+Calls        : 1
+Time         : 0.006s (Solving: 0.00s 1st Model: 0.00s Unsat: 0.00s)
+CPU Time     : 0.006s

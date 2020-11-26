@@ -326,18 +326,24 @@ def main(prog : str, only_dimacs = False):
     if len(loops) > 0:
         loop_formulas = compute_loop_formula(loops, imp_rules)
 
-        if not only_dimacs:
-            print("\nPrinting all the found Loop-Formulas...\n" + "="*60)
-            for lf in loop_formulas:
-                cmpl_res.append(lf)
-                print(lf)
+        
+        if not only_dimacs: print("\nPrinting all the found Loop-Formulas...\n" + "="*60)
+
+        # Make sure that the loop Formulas gets also append when there is the minimal version
+        for lf in loop_formulas:
+            cmpl_res.append(lf)  # Thank you for searching this Bug for 5 hours
+            if not only_dimacs: print(lf)
 
     # At this point there is the complete cmpl and the Loop-Formulas in the variable cmpl_res.
     # Now all of those rules need to get conjugated and gets formatted into DIMACS-Format.
     # ========================================================================================
     if not only_dimacs: print("\nPrinting the full DIMACS-Format...\n" + "="*60)
 
-    dimacs(write_rules(cmpl_res, "And"))
+    end = write_rules(cmpl_res, "And")
+
+    # print(end)
+
+    dimacs(end)
 
 
 
@@ -358,7 +364,7 @@ def main(prog : str, only_dimacs = False):
 
 
 # Asp-handout: S 218 2
-# tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(Not(a), c), Impl(d, c), Impl(And(a, b), d), Impl(c, d)"
+tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(Not(a), c), Impl(d, c), Impl(And(a, b), d), Impl(c, d)"
 
 
 # Characterizations: S 272
@@ -383,7 +389,7 @@ def main(prog : str, only_dimacs = False):
 # =====================================================================
 # = Provide the Program of your choice here into the variable tester: =
 # =====================================================================
-tester = "Impl(Not(b), a), Impl(a, c), Impl(And(b, c), d), Impl(And(b, Not(a)), e), Impl(Not(a), b), Impl(And(b, d), c), Impl(e, d), Impl(And(c, d), e)"
+# tester = "Impl(Not(b), a), Impl(a, c), Impl(And(b, c), d), Impl(And(b, Not(a)), e), Impl(Not(a), b), Impl(And(b, d), c), Impl(e, d), Impl(And(c, d), e)"
 
 
 if __name__ == '__main__':
