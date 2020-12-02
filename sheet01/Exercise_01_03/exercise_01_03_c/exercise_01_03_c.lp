@@ -33,7 +33,7 @@ assign(fritz,S,D) :- assign(frida,S,D), day(D), shift(S).
 % Nora arbitet nur in der Nacht, also arbeitet Ira nie in der Nacht
 :- assign(ira,nig,D), day(D).
 
-% Wenn man in der Nacht gearbeitet hat, arbeit man nicht am nächsten Morgen
+% Wenn man am zweiten Tag am Morgen arbeiten muss, darf man die Nacht davor nicht gearbeitet haben
 not assign(N,nig,one) :- assign(N,mor,two), nurse(N).
 
 #show assign/3.
