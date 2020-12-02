@@ -7,6 +7,9 @@
 
 # Usage:
 
+# Please make sure you are using the given file ordering, otherwise problems
+# can occur.
+
 # If you want to get the models of the current Program in the
 # script stable_models.py then just use:
 
@@ -27,10 +30,21 @@ tmp_atoms=("/tmp/atoms.txt")
 color=("\x1B[34m")
 color_end=("\e[0m")
 
-if [ -n "$1" ];
-	then python3 stable_models.py --minimal -p "$1" > $tmp_file;
+# Make sure to get the right file path, which depends on where you execute the file
+pyfile=$(find ../../ -name "stable_models.py")
 
-	else python3 stable_models.py --minimal > $tmp_file;
+# Check if stable_models.py was found
+if [ -z $pyfile ];
+then
+	echo "WARNING! Couldn't find stable_models.py in the two upper parent folders!"
+	exit -1
+fi
+
+
+if [ -n "$1" ];
+	then python3 $pyfile --minimal -p "$1" > $tmp_file;
+
+	else python3 $pyfile --minimal > $tmp_file;
 fi
 
 

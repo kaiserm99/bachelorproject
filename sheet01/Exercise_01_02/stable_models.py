@@ -377,8 +377,7 @@ tester = "Impl(Not(b), a), Impl(And(a, b), c), Impl(a, d), Impl(And(Not(a), Not(
 
 
 # Exercise 1.4
-# tester = "Impl(And(Not(fliegt), vogel), ffliegt), Impl(Not(pinguin), ffliegt), Impl(TOP, vogel), Impl(TOP, pinguin)"
-# tester = "Impl(And(Not(ffliegt), vogel), fliegt), Impl(Not(pinguin), ffliegt), Impl(TOP, vogel), Impl(TOP, pinguin)"
+tester = "Impl(And(Not(nfliegt), vogel), fliegt), Impl(pinguin, nfliegt), Impl(TOP, vogel), Impl(TOP, pinguin)"
 
 
 # =====================================================================

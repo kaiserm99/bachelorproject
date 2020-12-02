@@ -23,7 +23,7 @@
  - [X] d)
  
 ### Task 04:  
- - [ ] a)
+ - [X]
 
 ## Exercise-sheet 02:  
 ### Task 01:  
