@@ -5,7 +5,7 @@
 
  - [x] a)
  - [x] b)
- - [ ] c), Note: The Syntax-Error Or(a, b, c) can't get detected
+ - [X] c)
  - [X] d)
  - [X] e)
 
@@ -44,10 +44,9 @@
  - [x] d)
  - [x] e)
  - [x] f)
- - [ ] g)
+ - [X] g)
 
 ### Task 02:  
  - [x] a)
  - [x] b)
- - [ ] c)
- - [ ] d)
+ - [X] c)

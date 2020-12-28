@@ -1,4 +1,4 @@
-## Aufgabe Nr.3 c)
+## Aufgabe Nr.2 c)
 
 ### 1. Ist jeder, der in Freiburg wählen darf EU-Bürger?
 Diese Frage kann mit HermiT beantwortet werden, indem man einfach alle Instanzen von Personen in Freiburg wählen dürfen, also alle Instanzen in der Klasse *CanVoteInFreiburg* geschnitten mit allen Instanzen der Klasse *Not-EU-Citizen*.  
@@ -31,11 +31,11 @@ CanVoteInFreiburg and not (isLinvingIn some DistrictOfFreiburg)
 ... erkennen, dass diese Anfrage äquivalent zu *owl:Nothing* ist und somit der Schnitt leer ist. Somit ist jede in Freiburg wahlberechtigte Person auch automatisch ein Freiburger.
 
 ### 4. Ist jeder, der in Freiburg wählen darf auch Wiehremer?
-HermiT kann leider nicht bei nicht-existent von Werten weiterhelfen, sondern man brauch explizite Klassen.  Somit ist folgende DL-Querry:
+HermiT kann leider nicht bei nicht-existenz von Werten weiterhelfen, sondern man brauch explizite Klassen.  Somit ist folgende DL-Querry:
 ```
 CanVoteInFreiburg and not (isLinvingIn value Wiehre)
 ```
-... nicht zulässig, da explizierte Klassen erforderlich wäre. Diese habe ich aber nicht in meine Ontologie mit eingebaut. Somit müssen wir einen Umweg gehen und eine Personeninstanz erstellen, welche in Freiburg wahlberechtigt ist und dabei z.B. in Betzenhausen lebt. Somit könnte man dann mit der DL-Querry:
+... nicht zulässig, da explizierte Klassen erforderlich sind. Diese habe ich aber nicht in meine Ontologie mit eingebaut. Somit müssen wir einen Umweg gehen und eine Personeninstanz erstellen, welche in Freiburg wahlberechtigt ist und dabei z.B. in Betzenhausen lebt. Somit könnte man dann mit der DL-Querry:
 ```
 CanVoteInFreiburg and not (isLinvingIn value Betzenhausen)
 ```
