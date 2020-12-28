@@ -1,284 +1,492 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#"
-     xml:base="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/marco/ontologies/2020/11/untitled-ontology-15"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-    <owl:Ontology rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6"/>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Object Properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#besitztStadtteil -->
-
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#besitztStadtteil">
-        <owl:inverseOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#stadtteilVon"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#geschlecht -->
-
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#geschlecht">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Gender"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#stadtteilVon -->
-
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#stadtteilVon">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Stadtteil"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#City"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#wohntInStadt -->
-
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#wohntInStadt">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#City"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#wohntInStadtteil -->
-
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#wohntInStadtteil">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
-        <rdfs:range rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Stadtteil"/>
-    </owl:ObjectProperty>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Data properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Age -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Age">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Nachname -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Nachname">
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Vorname -->
-
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Vorname">
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
-        <rdfs:domain rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
-        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
-    </owl:DatatypeProperty>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Classes
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#City -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#City">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Place"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#DarfInFreiburgWaehlen -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#DarfInFreiburgWaehlen">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburger"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Age"/>
-                <owl:minQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">16</owl:minQualifiedCardinality>
-                <owl:onDataRange rdf:resource="http://www.w3.org/2002/07/owl#rational"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburger -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburger">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Gender -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Gender">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#NichtFreiburger -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#NichtFreiburger">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU"/>
-        <rdfs:subClassOf>
-            <owl:Class>
-                <owl:complementOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburger"/>
-            </owl:Class>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#NotEU -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#NotEU">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Human"/>
-        <rdfs:subClassOf>
-            <owl:Class>
-                <owl:complementOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU"/>
-            </owl:Class>
-        </rdfs:subClassOf>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Place -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Place"/>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Stadtteil -->
-
-    <owl:Class rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Stadtteil">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Place"/>
-    </owl:Class>
-    
-
-
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Individuals
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Betzenhausen -->
-
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Betzenhausen">
-        <rdf:type rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Stadtteil"/>
-        <stadtteilVon rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburg"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU-Buerger1 -->
-
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU-Buerger1">
-        <rdf:type rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#EU"/>
-        <geschlecht rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Male"/>
-        <wohntInStadt rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburg"/>
-        <wohntInStadtteil rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Wiehre"/>
-        <Age rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">18</Age>
-        <Nachname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mustermann</Nachname>
-        <Vorname rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Max</Vorname>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Female -->
-
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Female">
-        <rdf:type rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Gender"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburg -->
-
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburg">
-        <rdf:type rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#City"/>
-        <besitztStadtteil rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Betzenhausen"/>
-        <besitztStadtteil rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Wiehre"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Male -->
-
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Male">
-        <rdf:type rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Gender"/>
-    </owl:NamedIndividual>
-    
-
-
-    <!-- http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Wiehre -->
-
-    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Wiehre">
-        <rdf:type rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Stadtteil"/>
-        <stadtteilVon rdf:resource="http://www.semanticweb.org/marco/ontologies/2020/9/untitled-ontology-6#Freiburg"/>
-    </owl:NamedIndividual>
-</rdf:RDF>
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.semanticweb.org/marco/ontologies/2020/11/untitled-ontology-15">
+    <Prefix name="" IRI="http://www.semanticweb.org/marco/ontologies/2020/11/untitled-ontology-15"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
+        <Literal>Copyright 2020, University of Freiburg
+Bachelor-project - Foundations of Artificial Intelligence
+
+Author: Marco Kaiser &lt;kaiserm@informatik.uni-freiburg.de&gt;</Literal>
+    </Annotation>
+    <Declaration>
+        <Class IRI="#CanVoteInFreiburg"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#City"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Country"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#District"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#DistrictOfFreiburg"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#EU-Citizen"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#EU-Country"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Not-EU-Citizen"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Not-EU-Country"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Person"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isCitizenOf"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isDistrictOf"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isLinvingIn"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#ageOfPerson"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#genderOfPerson"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Berlin"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Bern"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Betzenhausen"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#France"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Freiburg"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Germany"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Marais"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Neufeld"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Neuköln"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Paris"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Switzerland"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Wiehre"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#person_1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#person_10"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#person_2"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#person_3"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#person_5"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#person_6"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#person_7"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#person_8"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#person_9"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class IRI="#CanVoteInFreiburg"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#EU-Citizen"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isLinvingIn"/>
+                <Class IRI="#DistrictOfFreiburg"/>
+            </ObjectSomeValuesFrom>
+            <DataSomeValuesFrom>
+                <DataProperty IRI="#ageOfPerson"/>
+                <DatatypeRestriction>
+                    <Datatype abbreviatedIRI="xsd:integer"/>
+                    <FacetRestriction facet="http://www.w3.org/2001/XMLSchema#minInclusive">
+                        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">16</Literal>
+                    </FacetRestriction>
+                </DatatypeRestriction>
+            </DataSomeValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#DistrictOfFreiburg"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#District"/>
+            <ObjectHasValue>
+                <ObjectProperty IRI="#isDistrictOf"/>
+                <NamedIndividual IRI="#Freiburg"/>
+            </ObjectHasValue>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#EU-Citizen"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Person"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isCitizenOf"/>
+                <Class IRI="#EU-Country"/>
+            </ObjectSomeValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Not-EU-Citizen"/>
+        <ObjectIntersectionOf>
+            <Class IRI="#Person"/>
+            <ObjectSomeValuesFrom>
+                <ObjectProperty IRI="#isCitizenOf"/>
+                <Class IRI="#Not-EU-Country"/>
+            </ObjectSomeValuesFrom>
+        </ObjectIntersectionOf>
+    </EquivalentClasses>
+    <SubClassOf>
+        <Class IRI="#CanVoteInFreiburg"/>
+        <Class IRI="#EU-Citizen"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#DistrictOfFreiburg"/>
+        <Class IRI="#District"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#EU-Citizen"/>
+        <Class IRI="#Person"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#EU-Country"/>
+        <Class IRI="#Country"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Not-EU-Citizen"/>
+        <Class IRI="#Person"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Not-EU-Country"/>
+        <Class IRI="#Country"/>
+    </SubClassOf>
+    <DisjointClasses>
+        <Class IRI="#City"/>
+        <Class IRI="#Country"/>
+        <Class IRI="#District"/>
+        <Class IRI="#Person"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#EU-Citizen"/>
+        <Class IRI="#Not-EU-Citizen"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#EU-Country"/>
+        <Class IRI="#Not-EU-Country"/>
+    </DisjointClasses>
+    <ClassAssertion>
+        <Class IRI="#EU-Country"/>
+        <NamedIndividual IRI="#France"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#EU-Country"/>
+        <NamedIndividual IRI="#Germany"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Not-EU-Country"/>
+        <NamedIndividual IRI="#Switzerland"/>
+    </ClassAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isDistrictOf"/>
+        <NamedIndividual IRI="#Betzenhausen"/>
+        <NamedIndividual IRI="#Freiburg"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isDistrictOf"/>
+        <NamedIndividual IRI="#Marais"/>
+        <NamedIndividual IRI="#Paris"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isDistrictOf"/>
+        <NamedIndividual IRI="#Neufeld"/>
+        <NamedIndividual IRI="#Bern"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isDistrictOf"/>
+        <NamedIndividual IRI="#Neuköln"/>
+        <NamedIndividual IRI="#Berlin"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isDistrictOf"/>
+        <NamedIndividual IRI="#Wiehre"/>
+        <NamedIndividual IRI="#Freiburg"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isCitizenOf"/>
+        <NamedIndividual IRI="#person_1"/>
+        <NamedIndividual IRI="#Germany"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isLinvingIn"/>
+        <NamedIndividual IRI="#person_1"/>
+        <NamedIndividual IRI="#Wiehre"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isCitizenOf"/>
+        <NamedIndividual IRI="#person_10"/>
+        <NamedIndividual IRI="#Germany"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isLinvingIn"/>
+        <NamedIndividual IRI="#person_10"/>
+        <NamedIndividual IRI="#Neuköln"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isCitizenOf"/>
+        <NamedIndividual IRI="#person_2"/>
+        <NamedIndividual IRI="#Germany"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isLinvingIn"/>
+        <NamedIndividual IRI="#person_2"/>
+        <NamedIndividual IRI="#Wiehre"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isCitizenOf"/>
+        <NamedIndividual IRI="#person_3"/>
+        <NamedIndividual IRI="#France"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isLinvingIn"/>
+        <NamedIndividual IRI="#person_3"/>
+        <NamedIndividual IRI="#Betzenhausen"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isCitizenOf"/>
+        <NamedIndividual IRI="#person_5"/>
+        <NamedIndividual IRI="#Switzerland"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isLinvingIn"/>
+        <NamedIndividual IRI="#person_5"/>
+        <NamedIndividual IRI="#Neufeld"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isCitizenOf"/>
+        <NamedIndividual IRI="#person_6"/>
+        <NamedIndividual IRI="#Switzerland"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isLinvingIn"/>
+        <NamedIndividual IRI="#person_6"/>
+        <NamedIndividual IRI="#Neufeld"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isCitizenOf"/>
+        <NamedIndividual IRI="#person_7"/>
+        <NamedIndividual IRI="#Switzerland"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isLinvingIn"/>
+        <NamedIndividual IRI="#person_7"/>
+        <NamedIndividual IRI="#Betzenhausen"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isCitizenOf"/>
+        <NamedIndividual IRI="#person_8"/>
+        <NamedIndividual IRI="#Switzerland"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isLinvingIn"/>
+        <NamedIndividual IRI="#person_8"/>
+        <NamedIndividual IRI="#Wiehre"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isCitizenOf"/>
+        <NamedIndividual IRI="#person_9"/>
+        <NamedIndividual IRI="#Germany"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#isLinvingIn"/>
+        <NamedIndividual IRI="#person_9"/>
+        <NamedIndividual IRI="#Neuköln"/>
+    </ObjectPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ageOfPerson"/>
+        <NamedIndividual IRI="#person_1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">18</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#genderOfPerson"/>
+        <NamedIndividual IRI="#person_1"/>
+        <Literal>Female</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ageOfPerson"/>
+        <NamedIndividual IRI="#person_10"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">66</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#genderOfPerson"/>
+        <NamedIndividual IRI="#person_10"/>
+        <Literal>Female</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ageOfPerson"/>
+        <NamedIndividual IRI="#person_2"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">15</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#genderOfPerson"/>
+        <NamedIndividual IRI="#person_2"/>
+        <Literal>Male</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ageOfPerson"/>
+        <NamedIndividual IRI="#person_3"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">18</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#genderOfPerson"/>
+        <NamedIndividual IRI="#person_3"/>
+        <Literal>Male</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ageOfPerson"/>
+        <NamedIndividual IRI="#person_5"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">15</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#genderOfPerson"/>
+        <NamedIndividual IRI="#person_5"/>
+        <Literal>Male</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ageOfPerson"/>
+        <NamedIndividual IRI="#person_6"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">18</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#genderOfPerson"/>
+        <NamedIndividual IRI="#person_6"/>
+        <Literal>Female</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ageOfPerson"/>
+        <NamedIndividual IRI="#person_7"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">13</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#genderOfPerson"/>
+        <NamedIndividual IRI="#person_7"/>
+        <Literal>Male</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ageOfPerson"/>
+        <NamedIndividual IRI="#person_8"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">21</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#genderOfPerson"/>
+        <NamedIndividual IRI="#person_8"/>
+        <Literal>Female</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#ageOfPerson"/>
+        <NamedIndividual IRI="#person_9"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#int">11</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#genderOfPerson"/>
+        <NamedIndividual IRI="#person_9"/>
+        <Literal>Female</Literal>
+    </DataPropertyAssertion>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="#isCitizenOf"/>
+    </FunctionalObjectProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="#isDistrictOf"/>
+    </FunctionalObjectProperty>
+    <FunctionalObjectProperty>
+        <ObjectProperty IRI="#isLinvingIn"/>
+    </FunctionalObjectProperty>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#isCitizenOf"/>
+        <Class IRI="#Person"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#isDistrictOf"/>
+        <Class IRI="#District"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#isLinvingIn"/>
+        <Class IRI="#Person"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#isCitizenOf"/>
+        <Class IRI="#Country"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#isDistrictOf"/>
+        <Class IRI="#City"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#isLinvingIn"/>
+        <Class IRI="#District"/>
+    </ObjectPropertyRange>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#ageOfPerson"/>
+    </FunctionalDataProperty>
+    <FunctionalDataProperty>
+        <DataProperty IRI="#genderOfPerson"/>
+    </FunctionalDataProperty>
+    <DataPropertyDomain>
+        <DataProperty IRI="#ageOfPerson"/>
+        <Class IRI="#Person"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty IRI="#genderOfPerson"/>
+        <Class IRI="#Person"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="#ageOfPerson"/>
+        <Datatype abbreviatedIRI="xsd:int"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty IRI="#genderOfPerson"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+</Ontology>
 
 
 

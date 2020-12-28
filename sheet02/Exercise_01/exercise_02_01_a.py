@@ -1,3 +1,17 @@
+#!/usr/bin/env python3
+
+"""
+Copyright 2020, University of Freiburg
+Bachelor-project - Foundations of Artificial Intelligence
+
+Author: Marco Kaiser <kaiserm@informatik.uni-freiburg.de>
+
+Description:
+
+Usage:
+
+"""
+
 from constraint import *
 
 
