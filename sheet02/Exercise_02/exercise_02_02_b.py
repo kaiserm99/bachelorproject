@@ -64,7 +64,8 @@ i = 10:
 (0) - (x_5,10  + x_8,10 + x_9,10) = -1
 
 
-WICHTIG: Die Kanten gehen auch wieder zurück, was heißt, dass man alles nochmal nur negiert dazu machen muss.
+WICHTIG: Die Kanten gehen auch wieder zurück. D. h., dass man alles nochmal nur negiert dazu machen muss.
+Ansonsten wäre der Weg, wo man eine Kante zurückgehen muss, also z.B. bei Mannheim - Stuttgart unmöglich.
 """
 
 from scipy.optimize import linprog

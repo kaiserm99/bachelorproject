@@ -109,5 +109,5 @@ class Csp:
                     count_cell[cell[0]] = count_cell.get(cell[0], 0) + 1
 
      
-        # Return the cell wich the least bombs in all the solutions
+        # Return the cell with the least bombs in all the solutions
         return max(count_cell, key=count_cell.get)
