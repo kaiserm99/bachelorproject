@@ -23,9 +23,29 @@ tmp_cnf_real=("/tmp/tmp2.cnf")
 tmp_model=("/tmp/tmp.model")
 tmp_out=("/tmp/out")
 
+
+parser=$(find ../../ -name "parser.py")
+if [ -z $parser ];
+then
+	echo "WARNING! Couldn't find parser.py in the two upper parent folders!"
+	exit -1
+fi
+
+all_mod=$(find ../../ -name "all_models.sh")
+if [ -z $all_mod ];
+then
+	echo "WARNING! Couldn't find all_models.sh in the two upper parent folders!"
+	exit -1
+fi
+
+
+
 printf $green"Printing the CNF of the given NSP-Problem...\n"$color_end
 printf $green"=============================================\n"$color_end
-python3 ../parser.py > $tmp_cnf
+
+
+
+python3 $parser > $tmp_cnf
 
 tail -n +2 $tmp_cnf > $tmp_cnf_real
 cat $tmp_cnf
@@ -33,7 +53,7 @@ cat $tmp_cnf
 
 printf $green"\n\nPrinting the all the Models of the given NSP-Problem...\n"$color_end
 printf $green"===========================================================\n"$color_end
-./../all_models.sh $tmp_cnf_real $tmp_model > $tmp_out
+./$all_mod $tmp_cnf_real $tmp_model > $tmp_out
 
 tail -n 12 $tmp_model | tee $tmp_model
 

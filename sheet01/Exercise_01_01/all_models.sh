@@ -1,4 +1,13 @@
-#!/bin/sh
+#!/bin/bash
+
+# Copyright 2020, University of Freiburg
+# Bachelor-project - Foundations of Artificial Intelligence
+
+# Author: Marco Kaiser <kaiserm@informatik.uni-freiburg.de>
+
+# Usage:
+
+# 	./all_models.sh <DIMACS-encodes file> <output file> # Make sure to include both files
 
 SOLUTIONS=0
 cp $1 /tmp/tmpsat

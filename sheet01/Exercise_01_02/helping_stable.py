@@ -7,8 +7,10 @@ Bachelor-project - Foundations of Artificial Intelligence
 Author: Marco Kaiser <kaiserm@informatik.uni-freiburg.de>
 
 Description:
+    This Script is only used to get imported by the main Script stable_models.py.
 
 Usage:
+    There is no Usage for this File except importing the needed Functions.
 
 """
 # helping_stable.py, written on: Donnerstag,  12 Oktober 2020.

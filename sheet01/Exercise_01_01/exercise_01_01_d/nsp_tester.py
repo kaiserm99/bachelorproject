@@ -2,11 +2,14 @@
 
 """
 Copyright 2020, University of Freiburg
+Bachelor-project - Foundations of Artificial Intelligence
+
 Author: Marco Kaiser <kaiserm@informatik.uni-freiburg.de>
+
+Description:
 
 Usage of the Script:
     python3 nsp_tester.py <.modell encoded file>
-
 
 """
 # nsp_tester.py, written on: Donnerstag,  12 Oktober 2020.
