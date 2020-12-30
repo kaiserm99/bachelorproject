@@ -51,7 +51,18 @@ fi
 
 tail -n +2 $tmp_file > $tmp_cnf
 
-./../Exercise_01_01/all_models.sh $tmp_cnf $tmp_models > $tmp_atoms  # This is just used so there is no ugly output
+# Make sure to get the right file path, which depends on where you execute the file
+all_mod=$(find ../../ -name "all_models.sh")
+
+if [ -z $all_mod ];
+then
+	echo "WARNING! Couldn't find all_models.sh in the two upper parent folders!"
+	exit -1
+fi
+
+
+
+$all_mod $tmp_cnf $tmp_models > $tmp_atoms  # This is just used so there is no ugly output
 
 
 printf $color"\nAll Atoms: \n"$color_end

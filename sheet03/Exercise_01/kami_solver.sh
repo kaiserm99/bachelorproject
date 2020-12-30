@@ -46,8 +46,20 @@ function print_plan() {
 
 
 # File names
-create_prob=("src/create_pddl.py")
-domain=("src/domain.pddl")
+create_prob=$(find ../../ -name "create_pddl.py")
+if [ -z $create_prob ];
+then
+	echo "WARNING! Couldn't find create_pddl.py in the two upper parent folders!"
+	exit -1
+fi
+
+domain=$(find ../../ -name "domain.pddl")
+if [ -z $domain ];
+then
+	echo "WARNING! Couldn't find domain.pddl in the two upper parent folders!"
+	exit -1
+fi
+
 tmp_prob=("/tmp/prob.pddl")
 tmp_out=("/tmp/out.txt")
 
