@@ -8,7 +8,35 @@ Author: Marco Kaiser <kaiserm@informatik.uni-freiburg.de>
 
 Description:
 
+    This Script is for calculating the DIMACS representation of a given Program, which contains
+    the stable Models of the given Program. You can use this DIMACS Output and pass it to a SAT-Solver
+    which then calculates this stable Models.
+
+    Attention: otherwise as in the Exercise described the Syntax of the Program is different. For more
+    Informations please read the README.md in this folder.
+
+    Syntax:
+        str  -> a | b | c | ... 
+        nots -> Not(str) | str
+
+        body -> str | And(... And(nots, nots) ...)
+        head -> str
+        
+
+        Implication -> Impl(body, head)
+
+        Program -> Implication | Implication, Implication, ...
+
+    Examples:
+
+        You can see some examples down below, right at the end
+
 Usage:
+
+    Ether you can provide an Program in the given Syntax right in this Script right at the end or
+    you can provide it by using the command line and giving it as an argument in brackets.
+
+    For more informations you can use --help to see the options.
 
 """
 # stable_models.py, written on: Donnerstag,  12 Oktober 2020.
@@ -341,33 +369,17 @@ def main(prog : str, only_dimacs = False):
     dimacs(write_rules(cmpl_res, "And"))
 
 
-
-
-# tester = "Impl(a, g), Impl(And(a, b), popopo), Impl(And(b, d), quer), Impl(And(b, And(a, e)), qur), Impl(And(a, t), qur), Impl(And(b, c), quer), Impl(And(h, c), quer), Impl(TOP, aasdf), Impl(qasd, BOT), Impl(qa, BOT), Impl(And(asdf, s), zz), Impl(And(b, And(a, b)), quer), Impl(And(asdf, s), zz), Impl(And(af, s), zz), Impl(And(asf, s), zz), Impl(And(s, And(adf, And(a, And(qw, And(asd, fa))))), zz)"
-
-# tester = "Impl(And(ab, And(a, And(e, f))), ab), Impl(TOP, ab), Impl(And(a, And(ab, And(c, e))), f), Impl(And(e, f), e), Impl(And(x, And(y, z)), BOT), Impl(a, f), Impl(f, a)"
-
-# tester = "Impl(And(a, b), c), Impl(And(a, c), b), Impl(And(c, b), a), Impl(g, c), Impl(a, g), Impl(And(f, h), z), Impl(z, h)"
-
-# tester = "Impl(And(a, c), b), Impl(TOP, a)"
-
-# tester = "Impl(a, c), Impl(And(b, And(d, Not(e))), c), Impl(And(b, c), d), Impl(e, d), Impl(b, e), Impl(And(c, d), e), Impl(Not(a), BOT)"
-
-
 # Asp-handout: S 218 1
 # tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(And(a, Not(d)), c), Impl(And(a, Not(c)), d), Impl(And(c, Not(a)), e), Impl(And(d, Not(b)), e)"
-
 
 # Asp-handout: S 218 2
 # tester = "Impl(Not(b), a), Impl(Not(a), b), Impl(Not(a), c), Impl(d, c), Impl(And(a, b), d), Impl(c, d)"
 
-
 # Characterizations: S 272
 # tester = "Impl(Not(b), a), Impl(a, c), Impl(And(b, c), d), Impl(And(b, Not(a)), e), Impl(Not(a), b), Impl(And(b, d), c), Impl(e, d), Impl(And(c, d), e)"
 
-
 # Characterizations: S 262
-tester = "Impl(Not(b), a), Impl(And(a, b), c), Impl(a, d), Impl(And(Not(a), Not(b)), e), Impl(Not(a), b), Impl(d, c), Impl(And(b, c), d)"
+# tester = "Impl(Not(b), a), Impl(And(a, b), c), Impl(a, d), Impl(And(Not(a), Not(b)), e), Impl(Not(a), b), Impl(d, c), Impl(And(b, c), d)"
 
 # tester = "Impl(TOP, a), Impl(And(a, Not(d)), c), Impl(And(b, Not(f)), e), Impl(Not(a), b), Impl(And(Not(c), Not(e)), d), Impl(e, e)"
 
@@ -375,15 +387,14 @@ tester = "Impl(Not(b), a), Impl(And(a, b), c), Impl(a, d), Impl(And(Not(a), Not(
 # Exercise 1.3
 # tester = "Impl(Not(b), a), Impl(Not(a), b)"
 
-
 # Exercise 1.4
-tester = "Impl(And(Not(nfliegt), vogel), fliegt), Impl(pinguin, nfliegt), Impl(TOP, vogel), Impl(TOP, pinguin)"
+# tester = "Impl(And(Not(nfliegt), vogel), fliegt), Impl(pinguin, nfliegt), Impl(TOP, vogel), Impl(TOP, pinguin)"
 
 
 # =====================================================================
 # = Provide the Program of your choice here into the variable tester: =
 # =====================================================================
-# tester = "Impl(Not(b), a), Impl(a, c), Impl(And(b, c), d), Impl(And(b, Not(a)), e), Impl(Not(a), b), Impl(And(b, d), c), Impl(e, d), Impl(And(c, d), e)"
+tester = "Impl(And(Not(nfliegt), vogel), fliegt), Impl(pinguin, nfliegt), Impl(TOP, vogel), Impl(TOP, pinguin)"
 
 
 if __name__ == '__main__':
