@@ -1,3 +1,4 @@
+
 # Aufgabe Nr.1 d)
 
 ## Welchen Plan findet Fast Downward?
@@ -42,10 +43,14 @@ In meiner *domail.pddl* verwende ich conditional effects, weshalb Aufrufe von A*
 $ ./fast-downward.py domain.pddl problem.pddl --search "astar(ipdb())"
 $ ./fast-downward.py domain.pddl problem.pddl --search "astar(lmcut())"
 ```
-Nicht möglich sind. Dies wird auch [hier](http://www.fast-downward.org/Doc/Evaluator) bestätigt.
-
-Wenn man jedoch eine Heuristik verwendet und nicht nur den *blinden* A* (Stern) Algorithmus, dann kommt man sehr viel schneller zu einem Ergebnis, jedoch ist dieses dann nicht das Optimale. Dies würde man mit folgenden Aufrufen erreichen:
-
+Nicht möglich sind. Dies wird auch [hier](http://www.fast-downward.org/Doc/Evaluator) bestätigt. Diese Heuristiken sind für uns interessant, weil sie zulässig, konsistent und sicher sind. Der A* (Stern) Algorithmus liefert nämlich ein Optimales Ergebnis, wenn die gegebene Heuristik [konsistent ist](https://de.wikipedia.org/wiki/A*-Algorithmus#Optimalit.C3.A4t).  
+Die folgenden Heuristiken, welche mit conditional effects kompatibel sind, sind jedoch nicht konsistent und das Ergebnis ist somit auch nicht optimal:
+```
+$ ./fast-downward.py domain.pddl problem.pddl --search "astar(add())"
+$ ./fast-downward.py domain.pddl problem.pddl --search "astar(cea())"
+...
+```
+Ebenso können nicht nur die Heuristiken für den A* (Stern) Algorithmus veränder werden. Ebenfalls können auch andere Algorithmen verwendet werden.
 ```
 $ ./fast-downward.py domain.pddl problem.pddl --evaluator "hff=ff()" --evaluator \
   "hcea=cea()" --search "lazy_greedy([hff, hcea], preferred=[hff, hcea])"
@@ -53,8 +58,7 @@ $ ./fast-downward.py domain.pddl problem.pddl --evaluator "hff=ff()" --evaluator
 $ ./fast-downward.py domain.pddl problem.pddl --evaluator "hcea=cea()" \
   --search "lazy_greedy([hcea], preferred=[hcea])"
 ```
-
-Wie man aber sehen sehen kann, ist der Plan von folgendem *Kami-Spiel* aber nicht optimal. 
+... diese beschleunigen die Suche sehr, jedoch ist der erhaltene Plan nicht optimal. Dies kann man an dem folgenden *Kami-Spiel* sehen:
 
 *Spielfeld:*
 > GGGGBB  

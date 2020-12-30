@@ -1,3 +1,4 @@
+
 ## Aufgabe Nr.2 c)
 
 ### 1. Ist jeder, der in Freiburg wählen darf EU-Bürger?
@@ -24,11 +25,15 @@ CanVoteInFreiburg and (isCitizenOf value France)
 
 
 ### 3. Ist jeder, der in Freiburg wählen darf auch Freiburger?
-Damit eine solch eine Personeninstanz existieren müsste, müsste einen nicht-leeren Schnitt zwischen allen in Freiburg wahlberechtigten Personen und aller Personen, welche nicht in einem Stadtteil von Freiburg leben. Somit kann man mit folgender DL-Querry:
+Um dies zu zeigen, müsste man die Klasse aller in Freiburg wahlberechtigten Personen mit allen Personen die in keinem Stadtteil von Freiburg leben schneiden. HermiT kann leider nicht bei nicht-existenz weiterhelfen, somit funktioniert folgende DL-Querry nicht:
 ```
 CanVoteInFreiburg and not (isLinvingIn some DistrictOfFreiburg)
 ```
-... erkennen, dass diese Anfrage äquivalent zu *owl:Nothing* ist und somit der Schnitt leer ist. Somit ist jede in Freiburg wahlberechtigte Person auch automatisch ein Freiburger.
+Man kann jedoch einen anderen Weg gehen und alle in Freiburg wahlberechtigten Personen mit allen Personen, welche auch in einem Stadtteil von Freiburg wohnen, schneiden. Also folgende DL-Querry:
+```
+CanVoteInFreiburg and (isLinvingIn some DistrictOfFreiburg)
+```
+Diese Anfrage ist äquivalent zu *CanVoteInFreiburg* nach HermiT, womit man also erkennen kann, dass jede in Freiburg wahlberechtigte Person auch in einem Stadtteil von Freiburg lebt.
 
 ### 4. Ist jeder, der in Freiburg wählen darf auch Wiehremer?
 HermiT kann leider nicht bei nicht-existenz von Werten weiterhelfen, sondern man brauch explizite Klassen.  Somit ist folgende DL-Querry:
@@ -37,7 +42,7 @@ CanVoteInFreiburg and not (isLinvingIn value Wiehre)
 ```
 ... nicht zulässig, da explizierte Klassen erforderlich sind. Diese habe ich aber nicht in meine Ontologie mit eingebaut. Somit müssen wir einen Umweg gehen und eine Personeninstanz erstellen, welche in Freiburg wahlberechtigt ist und dabei z.B. in Betzenhausen lebt. Somit könnte man dann mit der DL-Querry:
 ```
-CanVoteInFreiburg and not (isLinvingIn value Betzenhausen)
+CanVoteInFreiburg and (isLinvingIn value Betzenhausen)
 ```
 ... eine Personeninstanz erhalten. Somit erhalten wir eine in Freiburg wahlberechtigte Person, welche nicht in Wiehre lebt. Also ist somit nicht jeder, der in Freiburg wählen darf auch Wiehremer.
 

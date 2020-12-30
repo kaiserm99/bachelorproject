@@ -12,9 +12,9 @@
 ### Task 02:  
  - [X] a)
  - [X] b)
- - [ ] c)
+ - [X] c)
  - [X] d)
- - [ ] e)
+ - [X] e)
 
 ### Task 03:  
  - [X] a)
@@ -30,7 +30,7 @@
  - [x] a)
  - [x] b)
  - [x] c)
- - [ ] d), Note: need to do it in more detail
+ - [X] d)
 
 ### Task 02:  
  - [x] a)
@@ -41,7 +41,7 @@
  - [x] a)
  - [x] b)
  - [x] c)
- - [x] d)
+ - [X] d)
  - [x] e)
  - [x] f)
  - [X] g)
