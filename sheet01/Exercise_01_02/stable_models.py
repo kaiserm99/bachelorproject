@@ -38,6 +38,18 @@ Usage:
 
     For more informations you can use --help to see the options.
 
+    
+    Examples:
+        
+        # Get the minimal Version of the Output (just the DIMACS-Format)
+        python3 stable_models.py -m -p "Impl(Not(b), a), Impl(Not(a), b)"
+
+        # Get some more Informations: Formulas of the Clark's Completion and the Loop Formulas
+        python3 stable_models.py -p "Impl(Not(b), a), Impl(Not(a), b)"
+
+        # Get the DIMACS-Format of the given Formula. NOTE: use the other Syntax!
+        python3 stable_models.py -d "And(And(asdf, as), Not(BiImpl(z, a)))"
+
 """
 # stable_models.py, written on: Donnerstag,  12 Oktober 2020.
 
@@ -399,7 +411,7 @@ tester = "Impl(And(Not(nfliegt), vogel), fliegt), Impl(pinguin, nfliegt), Impl(T
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-m", "--minimal", help="just print out minimal informations about the parsing. Used by get_modells.sh", action="store_true")
+    parser.add_argument("-m", "--minimal", help="just print out minimal informations (DIMACS-Format), mainly used by get_modells.sh", action="store_true")
     parser.add_argument("-p", "--prog", help="you can also provide a string version of your program in the command line", type=str)
     parser.add_argument("-d", "--dimacs", help="you can provide a Formula which will parsed into DIMACS-Format", type=str)
     args = parser.parse_args()
